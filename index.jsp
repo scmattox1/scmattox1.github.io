@@ -12,16 +12,10 @@
     			<multi-header>
       				<h1>Sarah C Mattox</h1>
       				<h2>Web Design</h2>
+					<div class="textline"></div>
       				<h2>Portfolio</h2>
     			</multi-header>
-				<nav>
-      				<ul>
-        				<li><a href="works.html">Portfolio</a></li>
-        				<li><a href="bio.html">Me</a></li>
-        				<li><a href="resume.html">Resume</a></li>
-        				<li><a href="contact.html">Contact</a></li>
-      				</ul>
-				</nav>
+				<jsp:include page="/assets/nav.jsp" flush="false"></jsp:include>
   			</section>
 			<section>
 				<!-- video / image -->

@@ -11,15 +11,8 @@
 			<multi-header>
 				<h1>Contact</h1>
 				<h2>Information</h2>
-			</multi-header>			
-			<nav>
-				<ul>
-        			<li><a href="works.html">Portfolio</a></li>
-        			<li><a href="bio.html">Me</a></li>
-        			<li><a href="resume.html">Resume</a></li>
-        			<li><a href="contact.html">Contact</a></li>
-				</ul>
-			</nav>
+			</multi-header>	
+			<jsp:include page="/assets/nav.jsp" flush="false"></jsp:include>
 			<section>
 				<img alt="Image: Selfie" src="/assets/selfie_1200x900.jpg" />
 			</section>

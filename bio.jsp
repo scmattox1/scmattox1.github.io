@@ -15,14 +15,7 @@
 				</multi-header>
 				<img alt="Image: Selfie" src="/assets/selfie_150x150.jpg" />
 			</section>
-			<nav>
-				<ul>
-        			<li><a href="works.html">Portfolio</a></li>
-        			<li><a href="bio.html">Me</a></li>
-        			<li><a href="resume.html">Resume</a></li>
-        			<li><a href="contact.html">Contact</a></li>
-				</ul>
-			</nav>
+			<jsp:include page="/assets/nav.jsp" flush="false"></jsp:include>
 			<article>
 				<p>Hello! My name is Sarah. Welcome to my portfolio site! I'm currently working as a front end web designer in South Bend, Indiana, but I am open to any work in the Western/Center part of Michigan and the Northwest part of Indiana. Basically, I'm willing to communte up to an hour from Paw Paw, MI.</p>
 				<h3>The Work Part of Me</h3>
