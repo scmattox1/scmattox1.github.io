@@ -7,5 +7,6 @@
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
 	</head>
 	<body>
+		<jsp:include page="/assets/nav.jsp" flush="false"></jsp:include>
 	</body>
 </html>
