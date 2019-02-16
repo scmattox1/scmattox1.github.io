@@ -9,10 +9,18 @@ body{width:100%; margin:0; position:relative; min-height:100%; cursor:default;fo
 a{color:red;border-bottom:1px solid red;background-color: transparent;text-decoration: none;padding:5px 15px;}
 a:hover{color:white;background-color:red; transition:all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);}
 
+mobile-header{display:none;}
+
+emp-text{font-style:italic;}
+
 /***** HEADERS *****/
 h1{font-family:'Josefin Slab', serif;font-size:48px;}
 h2{font-size:24px;margin:10px;font-weight:300;}
 h3{font-size:18px;font-weight:300;}
+
+h1 a{border:none;padding:0px;color:#333;}
+h1 a:hover{background-color:transparent;color:#333;transition:none;}
+
 multi-header{width:100%;text-align:center;}
 multi-header h1{margin-bottom:0px;}
 multi-header h2, multi-header h3{letter-spacing:5px;}
@@ -40,7 +48,10 @@ nav input{display: none;}
 
 /***** INDEX *****/
 .homepage-image{background: lightgray;height: 100vh; order: -1;-webkit-box-flex:1 50%;-moz-box-flex:1 50%;-webkit-flex:1 50%;-ms-flex:1 50%;flex:1 50%; min-width:50%;max-width:50%;}
-.homepage header{padding:5%;min-height:600px;}
+.homepage mobile-header{display:flex;padding:5%;min-height:600px;}
+
+/***** BIO *****/
+
 
 /***** MEDIA QUERIES *****/
 @media only screen and (max-width:1024px){
@@ -57,8 +68,8 @@ nav input{display: none;}
     multi-header.flexAlign{align-items:flex-end;-ms-flex-align:end;}
     
     /*** MOBILE HEADER ***/
-    header h1, header h2:first-of-type{padding-right:5%}
-    header h2:last-of-type{border-bottom:1px solid gray;width:100%;padding-bottom:10px;margin-bottom: 0px;height: 35px;}
+    mobile-header h1, mobile-header h2:first-of-type{padding-right:5%}
+    mobile-header h2:last-of-type{border-bottom:1px solid gray;width:100%;padding-bottom:10px;margin-bottom: 0px;height: 35px;}
     .textline{width:100%;margin: 8px 0;}
     
     /*** NAVIGATION ***/
