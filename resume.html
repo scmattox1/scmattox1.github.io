@@ -6,10 +6,14 @@
 		<title>Resume</title>
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
 		
-		<script src="jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			$(function(){
-				$("#nav").load("/assets/nav.html");
+				var includes = $('[data-include]');
+				jQuery.each(includes, function(){
+					var file = 'assets/' + $(this).data('include') + '.html';
+					$(this).load(file);
+				});
 			});
 		</script>
 	</head>
@@ -20,7 +24,7 @@
 				<h2>The Road Map of My Career</h2>
 				<h2><a href="/assets/mattox_sarah_2019.pdf" target="_blank">Download</a></h2>
 			</multi-header>
-			<div id="nav"></div>
+				<nav data-include="nav"></nav>
 			
 		</main>
 	</body>

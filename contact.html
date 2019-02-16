@@ -6,10 +6,14 @@
 		<title>Contact Me</title>
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
 		
-		<script src="jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			$(function(){
-				$("#nav").load("/assets/nav.html");
+				var includes = $('[data-include]');
+				jQuery.each(includes, function(){
+					var file = 'assets/' + $(this).data('include') + '.html';
+					$(this).load(file);
+				});
 			});
 		</script>
 	</head>
@@ -19,7 +23,7 @@
 				<h1>Contact</h1>
 				<h2>Information</h2>
 			</multi-header>	
-			<div id="nav"></div>
+				<nav data-include="nav"></nav>
 			<section>
 				<img alt="Image: Selfie" src="/assets/selfie_1200x900.jpg" />
 			</section>
