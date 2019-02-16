@@ -54,10 +54,10 @@ nav input{display: none;}
     h1{font-size:30px;margin-top:15px}
     h2{font-size:16px;margin:0px;} 
     h3{font-size:14px;}
-    multi-header{align-items: flex-end;}
+    multi-header.flexAlign{align-items:flex-end;-ms-flex-align:end;}
     
     /*** MOBILE HEADER ***/
-    header > h1, header > h2:first-of-type{padding-right:5%}
+    header h1, header h2:first-of-type{padding-right:5%}
     header h2:last-of-type{border-bottom:1px solid gray;width:100%;padding-bottom:10px;margin-bottom: 0px;height: 35px;}
     .textline{width:100%;margin: 8px 0;}
     
