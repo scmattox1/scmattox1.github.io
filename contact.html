@@ -18,7 +18,7 @@
 		</script>
 	</head>
 	<body>
-		<main class="fixed-left flexDisplay">
+		<main class="contact fixed-left flexDisplay">
 			<section class="fixed flexDisplay flexColumn flexAlign flex1">
                 <mobile-header class="flexDisplay flexColumn flexJustifyBetween">
                     <multi-header class="flexDisplay flexAlign flexJusitfyCenter flexColumn">
@@ -39,13 +39,22 @@
 			</section>
             <section>
                 <nav data-include="nav"></nav>
-                <div>          
-                    <article>
-					    <span>scmattox1@gmail.com<br/>or<br/>linkedin.com/in/scmattox<br/>or<br/>260-494-4526</span>
-                        <p>Please leave me a message. I rarely answer unknown numbers.</p>
-                        <p>I live in the West Michigan/Indiana region</p>
+                <div class="flexDisplay flexWrap flexJustifyBetween">          
+                    <article class="flexDisplay flexAlign flexColumn">
+					    scmattox1@gmail.com
+                        <div class="divider flexDisplay flexJustifyCenter flexAlign"><span class="textline"></span><span class="text">or</span><span class="textline"></span></div>
+                        linkedin.com/in/scmattox
+                        <div class="divider flexDisplay flexJustifyCenter flexAlign"><span class="textline"></span><span class="text">or</span><span class="textline"></span></div>
+                        260-494-4526
+                        <i>Please leave me a message. I rarely answer unknown numbers.</i>
                     </article>
-				    <img alt="Image: Selfie" src="/assets/selfie_150x150.jpg">
+				    <div class="contact-img-text">
+                        <emp-text>I live in the</emp-text>
+                        <p>West Michigan/Indiana region</p>
+                    </div>
+                    <div class="contact-img">
+                        <img src="/assets/selfie_150x150.jpg" alt="Image: Map">
+                    </div>
                 </div>			
 			</section>
 		</main>
