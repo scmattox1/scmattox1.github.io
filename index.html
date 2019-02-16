@@ -5,6 +5,13 @@
 		<meta charset="utf-8">
 		<title>Sarah Mattox</title>
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
+		
+		<script src="assets/jquery.js"></script>
+		<script>
+			$(function(){
+				$("#nav").load("/assets/nav.html");
+			});
+		</script>
 	</head>
 	<body>
 		<main>
@@ -15,7 +22,7 @@
 					<div class="textline"></div>
       				<h2>Portfolio</h2>
     			</multi-header>
-				<jsp:include page="/assets/nav.jsp" flush="false"></jsp:include>
+				<div id="nav"></div>
   			</section>
 			<section>
 				<!-- video / image -->

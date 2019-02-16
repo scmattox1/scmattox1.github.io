@@ -5,6 +5,13 @@
 		<meta charset="utf-8">
 		<title>Resume</title>
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
+		
+		<script src="assets/jquery.js"></script>
+		<script>
+			$(function(){
+				$("#nav").load("/assets/nav.html");
+			});
+		</script>
 	</head>
 	<body>
 		<main>
@@ -13,7 +20,7 @@
 				<h2>The Road Map of My Career</h2>
 				<h2><a href="/assets/mattox_sarah_2019.pdf" target="_blank">Download</a></h2>
 			</multi-header>
-			<jsp:include page="/assets/nav.jsp" flush="false"></jsp:include>
+			<div id="nav"></div>
 			
 		</main>
 	</body>

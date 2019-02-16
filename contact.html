@@ -5,6 +5,13 @@
 		<meta charset="utf-8">
 		<title>Contact Me</title>
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
+		
+		<script src="assets/jquery.js"></script>
+		<script>
+			$(function(){
+				$("#nav").load("/assets/nav.html");
+			});
+		</script>
 	</head>
 	<body>
 		<main>
@@ -12,7 +19,7 @@
 				<h1>Contact</h1>
 				<h2>Information</h2>
 			</multi-header>	
-			<jsp:include page="/assets/nav.jsp" flush="false"></jsp:include>
+			<div id="nav"></div>
 			<section>
 				<img alt="Image: Selfie" src="/assets/selfie_1200x900.jpg" />
 			</section>
