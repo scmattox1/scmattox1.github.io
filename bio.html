@@ -6,10 +6,14 @@
 		<title>About Me</title>
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
 		
-		<script src="jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			$(function(){
-				$("#nav").load("/assets/nav.html");
+				var includes = $('[data-include]');
+				jQuery.each(includes, function(){
+					var file = 'assets/' + $(this).data('include') + '.html';
+					$(this).load(file);
+				});
 			});
 		</script>
 	</head>
@@ -22,7 +26,7 @@
 				</multi-header>
 				<img alt="Image: Selfie" src="/assets/selfie_150x150.jpg" />
 			</section>
-			<div id="nav"></div>
+				<nav data-include="nav"></nav>
 			<article>
 				<p>Hello! My name is Sarah. Welcome to my portfolio site! I'm currently working as a front end web designer in South Bend, Indiana, but I am open to any work in the Western/Center part of Michigan and the Northwest part of Indiana. Basically, I'm willing to communte up to an hour from Paw Paw, MI.</p>
 				<h3>The Work Part of Me</h3>
