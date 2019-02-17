@@ -10,6 +10,7 @@ a{color:red;border-bottom:1px solid red;background-color: transparent;text-decor
 a:hover{color:white;background-color:red; transition:all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);}
 mobile-header, mobile-header.flexDisplay{display:none;}
 emp-text{font-family:'Josefin Slab', serif;font-style:italic;font-size:18px;}
+ul li{line-height:30px;}
 
 /***** HEADERS *****/
 h1{font-family:'Josefin Slab', serif;font-size:48px;}
@@ -36,7 +37,7 @@ button:last-of-type{margin:5px 0px 5px 5px;}
 
 /***** FIXED PAGES *****/
 .fixed-left section.fixed{height:100vh;width:50%; padding:5%;position: -webkit-sticky;position: sticky;top: 0;}
-.fixed-left section.fixed img{border-radius: 100%;background:gray; width:400px; height:400px; margin-top:80px;}
+.fixed-left section.fixed img, .resume section img{border-radius: 100%;background:gray; width:400px; height:400px; margin-top:80px;}
 .fixed-left section:last-of-type{width:50%;padding:5%;}
 .fixed-left nav{margin-bottom:80px;}
 
@@ -90,11 +91,28 @@ nav input{display: none;}
 .contact-img img{width:300px; height:400px;}
 
 /***** RESUME *****/
-resume-title{}
-resume-experience{}
-.resume-content{}
-.resume-skills{}
-.resume-end{}
+.resume > *{padding:5%;}
+.resume > section:not(:last-of-type){width:50%;height:100vh;}
+.resume-content{width: 100%;}
+.resume-content p{text-align:center;margin-bottom:80px;}
+
+resume-title{margin:50px 0px;}
+resume-title > *{height:50px;}
+resume-title span{font-family:'Josefin Slab', serif;font-size:24px;border:1px solid black; height: 40px;padding: 0px 50px;display: inline-block;line-height: 35px;white-space: nowrap;line-height: 40px;}
+border{border:3px solid black;padding:2px;height: 50px;display: inline-block; margin:0px 3%;}
+resume-title line{width:90%;align-self:center;}
+resume-title emp-text{display: block;font-size:12px;line-height: 16px;text-align: center;}
+.title-subhead{line-height: 24px;}
+
+.resume-skills ul{list-style:none;margin:0px;padding:0px;margin-left:3%;}
+.resume-skills ul li{padding-bottom:30px;font-size:18px;line-height:18px;}
+.resume-skills emp-text{display: block;font-size:16px;line-height:16px;padding-top:2px;}
+
+resume-experience .flex2{padding:30px 0px;}
+resume-experience h3{margin-top:0px;}
+resume-experience .flex1{background-color:lightgray;align-self:stretch;text-align:center;font-size:18px;line-height:30px;}
+.resume-skills.flexJustifySpaceAround ul{margin-left:0px;text-align: center;}
+.resume-end{border-top:1px solid black;padding-top:5px;text-align:right;margin-top:50px;}
 
 /***** MEDIA QUERIES *****/
 @media only screen and (max-width:1024px){
