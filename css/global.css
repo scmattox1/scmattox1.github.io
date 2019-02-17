@@ -22,7 +22,7 @@ h1 a:hover{background-color:transparent;color:#333;transition:none;}
 multi-header{width:100%;text-align:center;}
 multi-header h1{margin-bottom:0px;}
 multi-header h2, multi-header h3{letter-spacing:5px;}
-.textline{height:1px;width:40%;background-color:gray;}
+line{height:1px;width:40%;background-color:gray;}
 
 /***** IMAGES *****/
 .img-right{float: right;margin: 0 0 15px 15px;}
@@ -44,6 +44,15 @@ button:last-of-type{margin:5px 0px 5px 5px;}
 .divider {width:50%;margin: 20px 0px;font-size:14px;text-transform:uppercase;}
 .divider .line{width:100%;align-self: center;background: gray;height: 1px;}
 .divider .text{margin:0px 15px;}
+
+/***** ICONS *****/
+icon{}
+icon.home{}
+icon.email{}
+icon.site{}
+icon.phone{}
+icon.linkedin{}
+icon.pdf{}
 
 /***** FLEXBOX *****/
 .flexDisplay{display:-webkit-box; display:-ms-flexbox; display:-webkit-flex; display:-moz-box; display:flex; }
@@ -80,6 +89,12 @@ nav input{display: none;}
 .contact-img{width:60%;height:400px;background: gray;}
 .contact-img img{width:300px; height:400px;}
 
+/***** RESUME *****/
+resume-title{}
+resume-experience{}
+.resume-content{}
+.resume-skills{}
+.resume-end{}
 
 /***** MEDIA QUERIES *****/
 @media only screen and (max-width:1024px){
@@ -114,7 +129,7 @@ nav input{display: none;}
     /*** MOBILE HEADER ***/
     mobile-header h1, mobile-header h2:first-of-type{padding-right:5%}
     mobile-header h2:last-of-type{border-bottom:1px solid gray;width:100%;padding-bottom:10px;margin-bottom: 0px;height: 35px;}
-    .textline{width:100%;margin: 8px 0;}
+    line{width:100%;margin: 8px 0;}
     
     /*** NAVIGATION ***/
     nav {order:-1;position: absolute;}
