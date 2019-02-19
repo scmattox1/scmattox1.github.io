@@ -37,7 +37,7 @@ button:last-of-type{margin:5px 0px 5px 5px;}
 /***** FIXED PAGES *****/
 .fixed-left section.fixed{height:100vh;width:50%; padding:5%;position: -webkit-sticky;position: sticky;top: 0;}
 .fixed-left section.fixed img, .resume section img{border-radius: 100%;background:gray; width:400px; height:400px; margin-top:80px;}
-.fixed-left section:last-of-type{width:50%;padding:5%;}
+.fixed-left > section:last-of-type{width:50%;padding:5%;}
 .fixed-left nav{margin-bottom:80px;}
 
 /***** CONTENT DIVIDERS *****/
@@ -79,9 +79,9 @@ nav input{display: none;}
 .homepage mobile-header{display:flex;padding:5%;min-height:600px;}
 
 /***** BIO *****/
-.bio article img:not(.img-full){width:150px;height:150px;}
-.img-full{width:100%;height:270px;/*! display: block; */ margin-top:50px;overflow: hidden;vertical-align: middle;text-align: center;}
-.bio article .img-full img{width: 100%;height: auto;}
+.bio article > img{width:150px;height:150px;}
+.img-full{width:100%;height:250px; margin-top:50px;overflow: hidden;align-items: flex-end;-ms-flex-align: end;}
+.img-full img{width: 100%;height: auto;}
 
 /***** CONTACT *****/
 .contact article {font-size:20px;text-align: center;width: 100%;margin-bottom:80px;}
@@ -169,7 +169,7 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
     .homepage mobile-header{height:120px;min-height: 120px;flex:unset;padding:0px;}
     
     /*** BIO ***/
-    .bio article img:not(.img-full){display:none;}
+    .bio article > img{display:none;}
     
     /*** CONTACT ***/
     .contact-img{width: 100%;}
