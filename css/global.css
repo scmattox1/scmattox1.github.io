@@ -85,10 +85,8 @@ nav input{display: none;}
 /***** CONTACT *****/
 .contact article {font-size:20px;text-align: center;width: 100%;margin-bottom:80px;}
 .contact article i{font-size:12px;}
-.contact-img-text{font-size:20px;width: 40%;align-self:flex-end;}
-.contact-img-text p{margin:0px;}
-.contact-img{width:60%;height:400px;background: gray;}
-.contact-img img{width:300px; height:400px;}
+.contact-img{width:100%;height:400px;}
+.contact-img img{width:auto; height:100%;}
 
 /***** RESUME *****/
 .resume > *{padding:5%;}
@@ -98,7 +96,7 @@ nav input{display: none;}
 
 resume-title{margin:50px 0px;}
 resume-title > *{height:50px;}
-resume-title span{font-family:'Josefin Slab', serif;font-size:24px;border:1px solid black; height: 40px;padding: 0px 50px;display: inline-block;line-height: 35px;white-space: nowrap;line-height: 40px;}
+resume-title span{font-family:'Josefin Slab', serif;font-size:24px;border:1px solid black; height: 40px;padding: 0px 50px;display: inline-block;white-space: nowrap;line-height: 40px;}
 border{border:3px solid black;padding:2px;height: 50px;display: inline-block; margin:0px 3%;}
 resume-title line{width:90%;align-self:center;}
 resume-title emp-text{display: block;font-size:12px;line-height: 16px;text-align: center;}
@@ -132,9 +130,6 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
     
     /*** BIO ***/
     .bio article section{margin-top:50px;}
-    
-    /*** CONTACT ***/
-    .contact-img-text{align-self:flex-start;}
 }
 @media only screen and (max-width:680px){
     /*** PRIMARY SETUP ***/
@@ -176,6 +171,5 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
     .bio article img:not(.img-full){display:none;}
     
     /*** CONTACT ***/
-    .contact-img-text{width: 100%;}
     .contact-img{width: 100%;}
 }
