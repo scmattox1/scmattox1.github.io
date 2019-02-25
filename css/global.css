@@ -209,7 +209,6 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
     .icons-container ul li{width:100%;margin-bottom: 30px;}
 }
 @media only screen and (max-width:500px){
-    .resume-skills{flex-direction: column;}
-    .resume-skills > .flex1 ul{flex-direction: column;}
-    .resume-skills > .flex2 > div.flexDisplay{flex-direction: column;}
+    .resume-skills, .resume-skills > .flex1 ul, .resume-skills > .flex2 > div.flexDisplay{flex-direction: column;}
+    .resume-skills.flexJustifySpaceAround ul{text-align: left;}
 }
