@@ -46,13 +46,13 @@ button:last-of-type{margin:5px 0px 5px 5px;}
 .divider .text{margin:0px 15px;}
 
 /***** ICONS *****/
-icon{}
-icon.home{background-image:url("/assets/images/icons-01.jpg");}
-icon.email{background-image:url("/assets/images/icons-02.jpg");}
-icon.site{background-image:url("/assets/images/icons-05.jpg");}
-icon.phone{background-image:url("/assets/images/icons-03.jpg");}
-icon.linkedin{background-image:url("/assets/images/icons-04.jpg");}
-icon.pdf{background-image:url("/assets/images/icons-06.jpg");}
+icon{height: 30px;display: block;/*! flex: 1; */width: 6%;}
+icon.home{background:url("/assets/images/icons-01.jpg") no-repeat;background-size: auto 30px;}
+icon.email{background:url("/assets/images/icons-02.jpg") no-repeat;background-size: auto 30px;}
+icon.site{background:url("/assets/images/icons-05.jpg") no-repeat;background-size: auto 30px;}
+icon.phone{background:url("/assets/images/icons-03.jpg") no-repeat;background-size: auto 30px;}
+icon.linkedin{background:url("/assets/images/icons-04.jpg") no-repeat;background-size: auto 30px;}
+icon.pdf{background:url("/assets/images/icons-06.jpg") no-repeat;background-size: auto 30px;}
 
 /***** FLEXBOX *****/
 .flexDisplay{display:-webkit-box; display:-ms-flexbox; display:-webkit-flex; display:-moz-box; display:flex; }
@@ -91,6 +91,8 @@ nav input{display: none;}
 .contact-img img{width:100%; height:auto;max-height: 400px;max-width: 600px;}
 
 /***** RESUME *****/
+.icons-container > ul{list-style:none;margin:0px;padding:0px; padding:80px 0 0 0;height: 100%;}
+.icons-container > ul a, .icons-container > ul span{padding: 5px;}
 .resume > *{padding:5%;}
 .resume > section:not(:last-of-type){width:50%;height:100vh;}
 .resume-content{width: 100%;}
