@@ -6,10 +6,286 @@
 		<title>Portfolio</title>
 		<link rel="stylesheet" type="text/css" href="/css/global.css">
 		<link rel="stylesheet" type="text/css" href="/fancybox/dist/jquery.fancybox.min.css">
-		</script>
 	</head>
 	<body>
-				<nav data-include="nav"></nav>
+        <main class="works fixed-left flexDisplay">
+			<section class="fixed flexDisplay flexColumn flexAlign flex1">
+                <mobile-header class="flexDisplay flexColumn flexJustifyBetween">
+                    <multi-header class="flexDisplay flexAlign flexJusitfyCenter flexColumn">
+                        <h1><a href="/index.html">Sarah C Mattox</a></h1>
+      				    <h2>Web Designer</h2>
+					    <line></line>
+      				    <h2>Gallery</h2>
+    			    </multi-header>
+				    <nav data-include="nav"></nav>
+  			    </mobile-header>
+				<multi-header class="flexDisplay flexAlign flexJusitfyCenter flexColumn">
+                    <h1><a href="/index.html">Sarah C Mattox</a></h1>
+      				<h2>Web Designer</h2>
+					<line></line>
+      				<h2>Gallery</h2>
+    			</multi-header>
+				<img alt="Image: Selfie" src="/assets/selfie_150x150.jpg">
+			</section>
+            <section>
+                <nav data-include="nav"></nav>
+                <div id="imageContainer" class="fancybox-container" role="dialog" tabindex="-1">
+                    <a><img src="/assets/images/gallery/test1.jpg" alt="Test" /></a>
+                </div>
+                 <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                    <h2>Demos</h2>
+                </div>
+                            <div class="col-md-9">
+                                <h3>Images</h3>
+
+                                <p>
+    By default, fancybox fully preloads an image before displaying it. You can choose to display the image right away. It will
+    render and show the full size image while the data is being received.
+</p>
+
+                                <p class="text-right mb-4">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#imgOpts" aria-expanded="false" aria-controls="imgOpts">
+        Customize
+    </button>
+</p>
+
+                                <div id="imgOpts" class="collapse">
+                                    <form autocomplete="off" class="mb-4 p-3">
+<div class="form-group row">
+            <div class="col-sm-6">
+                <label for="animationEffect">
+                    Open/close animation type
+                </label>
+                <select id="animationEffect" class="form-control">
+                    <option value="zoom">zoom</option>
+                    <option value="fade">fade</option>
+                    <option value="slide">slide</option>
+                    <option value="rotate">rotate</option>
+                    <option value="circular">circular</option>
+                    <option value="tube">tube</option>
+                    <option value="zoom-in-out">zoom-in-out</option>
+                    <option value="" style="font-style:italic;color:#888;">none</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="transitionEffect">
+                    Transition effect between slides
+                </label>
+                <select id="transitionEffect" class="form-control">
+                    <option value="fade">fade</option>
+                    <option value="slide">slide</option>
+                    <option value="rotate">rotate</option>
+                    <option value="circular">circular</option>
+                    <option value="tube">tube</option>
+                    <option value="zoom-in-out">zoom-in-out</option>
+                    <option value="" style="font-style:italic;color:#888;">none</option>
+                </select>
+            </div>
+        </div>
+<div class="form-group row">
+            <label class="col-md-2">
+                Buttons
+            </label>
+
+            <div class="col-md-10">
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="slideShow"> Slideshow
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="fullScreen"> Fullscreen
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="zoom" checked="checked"> Zoom
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="thumbs" checked="checked"> Thumbnails
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="share"> Share
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="download"> Download
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="arrowLeft"> Left arrow
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input buttons" type="checkbox" value="arrowRight"> Right arrow
+                    </label>
+                </div>
+
+            </div>
+        </div>
+  <div class="form-group row">
+            <label class="col-md-2">
+                Elements
+            </label>
+
+            <div class="col-md-10">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input toggle" id="arrows" value="1" checked="checked"> Navigation arrows
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input toggle" id="infobar" value="1" checked="checked"> Counter
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input toggle" id="thumbs" value="1"> Thumbnails
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row mb-0">
+            <label class="col-md-2">
+                Translation
+            </label>
+
+            <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="lang" value="en" checked="checked"> English
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="lang" value="de"> German
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <small>
+                    <a href="https://fancyapps.com/fancybox/3/docs/#options" target="_blank">
+                        Full list of options
+                    </a>
+                </small>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row mb-4">
+    <div class="col-6 col-lg-4">
+        
+        <figure>
+            <a class="d-block mb-4" data-fancybox="images" href="https://source.unsplash.com/lSXpV8bDeMA/1536x2304" data-width="1536" data-height="2304">
+                <img class="img-fluid" src="https://source.unsplash.com/lSXpV8bDeMA/416x623" />
+            </a>
+            <figcaption>
+                <h6>Rocky mountain under blue and white sky</h6>
+                <a href="https://unsplash.com/photos/lSXpV8bDeMA">Photo by Guillaume Briard</a>
+            </figcaption>
+        </figure>
+
+        <figure>
+            <a class="d-block mb-4" data-fancybox="images" href="https://source.unsplash.com/ty4X72BSsXY/1279x853" data-width="1279" data-height="853">
+                <img class="img-fluid" src="https://source.unsplash.com/ty4X72BSsXY/416x278" />
+            </a>
+            <figcaption>
+                <h6>Vaihingen an der Enz, Germany</h6>
+                <a href="https://unsplash.com/photos/ty4X72BSsXY">Photo by Oliver Roos</a>
+            </figcaption>
+        </figure>
+
+    </div>
+    <div class="col-6 col-lg-4">
+        
+        <figure>
+            <a class="d-block mb-4" data-fancybox="images" href="https://source.unsplash.com/QkPb5g9p338/1279x719" data-width="1279"
+                data-height="719">
+                <img class="img-fluid" src="https://source.unsplash.com/QkPb5g9p338/416x234" />
+            </a>
+            <figcaption>
+                <h6>Closeup photo of world globe</h6>
+                <a href="https://unsplash.com/photos/QkPb5g9p338">Photo by chuttersnap</a>
+            </figcaption>
+        </figure>
+
+        <figure>
+            <a class="d-block mb-4" data-fancybox="images" href="https://source.unsplash.com/z55CR_d0ayg/1279x853" data-width="1279"
+                data-height="853">
+                <img class="img-fluid" src="https://source.unsplash.com/z55CR_d0ayg/416x278" />
+            </a>
+            <figcaption>
+                <h6>Blessed are the curious, for they shall have adventures. 🚩</h6>
+                <a href="https://unsplash.com/photos/z55CR_d0ayg">Photo by Andrew Neel</a>
+            </figcaption>
+        </figure>
+
+        <figure>
+            <a class="d-block mb-4" data-fancybox="images" href="https://source.unsplash.com/IbLZjKcelpM/1020x858" data-width="1020"
+                data-height="858">
+                <img class="img-fluid" src="https://source.unsplash.com/IbLZjKcelpM/416x350" />
+            </a>
+            <figcaption>
+                <h6>Man holding pair of ski poles in front of trees</h6>
+                <a href="https://unsplash.com/photos/IbLZjKcelpM">Photo by Oziel Gómez</a>
+            </figcaption>
+        </figure>
+
+    </div>
+ <div class="col-6 col-lg-4 d-none d-lg-block">
+
+        <figure>
+            <a class="d-block mb-4" data-fancybox="images" href="https://source.unsplash.com/KgCbvOWYuU0/1279x870" data-width="1279"
+                data-height="870">
+                <img class="img-fluid" src="https://source.unsplash.com/KgCbvOWYuU0/416x283" />
+            </a>
+            <figcaption>
+                <h6>Aerial photo of person using paddleboard</h6>
+                <a href="https://unsplash.com/photos/KgCbvOWYuU0">Photo by Ishan @seefromthesky</a>
+            </figcaption>
+        </figure>
+
+        <figure>
+            <a class="d-block mb-4" data-fancybox="images" href="https://source.unsplash.com/O7qK1vQY3p0/1519x2279" data-width="1519"
+                data-height="2279">
+                <img class="img-fluid" src="https://source.unsplash.com/O7qK1vQY3p0/416x623" />
+            </a>
+            <figcaption>
+                <h6>Car on curve road surrounded by trees</h6>
+                <a href="https://unsplash.com/photos/O7qK1vQY3p0">Photo by Grant Porter</a>
+            </figcaption>
+        </figure>
+    </div>
+</div>
+                        </div>
+                     </div>
+                </div>
+
+            </section>
+		</main>
         <!-- JS -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script src="/fancybox/dist/jquery.fancybox.min.js"></script>
@@ -22,5 +298,46 @@
 				});
 			});
 		</script>
+        <script>
+            $(document).ready(function() { $(".fancybox").fancybox(); });
+            $("#imageContainer").find("a").attr('rel', 'gallery').fancybox();
+        </script>
+        <script>
+            var imgOpts = $.extend(true, {}, $.fancybox.defaults, {
+                caption : function( instance, item ) { return $(this).next('figcaption').html(); }
+            });
+            
+            // Shortcut to apply options to image gallery
+            function applyImgOpts() { $('[data-fancybox="images"]').fancybox(imgOpts); }
+            
+            $("#imgOpts select").change(function () {
+                var opt = $(this).attr("id");
+                var val = $(this).val();
+                imgOpts[opt] = val === "" ? false : val;
+                
+                // Make "fade" transiton faster than others
+                if (opt === 'transitionEffect') { imgOpts['transitionDuration'] = opt === 'fade' ? 330 : 550; }
+                applyImgOpts();
+            });
+            
+            $("#imgOpts input[type=radio][name=lang]").on("change", function () {
+                imgOpts.lang = $(this).val();
+                applyImgOpts();
+            });
+            
+            $("#imgOpts .toggle").change(function () {
+                if (this.id === 'thumbs') { imgOpts.thumbs.autoStart = this.checked ? true : false;
+                } else { imgOpts[this.id] = this.checked ? true : false; }
+                applyImgOpts();
+            });
+            
+            $("#imgOpts .buttons").change(function () {
+                var buttonArr = $('input:checkbox:checked.buttons').map(function () { return this.value; }).get();
+                buttonArr.push('close');
+                imgOpts.buttons = buttonArr;
+                applyImgOpts();
+            });
+            applyImgOpts();
+        </script>
 	</body>
 </html>
