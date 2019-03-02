@@ -38,7 +38,7 @@ button:last-of-type{margin:5px 0px 5px 5px;}
 .fixed-left section.fixed{height:100vh;width:50%; padding:5%;position: -webkit-sticky;position: sticky;top: 0;}
 .fixed-left section.fixed img, .resume section img{border-radius: 100%;background:gray; width:400px; height:400px; margin-top:80px;}
 .fixed-left > section:last-of-type{width:50%;padding:5%;}
-.fixed-left nav{margin-bottom:80px;}
+.fixed-left section:last-of-type nav{margin-bottom:80px;}
 
 /***** CONTENT DIVIDERS *****/
 .divider {width:50%;margin: 20px 0px;font-size:14px;text-transform:uppercase;}
@@ -101,14 +101,17 @@ nav input{display: none;}
 resume-title{margin:50px 0px;}
 resume-title > *{height:50px;}
 resume-title span{font-family:'Josefin Slab', serif;font-size:24px;border:1px solid black; height: 40px;padding: 0px 50px;display: inline-block;white-space: nowrap;line-height: 40px;}
-border{border:3px solid black;padding:2px;height: 50px;display: inline-block; margin:0px 3%;}
+border{border:3px solid black;padding:2px;height: 50px;display: inline-block; margin:0px 30px;}
 resume-title line{width:90%;align-self:center;}
 resume-title emp-text{display: block;font-size:12px;line-height: 16px;text-align: center;}
 .title-subhead{line-height: 24px;}
 
-.resume-skills ul{list-style:none;margin:0px;padding:0px;margin-left:3%;}
+.resume-skills ul{list-style:none;margin:0px;padding:0px;margin-left:30px;}
 .resume-skills ul li{padding-bottom:30px;font-size:18px;line-height:18px;}
 .resume-skills emp-text{display: block;font-size:16px;line-height:16px;padding-top:2px;}
+
+.resume-skills .flex1 border{margin:0 30px 0 0;}
+.resume-skills > .flex2{max-width:58%; flex:2 58%;}
 
 resume-experience .flex2{padding:30px 2% 30px 0px;}
 resume-experience h3{margin-top:0px;}
@@ -117,13 +120,31 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
 .resume-end{border-top:1px solid black;padding-top:5px;text-align:right;margin-top:50px;}
 
 /***** MEDIA QUERIES *****/
+@media only screen and (max-width:1600px) and (min-width:1501px){
+    .resume-skills > .flex2{max-width:59%; flex:2 59%;}
+}
+@media only screen and (max-width:1500px) and (min-width:1401px){
+    .resume-skills > .flex2{max-width:60%; flex:2 60%;}
+}
+@media only screen and (max-width:1400px) and (min-width:1301px){
+    .resume-skills > .flex2{max-width:61%; flex:2 61%;}
+}
+@media only screen and (max-width:1300px) and (min-width:1201px){
+    .resume-skills > .flex2{max-width:62%; flex:2 62%;}
+}
+@media only screen and (max-width:1200px) and (min-width:1101px){
+    .resume-skills > .flex2{max-width:63%; flex:2 63%;}
+}
+@media only screen and (max-width:1100px){
+    .resume-skills > .flex2{max-width:64%; flex:2 64%;}
+}
 @media only screen and (max-width:1024px){
     /*** FIXED PAGES ***/
     .fixed-left, .resume{flex-direction: column;}
     .fixed-left section.fixed, .resume section.fixed{width:100%;top: unset;position: unset;padding:0px;}
-    .fixed-left mobile-header, .resume mobile-header{display:flex;width:100%;height:50vh;padding:5%;}
+    .fixed-left mobile-header, .resume mobile-header{display:flex;width:100%;height:50vh;padding:5%;min-height: 350px;}
     .fixed-left section > multi-header, .resume section > multi-header{display:none;}
-    section.fixed img, .resume section.fixed img{border-radius:0px;width:100%;margin-top:0px;}
+    .fixed-left section.fixed img, .resume section.fixed img{border-radius:0px;width:100%;margin-top:0px;}
     .fixed-left section > nav, .resume section > nav{display: none;}
     .fixed-left > section:last-of-type{width:100%;}
     
@@ -158,6 +179,7 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
     .resume-skills:first-of-type{flex-direction: column;}
     .resume-skills > .flex1 ul{display:flex;flex-wrap:wrap;justify-content: space-between;}
     .resume-skills > .flex1 li{width:50%;}
+    .resume-skills > .flex2{max-width:100%; flex:2 100%;}
     resume-experience{flex-direction: column;}
     resume-experience .flex2{width:100%;padding: 80px 0 0 0;}
     resume-experience:first-of-type .flex2{padding:0px;}
@@ -174,6 +196,7 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
     mobile-header h1, mobile-header h2:first-of-type{padding-right:5%}
     mobile-header h2:last-of-type{border-bottom:1px solid gray;width:100%;padding-bottom:10px;margin-bottom: 0px;height: 35px;}
     line{width:100%;margin: 8px 0;}
+    .fixed-left mobile-header, .resume mobile-header{min-height:auto;}
     
     /*** NAVIGATION ***/
     nav {order:-1;position: absolute;}
@@ -203,7 +226,6 @@ resume-experience .flex1{background-color:lightgray;align-self:stretch;text-alig
     
     /*** CONTACT ***/
     .contact-img{width: 100%;}
-    
     
     /*** RESUME ***/
     .icons-container ul li{width:100%;margin-bottom: 30px;}
