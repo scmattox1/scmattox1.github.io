@@ -5,7 +5,7 @@
 html {box-sizing:border-box; height:100%;}
 *, *:before, *:after {box-sizing:border-box;}
 body {color:#58575f; cursor:default; font-family:'Open Sans', sans-serif; font-size:14px; font-weight:300; margin:0; min-height:100%; position:relative; width:100%;}
-border {border:3px solid #979879; display:inline-block; height:50px; margin:0px 30px; padding:2px;}
+border {border:3px solid #889879; display:inline-block; height:50px; margin:0px 30px; padding:2px;}
 emp-text {font-family:'Josefin Slab', serif; font-size:18px; font-style:italic;}
 mobile-header, mobile-header.flexDisplay {display:none;}
 ul li {line-height:30px;}
@@ -40,13 +40,13 @@ line {background-color:#e8e8e8; height:1px; width:40%;}
 .flex2 {-moz-box-flex:2; -ms-flex:2; -webkit-box-flex:2; -webkit-flex:2; flex:2;}
 .flex3 {-moz-box-flex:3; -ms-flex:3; -webkit-box-flex:3; -webkit-flex:3; flex:3;}
 /* Icons */
-icon {height: 30px;display: block;width: 70px;}
-icon.home {background:url("/assets/images/icons-01.jpg") no-repeat; background-size:auto 30px;}
-icon.email {background:url("/assets/images/icons-02.jpg") no-repeat; background-size:auto 30px;}
+icon {height: 50px;display: block;width: 100px;}
+icon.home {background:url("/assets/images/icons-01.jpg") no-repeat; background-size:auto 50px;}
+icon.email {background:url("/assets/images/icons-02.jpg") no-repeat; background-size:auto 50px;}
 icon.site {background:url("/assets/images/icons-05.jpg") no-repeat; background-size:auto 30px;}
-icon.phone {background:url("/assets/images/icons-03.jpg") no-repeat; background-size:auto 30px;}
-icon.linkedin {background:url("/assets/images/icons-04.jpg") no-repeat; background-size:auto 30px;}
-icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-size:auto 30px;}
+icon.phone {background:url("/assets/images/icons-03.jpg") no-repeat; background-size:auto 50px;}
+icon.linkedin {background:url("/assets/images/icons-04.jpg") no-repeat; background-size:auto 50px;}
+icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-size:auto 50px;}
 /* Images */
 .img-right {float: right; margin: 0 0 15px 15px;}
 .img-left {float: left; margin: 0 15px 15px 0px;}
@@ -103,13 +103,13 @@ nav input {display:none;}
 /***** RESUME *****/
 .resume > * {padding:5%;}
 .resume > .fixed, .resume > .icons-container {height:100vh; width:50%;}
-.icons-container > ul {height:100%; list-style:none ;margin:0px; padding:80px 0 0 0;}
+.icons-container > ul {height:100%; list-style:none ;margin:0px; padding:80px 0 0 0;font-size: 20px;}
 .icons-container > ul a, .icons-container > ul span {padding:5px;}
 .resume-content {width:100%;}
 .resume-content p {margin-bottom:80px; text-align:center;}
 resume-title {margin:50px 0px;}
 resume-title > * {height:50px;}
-resume-title span {border:1px solid #979879; display:inline-block; font-family:'Josefin Slab', serif; font-size:24px; line-height:40px; height:40px; padding:0px 50px; white-space:nowrap;color: #979879;}
+resume-title span {border:1px solid #889879; display:inline-block; font-family:'Josefin Slab', serif; font-size:24px; line-height:40px; height:40px; padding:0px 50px; white-space:nowrap;color: #889879;}
 resume-title line {width:90%;align-self:center;}
 resume-title emp-text {display: block;font-size:12px;line-height: 16px;text-align: center;}
 .title-subhead {line-height:24px;}
@@ -122,7 +122,7 @@ resume-title emp-text {display: block;font-size:12px;line-height: 16px;text-alig
 resume-experience{margin-bottom:15px;}
 resume-experience .flex2 {padding:30px 2% 30px 0px;}
 resume-experience h3 {margin-top:0px;}
-resume-experience .flex1 {align-self:stretch; background-color:#979879; font-size:18px; line-height:30px; text-align:center;color: #e8e8e8;padding: 30px;}
+resume-experience .flex1 {align-self:stretch; background-color:#889879; font-size:18px; line-height:30px; text-align:center;color: #e8e8e8;padding: 30px;}
 resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0;width: 100%;height: 100%;min-height: 160px;}
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
 
@@ -243,7 +243,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     nav input:checked ~ span {background-color:#fff; opacity:1; transform:rotate(45deg) translate(-2px, -1px);}
     nav input:checked ~ span:nth-last-child(3) {opacity: 0; transform:rotate(0deg) scale(0.2, 0.2);}
     nav input:checked ~ span:nth-last-child(2) {transform:rotate(-45deg) translate(0, -1px);}
-    nav ul {background-color:#979879; -ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column; height:100vh; -ms-flex-pack:start !important; -webkit-box-pack:start !important; -webkit-justify-content:flex-start !important; justify-content:flex-start !important; left:-5%; list-style-type:none; padding:70px 5%; position:absolute; -webkit-font-smoothing:antialiased; top: -25px; transform-origin:0% 0%; transform:translate(-100%, 0); transition:transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); width:260px;}
+    nav ul {background-color:#889879; -ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column; height:100vh; -ms-flex-pack:start !important; -webkit-box-pack:start !important; -webkit-justify-content:flex-start !important; justify-content:flex-start !important; left:-5%; list-style-type:none; padding:70px 5%; position:absolute; -webkit-font-smoothing:antialiased; top: -25px; transform-origin:0% 0%; transform:translate(-100%, 0); transition:transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); width:260px;}
     nav li {font-size:18px; padding:20px 0;}
     nav input:checked ~ ul {transform:none;}
     
@@ -252,6 +252,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 }
 @media only screen and (max-width:500px){
     /*** RESUME ***/
+    .icons-container icon{background-size: auto 40px;height: 40px;width: 60px;}
     .resume-skills, .resume-skills > .flex1 ul, .resume-skills > .flex2 > div.flexDisplay {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
     .resume-skills.flexJustifySpaceAround ul {text-align:left;}
 }
