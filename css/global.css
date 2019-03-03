@@ -24,7 +24,6 @@ line {background-color:#e8e8e8; height:1px; width:40%;}
 .fancybox-button--zoom, .fancybox-button--close{margin:0 !important;}
 /* Fixed Page */
 .fixed-left section.fixed {height:100vh; padding:5%; position:-webkit-sticky; position:sticky; top:0; width:50%;}
-.fixed-left section.fixed img, .resume section img {background:#e8e8e8; border-radius:100%; height:400px; margin-top:80px; width:400px;}
 .fixed-left > section:last-of-type {padding:5%; width:50%;}
 .fixed-left section:last-of-type nav {margin-bottom:80px;}
 /* FlexBox*/
@@ -54,6 +53,7 @@ icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-si
 .img-left {float: left; margin: 0 15px 15px 0px;}
 .img-full {-ms-flex-align:end; align-items:flex-end; height:250px; margin-top:50px; overflow:hidden; width:100%;}
 .img-full img {height:auto; width:100%;}
+.img-self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;border-radius:100%; height:400px; margin-top:80px; width:400px;background-size: 100% auto;}
 /* Headers */
 h1 {font-family:'Josefin Slab', serif; font-size:48px;}
 h2 {font-size:24px; font-weight:300; margin:10px;}
@@ -129,6 +129,9 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
 
 /***** MEDIA QUERIES *****/
+@media only screen and (max-height:851px) and (min-width:1025px){
+    .fixed-left section.fixed{height: unset;min-height: 100vh;}
+}
 @media only screen and (max-width:1600px) and (min-width:1501px){
     /* Resume Alignment */
     .resume-skills > .flex2 {-moz-box-flex:2 59%; -ms-flex:2 59%; -webkit-box-flex:2 59%; -webkit-flex:2 59%; flex:2 59%; max-width:59%;}
@@ -160,9 +163,10 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     .fixed-left section.fixed, .resume section.fixed {padding:0px; position:unset; top:unset; width:100%;}
     .fixed-left mobile-header, .resume mobile-header {display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex; height:50vh; min-height:350px; padding:5%; width:100%;}
     .fixed-left section > multi-header, .resume section > multi-header {display:none;}
-    .fixed-left section.fixed img, .resume section.fixed img {border-radius:0px; margin-top:0px; width:100%;}
     .fixed-left section > nav, .resume section > nav {display:none;}
     .fixed-left > section:last-of-type {width:100%;}
+    /* Images */
+    .img-self {border-radius:0px; margin-top:0px; width:100%;}
     
     /*** BIO ***/
     .bio article section {margin-top:50px;}
