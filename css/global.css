@@ -57,7 +57,7 @@ icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-si
 .img-self.bio{background:url("/assets/images/sarah_me.jpg") no-repeat center center;}
 .img-self.gallery{background:url("/assets/images/dozer.jpg") no-repeat center center;}
 .img-self.map{background:url("/assets/images/map.gif") no-repeat center center; background-size:auto 100%; border:3px solid #77939f;}
-.img-self.self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;}
+.img-self.self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;background-size: 100% auto;}
 /* Headers */
 h1 {font-family:'Josefin Slab', serif; font-size:48px;}
 h2 {font-size:24px; font-weight:300; margin:10px;}
