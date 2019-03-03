@@ -37,7 +37,7 @@
   var defaults = {
     // Close existing modals
     // Set this to false if you do not need to stack multiple instances
-    closeExisting: true,
+    closeExisting: false,
 
     // Enable infinite gallery navigation
     loop: false,
@@ -74,7 +74,7 @@
       "zoom",
       //"share",
       "slideShow",
-      "fullScreen",
+      //"fullScreen",
       //"download",
       "thumbs",
       "close"
@@ -84,7 +84,7 @@
     idleTime: 3,
 
     // Disable right-click and use simple image protection for images
-    protect: true,
+    protect: false,
 
     // Shortcut to make content "modal" - disable keyboard navigtion, hide buttons, etc
     modal: false,
@@ -169,7 +169,7 @@
     //   "zoom-in-out'
     //   "rotate'
     //
-    transitionEffect: "circular",
+    transitionEffect: "fade",
 
     // Duration in ms for transition animation
     transitionDuration: 366,
