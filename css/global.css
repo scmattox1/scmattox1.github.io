@@ -94,7 +94,8 @@ img-col img {border-style:none; height:auto; max-width:100%; vertical-align:midd
 .works section:last-of-type line{display:block;width:100%;margin:50px 0;}
 
 /***** INDEX *****/
-.homepage-image {background-color:#e8e8e8; -moz-box-flex:1 50%; -ms-flex:1 50%; -webkit-box-flex:1 50%; -webkit-flex:1 50%; flex:1 50%; height:100vh; min-width:50%; max-width:50%; order:-1;}
+.homepage-image {background-color:#fff; -moz-box-flex:1 50%; -ms-flex:1 50%; -webkit-box-flex:1 50%; -webkit-flex:1 50%; flex:1 50%; height:100vh; min-width:50%; max-width:50%; order:-1;}
+.homepage-image .img-self{border-radius: 0;height: 100%;width: 100%;margin-top: 0px;}
 .homepage mobile-header {display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex; min-height:600px; padding:5%;}
 
 /***** NAVIGATION *****/
@@ -129,6 +130,9 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
 
 /***** MEDIA QUERIES *****/
+@media only screen and (max-width:1400px) and (min-width:1025px){
+    .homepage-image .img-self{background-size:auto 100%;background-position:left center;}
+}
 @media only screen and (max-height:851px) and (min-width:1025px){
     .fixed-left section.fixed{height: unset;min-height: 100vh;}
 }
@@ -166,7 +170,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     .fixed-left section > nav, .resume section > nav {display:none;}
     .fixed-left > section:last-of-type {width:100%;}
     /* Images */
-    .img-self {border-radius:0px; margin-top:0px; width:100%;}
+    .img-self {border-radius:0px; margin-top:0px; width:100%;background-position-y:-400px}
     
     /*** BIO ***/
     .bio article section {margin-top:50px;}
@@ -175,6 +179,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     .homepage {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
     .homepage mobile-header {min-height:50vh;}
     .homepage-image {bottom:0px; display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex; height:50vh; max-width: 100%; order:0; position:absolute; width:100%;}
+    .homepage-image .img-self{background-position-y: -280px;}
     
     /*** RESUME ***/
     .resume > .icons-container {height:unset; padding:50px 5% 0px; width:100%;}
@@ -219,6 +224,8 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     multi-header.flexAlign {-ms-flex-align:end; align-items:flex-end;}
     /* Fixed Pages */
     .fixed-left mobile-header, .resume mobile-header {height:120px; padding:0%;}
+    /* Images */
+    .img-self {background-position-y:center;}
     /* Mobile Header */
     mobile-header h1, mobile-header h2:first-of-type {padding-right:5%}
     mobile-header h2:last-of-type {border-bottom:1px solid #e8e8e8; height:35px; margin-bottom:0px; padding-bottom:10px; width:100%;}
@@ -235,6 +242,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     
     /*** INDEX ***/
     .homepage-image {height:auto; top:120px;}
+    .homepage-image .img-self{background-position-y:center;}
     .homepage mobile-header {height:120px; min-height:120px; flex:unset; padding:0px;}
     
     /*** NAVIGATION ***/
@@ -256,9 +264,21 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     /*** RESUME ***/
     .icons-container ul li {margin-bottom:30px; width:100%;}
 }
+@media only screen and (max-width:550px) and (min-height:880px){
+     /*** INDEX ***/
+    .homepage-image .img-self{background-size:auto 100%;}
+}
 @media only screen and (max-width:500px){
     /*** RESUME ***/
     .icons-container icon{background-size: auto 40px;height: 40px;width: 60px;}
     .resume-skills, .resume-skills > .flex1 ul, .resume-skills > .flex2 > div.flexDisplay {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
     .resume-skills.flexJustifySpaceAround ul {text-align:left;}
+}
+@media only screen and (max-height:600px) and (min-width:680px){
+     /*** INDEX ***/
+    .homepage-image{height: 0;}
+}
+@media only screen and (max-height:600px) and (max-width:680px){
+     /*** INDEX ***/
+    .homepage-image .img-self{background-position-y: -250px;}
 }
