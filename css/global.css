@@ -54,7 +54,7 @@ icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-si
 .img-full {-ms-flex-align:end; align-items:flex-end; height:250px; margin-top:50px; overflow:hidden; width:100%;}
 .img-full img {height:auto; width:100%;}
 .img-self{border-radius:100%; height:400px; margin-top:80px; width:400px;}
-.img-self.bio{background:url("/assets/images/sarahandfarrah.jpg") no-repeat center center;background-size: 100% auto;}
+.img-self.bio{background:url("/assets/images/moab.jpg") no-repeat center center;background-size: 100% auto;}
 .img-self.gallery{background:url("/assets/images/dozer.jpg") no-repeat center center;background-size: 100% auto;}
 .img-self.map{background:url("/assets/images/map.gif") no-repeat center center; background-size:auto 100%; border:3px solid #77939f;}
 .img-self.self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;background-size: 100% auto;}
