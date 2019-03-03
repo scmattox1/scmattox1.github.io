@@ -53,8 +53,11 @@ icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-si
 .img-left {float: left; margin: 0 15px 15px 0px;}
 .img-full {-ms-flex-align:end; align-items:flex-end; height:250px; margin-top:50px; overflow:hidden; width:100%;}
 .img-full img {height:auto; width:100%;}
-.img-self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;border-radius:100%; height:400px; margin-top:80px; width:400px;background-size: 100% auto;}
+.img-self{border-radius:100%; height:400px; margin-top:80px; width:400px;background-size: 100% auto;}
+.img-self.bio{background:url("/assets/images/sarah_me.jpg") no-repeat center center;}
+.img-self.gallery{background:url("/assets/images/dozer.jpg") no-repeat center center;}
 .img-self.map{background:url("/assets/images/map.gif") no-repeat center center; background-size:auto 100%; border:3px solid #77939f;}
+.img-self.self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;}
 /* Headers */
 h1 {font-family:'Josefin Slab', serif; font-size:48px;}
 h2 {font-size:24px; font-weight:300; margin:10px;}
@@ -78,8 +81,10 @@ h1 a:hover {background-color:transparent; color:#58575f; transition:none;}
 .bio article > img {height:150px; width:150px;}
 
 /***** CONTACT *****/
-.contact article {font-size:20px; margin-bottom:80px; text-align:center; width:100%;}
-.contact article i {font-size:12px;}
+.contact > section{height:100vh;}
+.contact section:last-of-type nav{height: 20%;margin-bottom: 0px;}
+.contact article {font-size:20px; height:80%; text-align:center; width:100%;}
+.contact article i {display:block; font-size:12px;}
 .contact-img {height:100%; width:100%;}
 .contact-img img {height:auto; max-height:400px; max-width:600px; width:100%;}
 
