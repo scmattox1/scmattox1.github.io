@@ -19,7 +19,9 @@ line {background-color:#e8e8e8; height:1px; width:40%;}
 .divider .text {margin:0px 15px;}
 /* FancyBox */
 .fancybox-caption {display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex;-ms-flex-pack:center; -webkit-box-pack:center; webkit-justify-content:center; justify-content:center;}
-.fancybox-caption__body {max-width:70%;}
+.fancybox-caption__body {max-width:70%; overflow: unset !important;}
+.fancybox-button{background:transparent !important;}
+.fancybox-button--zoom, .fancybox-button--close{margin:0 !important;}
 /* Fixed Page */
 .fixed-left section.fixed {height:100vh; padding:5%; position:-webkit-sticky; position:sticky; top:0; width:50%;}
 .fixed-left section.fixed img, .resume section img {background:#e8e8e8; border-radius:100%; height:400px; margin-top:80px; width:400px;}
