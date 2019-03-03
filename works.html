@@ -25,7 +25,7 @@
 					<line></line>
       				<h2>Gallery</h2>
     			</multi-header>
-				<img alt="Image: Selfie" src="/assets/selfie_150x150.jpg">
+				<img alt="Image: Selfie" src="/assets/images/selfie.jpg">
 			</section>
             <section>
                 <nav data-include="nav"></nav>
@@ -316,14 +316,16 @@
                     }
                     closeExisiting: true,
                     protect: true,
-                    transitionEffect: "circular",
+                    slideShow : {
+                        transitionEffect: "circular",
                     buttons: [
                     "zoom",
                     "slideShow",
                     "fullScreen",
                     "thumbs",
                     "close"
-                    ],
+                    ]
+                },
                     thumbs : {
                         autoStart : true
                     },
