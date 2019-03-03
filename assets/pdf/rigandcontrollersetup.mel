@@ -1,0 +1,3351 @@
+/*
+/Sarah Mattox's Maya Auto Control Rig      
+/www.scmattox.weebly.com/rig
+/
+/This script creates a rig and controller system.
+/
+/To Use:
+/Run the script. After clicking first button, adjust joints to /fit model. After clicking second button, scale controllers to /fit model. Third button cleans up and hides unused attributes.
+/
+/Noted Features:
+/FK/IK legs and arms
+/IK legs and arms can follow body motion
+/Hands and Feet custom attributes
+*/
+
+
+if (`window -exists myWindow`) deleteUI myWindow;
+// create a window
+window -title "Rig and Controller Setup" myWindow ;
+ formLayout -numberOfDivisions 100 myForm; 
+// define the layout of controls added to the window.
+//columnLayout -bgc 12 90 166;
+
+// create a couple of buttons
+button -bgc 255 195 0 -label "Left Side Joint Setup" -command "setup_func" myBtn1;
+text -label "Translate joints to fit model" myTxt1;
+
+button -bgc 255 83 0 -label "Mirror Joints & Add Controllers" -command "mirror_func" myBtn2;
+text -label "Rig Complete. IKFK arms and legs. FK back." myTxt2;
+text -label "Driven Keys for hands and feet." myTxt3;
+text -label "World/Local Switch added to IK arms and legs." myTxt4;
+
+button -bgc 255 195 0 -label "Clean Up" -command "extra_func" myBtn3;
+text -label "Locked unavailble attributes in controllers." myTxt5;
+
+formLayout -edit 
+ -attachForm myBtn1 "top" 30 
+ -attachForm myBtn1 "left" 110
+ -attachForm myTxt1 "top" 60
+ -attachForm myTxt1 "left" 100
+
+ -attachForm myBtn2 "top" 100
+ -attachForm myBtn2 "left" 90 
+-attachForm myTxt2 "top" 130
+ -attachForm myTxt2 "left" 60 
+
+ -attachForm myTxt3 "top" 145
+ -attachForm myTxt3 "left" 85 
+
+ -attachForm myTxt4 "top" 160
+ -attachForm myTxt4 "left" 55 
+
+ -attachForm myBtn3 "top" 200
+ -attachForm myBtn3 "left" 140  
+
+ -attachForm myTxt5 "top" 230
+ -attachForm myTxt5 "left" 60
+myForm;  
+
+// show the window we last created
+showWindow;
+
+proc setup_func() {
+/*Left Side Joint Setup Button*/
+select -d;
+joint -p 0 -0.0422183 -0.0498528 ;
+joint -p 0 2.999686 -0.0498528 ;
+joint -e -zso -oj xyz -sao yup joint1;
+joint -p 0 5.961541 -1.971056 ;
+joint -e -zso -oj xyz -sao yup joint2;
+joint -p 0 9.964047 -2.971682 ;
+joint -e -zso -oj xyz -sao yup joint3;
+joint -p 0 13.926528 -3.051732 ;
+joint -e -zso -oj xyz -sao yup joint4;
+joint -p 0 16.928408 -3.011707 ;
+joint -e -zso -oj xyz -sao yup joint5;
+joint -p 0 18.889636 -2.011081 ;
+joint -e -zso -oj xyz -sao yup joint6;
+joint -p 0 20.930914 -1.090504 ;
+joint -e -zso -oj xyz -sao yup joint7;
+joint -p 0 22.571942 -0.970429 ;
+joint -e -zso -oj xyz -sao yup joint8;
+joint -p 0 26.934674 -0.0498528 ;
+joint -e -zso -oj xyz -sao yup joint9;
+joint -p 0 30.336804 -0.00982776 ;
+joint -e -zso -oj xyz -sao yup joint10;
+
+//Left Leg
+select -d;
+joint -p 0 -3.722654 -0.0581521 ;
+joint -p 0 -21.104744 1.871562 ;
+joint -e -zso -oj xyz -sao yup joint12;
+joint -p 0 -37.06791 -2.385282 ;
+joint -e -zso -oj xyz -sao yup joint13;
+joint -p 0 -40.041787 0.988412 ;
+joint -e -zso -oj xyz -sao yup joint14;
+joint -p 0 -40.041787 5.554677 ;
+joint -e -zso -oj xyz -sao yup joint15;
+select -r joint12 ;
+move -r 5.043682 0 0 ;
+select -tgl joint1 ;
+parent;
+
+//Naming Main Joints and Leg
+rename "joint1" "Pelvis";
+rename "joint2" "Lumbar1";
+rename "joint3" "Lumbar2";
+rename "joint4" "Thorax1";
+rename "joint5" "Thorax2";
+rename "joint6" "Scapula";
+rename "joint7" "Neck1";
+rename "joint8" "Neck2";
+rename "joint9" "Neck3";
+rename "joint10" "Head_Center";
+rename "joint11" "Head_Top";
+rename "joint12" "L_Hip";
+rename "joint13" "L_Knee";
+rename "joint14" "L_Ankle";
+rename "joint15" "L_Ball";
+rename "joint16" "L_Toe";
+
+//Jaw Joints
+select -d;
+joint -p 0 22.971913 1.514827 ;
+joint -p 0 21.633058 4.273681 ;
+joint -e -zso -oj xyz -sao yup joint1;
+
+//Naming Jaw Joints
+rename "joint1" "Jaw";
+rename "joint2" "Jaw_Tip";
+
+//Parent Jaw
+select -cl  ;
+select -r Jaw ;
+select -tgl Head_Center ;
+parent;
+
+//Left Arm Joints
+//Collar, Clavicle
+select -cl  ;
+// not needed, will deleter later
+joint -p -20.699941 0 -44.383622 ;
+joint -e -zso -oj xyz -sao yup joint1;
+select -cl  ; 
+joint -p 2.439165 17.003714 -0.0151729 ;
+joint -e -zso -oj xyz -sao yup joint2;
+joint -p 7.439165 17.003714 -0.991568 ;
+joint -e -zso -oj xyz -sao yup joint3;
+
+//Arm, Hand, Thumb
+joint -p 18.835239 16.993885 -2.007224 ;
+joint -e -zso -oj xyz -sao yup joint4;
+joint -p 29.424385 17.007733 -1.020303 ;
+joint -e -zso -oj xyz -sao yup joint5;
+joint -p 30.073172 17.011195 -0.8994 ;
+joint -e -zso -oj xyz -sao yup joint6;
+joint -p 30.787572 17.011195 0.0866132 ;
+joint -e -zso -oj xyz -sao yup joint7;
+joint -p 31.49164 16.975895 0.663485 ;
+joint -e -zso -oj xyz -sao yup joint8;
+joint -p 31.997327 16.953533 1.095931 ;
+joint -e -zso -oj xyz -sao yup joint9;
+joint -p 32.610584 16.932135 1.577177 ;
+joint -e -zso -oj xyz -sao yup joint10;
+select -cl  ;
+
+//Fingers
+//Index
+select -cl  ;
+select -r joint6;
+joint -p 31.981745 17.00126 -0.354257 ;
+joint -e -zso -oj xyz -sao yup joint6;
+joint -p 33.250819 16.989276 -0.332901 ;
+joint -e -zso -oj xyz -sao yup joint12;
+joint -p 34.281914 17.00875 -0.264551 ;
+joint -e -zso -oj xyz -sao yup joint13;
+joint -p 34.95428 16.996302 -0.234322 ;
+joint -e -zso -oj xyz -sao yup joint14;
+//Middle
+select -cl  ;
+select -r joint6;
+joint -p 31.901656 16.998959 -1.138157 ;
+joint -e -zso -oj xyz -sao yup joint6;
+joint -p 33.17073 16.986975 -1.1168 ;
+joint -e -zso -oj xyz -sao yup joint16;
+joint -p 34.201825 17.014834 -1.048451 ;
+joint -e -zso -oj xyz -sao yup joint17;
+joint -p 34.874191 16.994001 -1.018222 ;
+joint -e -zso -oj xyz -sao yup joint18;
+//Ring
+select -cl  ;
+select -r joint6;
+joint -p 31.832144 17.011195 -1.818522 ;
+joint -e -zso -oj xyz -sao yup joint6;
+joint -p 33.101219 16.988458 -1.797166 ;
+joint -e -zso -oj xyz -sao yup joint20;
+joint -p 34.132313 17.007932 -1.728816 ;
+joint -e -zso -oj xyz -sao yup joint21;
+joint -p 34.80468 16.995485 -1.698588 ;
+joint -e -zso -oj xyz -sao yup joint22;
+//Pinky
+select -cl  ;
+select -r joint6;
+joint -p 31.764144 17.008455 -2.484098 ;
+joint -e -zso -oj xyz -sao yup joint6;
+joint -p 33.033219 16.962933 -2.462742 ;
+joint -e -zso -oj xyz -sao yup joint24;
+joint -p 34.064313 17.007561 -2.394392 ;
+joint -e -zso -oj xyz -sao yup joint25;
+joint -p 34.73668 16.995113 -2.364163 ;
+joint -e -zso -oj xyz -sao yup joint26;
+
+//Naming Joints//
+delete joint1;
+rename "joint2" "L_Clavicle";
+rename "joint3" "L_Shoulder";
+rename "joint4" "L_Elbow";
+rename "joint5" "L_Wrist";
+rename "joint6" "L_Hand";
+rename "joint7" "L_Thumb_Base"; 
+rename "joint8" "L_Thumb_Middle";
+rename "joint9" "L_Thumb_Top";
+rename "joint10" "L_Thumb_Tip";
+rename "joint11" "L_Index_Base";
+rename "joint12" "L_Index_Middle";
+rename "joint13" "L_Index_Top";
+rename "joint14" "L_Index_Tip";
+rename "joint15" "L_Middle_Base";
+rename "L_Middle_Base|joint16" "L_Middle_Middle";
+rename "L_Middle_Middle|joint17" "L_Middle_Top";
+rename "L_Middle_Top|joint18" "L_Middle_Tip";
+rename "joint19" "L_Ring_Base";
+rename "L_Ring_Base|joint20" "L_Ring_Middle";
+rename "L_Ring_Middle|joint21" "L_Ring_Top";
+rename "L_Ring_Top|joint22" "L_Ring_Tip";
+rename "joint23" "L_Pinky_Base"; 
+rename "L_Pinky_Base|joint24" "L_Pinky_Middle";
+rename "L_Pinky_Middle|joint25" "L_Pinky_Top";
+rename "L_Pinky_Top|joint26" "L_Pinky_Tip";
+
+//Parent Clavicle to Body
+select -r L_Clavicle ;
+select -tgl Scapula ;
+parent; 
+
+//Move Clavicle
+select -r L_Clavicle ;
+move -r 0 0.919975 0 -orientJoint xyz -secondaryAxisOrient yup ;
+move -r 0.689981 0 0 -orientJoint xyz -secondaryAxisOrient yup ;    
+
+select -r L_Knee ;
+move -r 0 0 1.662895 -orientJoint xyz -secondaryAxisOrient yup ;
+select -r L_Ankle ;
+move -r 0 0 -2.202954 -orientJoint xyz -secondaryAxisOrient yup ;            
+}
+
+
+proc mirror_func() {
+/*Mirror Joints and Add Controllers*/
+
+//IK and FK ARM
+//Mirror Right Arm
+select -r L_Clavicle ;
+mirrorJoint -mirrorYZ -mirrorBehavior -searchReplace "L_" "R_";
+
+//L Shoulder Placeholder
+select -r L_Shoulder ;
+duplicate -rr;
+parent -w;
+rename "L_Shoulder" "L_ShoulderPlaceHolder";
+select -r L_ShoulderPlaceHolder|L_Elbow ;
+parent -w;
+doDelete;
+
+//L BINDchain Rig Set Up
+rename "L_Shoulder1" "BIND_L_Shoulder";
+rename "L_Elbow" "BIND_L_Elbow";
+rename "L_Wrist" "BIND_L_Wrist";
+
+//L Forearm Joint//
+select -r L_Hand ;
+parent -w; 
+select -r BIND_L_Elbow ;
+select -tgl BIND_L_Wrist ;
+doCreateOrientConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+orientConstraint -offset 0 0 0 -weight 1;
+select -r BIND_L_Wrist ;
+duplicate -rr;
+parent -w;
+select -r BIND_L_Elbow ;
+scale -r 0.562806 0.562806 0.562806 ;
+rename "BIND_L_Wrist" "BIND_L_Forearm";
+select -r BIND_L_Elbow ;
+select -add BIND_L_Forearm ;
+doCreateOrientConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+orientConstraint -offset 0 0 0 -weight 1; 
+select -r BIND_L_Elbow ;
+makeIdentity -apply true -t 1 -r 0 -s 1 -n 0;
+select -r BIND_L_Forearm|BIND_L_Wrist_orientConstraint1 ;
+doDelete;
+select -r BIND_L_Wrist1|BIND_L_Wrist_orientConstraint1 ;
+doDelete;
+select -cl  ;
+select -r BIND_L_Wrist1 ;
+select -add BIND_L_Elbow ;
+parent; 
+
+//L Hypershade, Rotate Wrist and Forearm//
+select -r BIND_L_Forearm BIND_L_Wrist1 ;
+HypershadeWindow;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+ConnectionEditor;
+nodeOutliner -e -replace BIND_L_Forearm connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+nodeOutliner -e -replace BIND_L_Wrist1 connectWindow|tl|cwForm|connectWindowPane|rightSideCW;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace BIND_L_Wrist1 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+nodeOutliner -e -replace BIND_L_Forearm connectWindow|tl|cwForm|connectWindowPane|rightSideCW;
+connectAttr -f BIND_L_Wrist1.rotateX BIND_L_Forearm.rotateX;
+
+select -r L_Hand ;
+select -tgl BIND_L_Wrist1 ;
+parent;
+
+//R Shoulder Placeholder
+select -r R_Shoulder ;
+duplicate -rr;
+parent -w;
+rename "R_Shoulder" "R_ShoulderPlaceHolder";
+select -r R_ShoulderPlaceHolder|R_Elbow ;
+parent -w;
+doDelete;
+
+//R BINDchain Rig Set Up
+rename "R_Shoulder1" "BIND_R_Shoulder";
+rename "R_Elbow" "BIND_R_Elbow";
+rename "R_Wrist" "BIND_R_Wrist";
+
+//R Forearm Joint//
+select -r R_Hand ;
+parent -w; 
+select -r BIND_R_Elbow ;
+select -tgl BIND_R_Wrist ;
+doCreateOrientConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+orientConstraint -offset 0 0 0 -weight 1;
+select -r BIND_R_Wrist ;
+duplicate -rr;
+parent -w;
+select -r BIND_R_Elbow ;
+scale -r 0.562806 0.562806 0.562806 ;
+rename "BIND_R_Wrist" "BIND_R_Forearm";
+select -r BIND_R_Elbow ;
+select -add BIND_R_Forearm ;
+doCreateOrientConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+orientConstraint -offset 0 0 0 -weight 1; 
+select -r BIND_R_Elbow ;
+makeIdentity -apply true -t 1 -r 0 -s 1 -n 0;
+select -r BIND_R_Forearm|BIND_R_Wrist_orientConstraint1 ;
+doDelete;
+select -r BIND_R_Wrist1|BIND_R_Wrist_orientConstraint1 ;
+doDelete;
+select -cl  ;
+select -r BIND_R_Wrist1 ;
+select -add BIND_R_Elbow ;
+parent; 
+
+//R Hypershade, Rotate Wrist and Forearm//
+select -r BIND_R_Forearm BIND_R_Wrist1 ;
+HypershadeWindow;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+ConnectionEditor;
+nodeOutliner -e -replace BIND_R_Forearm connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+nodeOutliner -e -replace BIND_R_Wrist1 connectWindow|tl|cwForm|connectWindowPane|rightSideCW;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace BIND_R_Wrist1 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+nodeOutliner -e -replace BIND_R_Forearm connectWindow|tl|cwForm|connectWindowPane|rightSideCW;
+connectAttr -f BIND_R_Wrist1.rotateX BIND_R_Forearm.rotateX;
+
+select -r R_Hand ;
+select -tgl BIND_R_Wrist1 ;
+parent;
+
+//IK Rig Set Up//
+select -r BIND_L_Shoulder ;
+duplicate -rr;
+select -r BIND_L_Shoulder1|BIND_L_Elbow|BIND_L_Wrist1|L_Hand ;
+doDelete;
+rename "BIND_L_Shoulder1" "IK_L_Shoulder";
+rename "IK_L_Shoulder|BIND_L_Elbow" "IK_L_Elbow";
+rename "IK_L_Elbow|BIND_L_Forearm" "IK_L_Forearm";
+rename "IK_L_Elbow|BIND_L_Wrist1" "IK_L_Wrist";
+
+select -r BIND_R_Shoulder ;
+duplicate -rr;
+select -r BIND_R_Shoulder1|BIND_R_Elbow|BIND_R_Wrist1|R_Hand ;
+doDelete;
+rename "BIND_R_Shoulder1" "IK_R_Shoulder";
+rename "IK_R_Shoulder|BIND_R_Elbow" "IK_R_Elbow";
+rename "IK_R_Elbow|BIND_R_Forearm" "IK_R_Forearm";
+rename "IK_R_Elbow|BIND_R_Wrist1" "IK_R_Wrist";
+
+//FK Rig Set Up//
+select -r IK_L_Shoulder ;
+duplicate -rr;
+rename "IK_L_Shoulder1" "FK_L_Shoulder";
+rename "FK_L_Shoulder|IK_L_Elbow" "FK_L_Elbow"; 
+rename "FK_L_Elbow|IK_L_Forearm" "FK_L_Forearm";
+rename "FK_L_Elbow|IK_L_Wrist" "FK_L_Wrist";
+rename "BIND_L_Wrist1" "BIND_L_Wrist";
+
+select -r IK_R_Shoulder ;
+duplicate -rr;
+rename "IK_R_Shoulder1" "FK_R_Shoulder";
+rename "FK_R_Shoulder|IK_R_Elbow" "FK_R_Elbow"; 
+rename "FK_R_Elbow|IK_R_Forearm" "FK_R_Forearm";
+rename "FK_R_Elbow|IK_R_Wrist" "FK_R_Wrist";
+rename "BIND_R_Wrist1" "BIND_R_Wrist";
+
+//Set Up Joint Controllers//
+setToolTo "CreateNurbsCircleCtx";
+circle -ch on -o on -nr 1 0 0 -r 1.414214 ;
+move -rpr -yz 0 0 ;
+makeIdentity -apply true -t 1 -r 0 -s 1 -n 0;
+group; xform -os -piv 0 0 0;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+rename "group1" "IK_L_Wrist_Ctrl_Grp";
+rename "IK_L_Wrist_Ctrl_Grp|nurbsCircle1" "IK_L_Wrist_Ctrl";
+rename "group2" "FK_L_Shoulder_Ctrl_Grp"; 
+rename "FK_L_Shoulder_Ctrl_Grp|nurbsCircle1" "FK_L_Shoulder_Ctrl";
+rename "group3" "FK_L_Elbow_Ctrl_Grp";
+rename "FK_L_Elbow_Ctrl_Grp|nurbsCircle1" "FK_L_Elbow_Ctrl";
+rename "group4" "FK_L_Wrist_Ctrl_Grp";
+rename "nurbsCircle1" "FK_L_Wrist_Ctrl";
+spaceLocator -p 0 0 0;
+group; xform -os -piv 0 0 0;
+rename "group1" "L_Arm_Polevector_Ctrl_Grp";
+rename "locator1" "L_Arm_Polevector_Ctrl";
+
+setToolTo "CreateNurbsCircleCtx";
+circle -ch on -o on -nr 1 0 0 -r 1.414214 ;
+move -rpr -yz 0 0 ;
+makeIdentity -apply true -t 1 -r 0 -s 1 -n 0;
+group; xform -os -piv 0 0 0;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+rename "group1" "IK_R_Wrist_Ctrl_Grp";
+rename "IK_R_Wrist_Ctrl_Grp|nurbsCircle1" "IK_R_Wrist_Ctrl";
+rename "group2" "FK_R_Shoulder_Ctrl_Grp"; 
+rename "FK_R_Shoulder_Ctrl_Grp|nurbsCircle1" "FK_R_Shoulder_Ctrl";
+rename "group3" "FK_R_Elbow_Ctrl_Grp";
+rename "FK_R_Elbow_Ctrl_Grp|nurbsCircle1" "FK_R_Elbow_Ctrl";
+rename "group4" "FK_R_Wrist_Ctrl_Grp";
+rename "nurbsCircle1" "FK_R_Wrist_Ctrl";
+spaceLocator -p 0 0 0;
+group; xform -os -piv 0 0 0;
+rename "group1" "R_Arm_Polevector_Ctrl_Grp";
+rename "locator1" "R_Arm_Polevector_Ctrl";
+
+//Parent Controllers to Joints//
+select -r IK_L_Wrist ;
+select -add IK_L_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_L_Shoulder ;
+select -add FK_L_Shoulder_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_L_Elbow ;
+select -add FK_L_Elbow_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_L_Wrist ;
+select -add FK_L_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r IK_L_Elbow ;
+select -add L_Arm_Polevector_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r IK_L_Wrist_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r FK_L_Shoulder_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r FK_L_Elbow_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r FK_L_Wrist_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r L_Arm_Polevector_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r L_Arm_Polevector_Ctrl_Grp ;
+move -rpr -z -10 ;
+
+select -r IK_R_Wrist ;
+select -add IK_R_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_R_Shoulder ;
+select -add FK_R_Shoulder_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_R_Elbow ;
+select -add FK_R_Elbow_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_R_Wrist ;
+select -add FK_R_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r IK_R_Elbow ;
+select -add R_Arm_Polevector_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r IK_R_Wrist_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r FK_R_Shoulder_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r FK_R_Elbow_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r FK_R_Wrist_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r R_Arm_Polevector_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r R_Arm_Polevector_Ctrl_Grp ;
+move -rpr -z -10 ;
+
+//IK Handle//
+select -r IK_L_Shoulder.rotatePivot ;
+select -add IK_L_Wrist.rotatePivot ;
+ikHandle -sol ikRPsolver;
+select -r IK_L_Wrist_Ctrl;
+select -add ikHandle1;
+doCreatePointConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+pointConstraint -offset 0 0 0 -weight 1;
+select -r ikHandle1 ;
+select -r L_Arm_Polevector_Ctrl ;
+select -add ikHandle1 ;
+poleVectorConstraint -weight 1;
+
+//FK Handle//
+select -r FK_L_Shoulder_Ctrl ;
+select -add FK_L_Elbow_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r FK_L_Elbow_Ctrl ;
+select -add FK_L_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r FK_L_Shoulder_Ctrl ;
+select -add FK_L_Shoulder ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_L_Elbow_Ctrl ;
+select -add FK_L_Elbow ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_L_Wrist_Ctrl ;
+select -add FK_L_Wrist ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+
+select -r FK_R_Shoulder_Ctrl ;
+select -add FK_R_Elbow_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r FK_R_Elbow_Ctrl ;
+select -add FK_R_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r FK_R_Shoulder_Ctrl ;
+select -add FK_R_Shoulder ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_R_Elbow_Ctrl ;
+select -add FK_R_Elbow ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r FK_R_Wrist_Ctrl ;
+select -add FK_R_Wrist ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+
+select -r IK_L_Wrist_Ctrl ;
+select -tgl IK_L_Wrist ;
+doCreateOrientConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+orientConstraint -offset 0 0 0 -weight 1;
+
+select -r IK_R_Shoulder.rotatePivot ;
+select -add IK_R_Wrist.rotatePivot ;
+ikHandle -sol ikRPsolver;
+select -r IK_R_Wrist_Ctrl;
+select -add ikHandle2;
+doCreatePointConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+pointConstraint -offset 0 0 0 -weight 1;
+select -r ikHandle2 ;
+select -r R_Arm_Polevector_Ctrl ;
+select -add ikHandle2 ;
+poleVectorConstraint -weight 1;
+
+select -r IK_R_Wrist_Ctrl ;
+select -tgl IK_R_Wrist ;
+doCreateOrientConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+orientConstraint -offset 0 0 0 -weight 1;
+
+//Chains to Bind//
+select -r FK_L_Shoulder_Ctrl;
+rotate -r -os 0 0 -49.954929 ;
+select -r IK_L_Wrist_Ctrl ;
+move -r 1.077935 -2.127122 -2.810975 ;
+select -r FK_R_Shoulder_Ctrl;
+rotate -r -os 0 0 -49.954929 ;
+select -r IK_R_Wrist_Ctrl ;
+move -r 1.077935 -2.127122 -2.810975 ;
+
+//L Shoulder Blend//
+select -r FK_L_Shoulder ;
+select -add IK_L_Shoulder ;
+select -add BIND_L_Shoulder ;
+select -r BIND_L_Shoulder IK_L_Shoulder FK_L_Shoulder ;
+select -r BIND_L_Shoulder IK_L_Shoulder FK_L_Shoulder ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors1 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Shoulder.rotateX blendColors1.color1R; 
+connectAttr -f FK_L_Shoulder.rotateY blendColors1.color1G; 
+connectAttr -f FK_L_Shoulder.rotateZ blendColors1.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors1 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_L_Shoulder.rotateX blendColors1.color2R;
+connectAttr -f IK_L_Shoulder.rotateY blendColors1.color2G;
+connectAttr -f IK_L_Shoulder.rotateZ blendColors1.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors1 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors1.outputR BIND_L_Shoulder.rotateX; 
+connectAttr -f blendColors1.outputG BIND_L_Shoulder.rotateY;
+connectAttr -f blendColors1.outputB BIND_L_Shoulder.rotateZ;
+
+//L Elbow Blend//
+select -r BIND_L_Elbow ;
+select -add IK_L_Elbow ;
+select -add FK_L_Elbow ;
+select -r BIND_L_Elbow FK_L_Elbow IK_L_Elbow ;
+shadingNode -asUtility blendColors; 
+select -r blendColors2 ;
+nodeOutliner -e -replace blendColors2 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Elbow.rotateX blendColors2.color1R; 
+connectAttr -f FK_L_Elbow.rotateY blendColors2.color1G;
+connectAttr -f FK_L_Elbow.rotateZ blendColors2.color1B; 
+nodeOutliner -e -replace blendColors2 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f IK_L_Elbow.rotateX blendColors2.color2R; 
+connectAttr -f IK_L_Elbow.rotateY blendColors2.color2G;
+connectAttr -f IK_L_Elbow.rotateZ blendColors2.color2B;
+nodeOutliner -e -replace blendColors2 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors2.outputR BIND_L_Elbow.rotateX;
+connectAttr -f blendColors2.outputG BIND_L_Elbow.rotateY;
+connectAttr -f blendColors2.outputB BIND_L_Elbow.rotateZ;
+
+//L Wrist Blend// 
+select -r FK_L_Wrist ;
+select -add IK_L_Wrist ;
+select -add BIND_L_Wrist ;
+select -r BIND_L_Wrist IK_L_Wrist FK_L_Wrist ;
+shadingNode -asUtility blendColors;
+select -r blendColors3 ;
+nodeOutliner -e -replace blendColors3 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Wrist.rotateX blendColors3.color1R;
+connectAttr -f FK_L_Wrist.rotateY blendColors3.color1G; 
+connectAttr -f FK_L_Wrist.rotateZ blendColors3.color1B; 
+nodeOutliner -e -replace blendColors3 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f IK_L_Wrist.rotateX blendColors3.color2R; 
+connectAttr -f IK_L_Wrist.rotateY blendColors3.color2G;
+connectAttr -f IK_L_Wrist.rotateZ blendColors3.color2B; 
+nodeOutliner -e -replace blendColors3 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors3.outputR BIND_L_Wrist.rotateX; 
+connectAttr -f blendColors3.outputG BIND_L_Wrist.rotateY; 
+connectAttr -f blendColors3.outputB BIND_L_Wrist.rotateZ;
+
+//R Shoulder Blend//
+select -r FK_R_Shoulder ;
+select -add IK_R_Shoulder ;
+select -add BIND_R_Shoulder ;
+select -r BIND_R_Shoulder IK_R_Shoulder FK_R_Shoulder ;
+select -r BIND_R_Shoulder IK_R_Shoulder FK_R_Shoulder ;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors4 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Shoulder.rotateX blendColors4.color1R; 
+connectAttr -f FK_R_Shoulder.rotateY blendColors4.color1G; 
+connectAttr -f FK_R_Shoulder.rotateZ blendColors4.color1B;
+nodeOutliner -e -replace blendColors4 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_R_Shoulder.rotateX blendColors4.color2R;
+connectAttr -f IK_R_Shoulder.rotateY blendColors4.color2G;
+connectAttr -f IK_R_Shoulder.rotateZ blendColors4.color2B;
+nodeOutliner -e -replace blendColors1 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors4.outputR BIND_R_Shoulder.rotateX; 
+connectAttr -f blendColors4.outputG BIND_R_Shoulder.rotateY;
+connectAttr -f blendColors4.outputB BIND_R_Shoulder.rotateZ;
+
+//R Elbow Blend//
+select -r BIND_R_Elbow ;
+select -add IK_R_Elbow ;
+select -add FK_R_Elbow ;
+select -r BIND_R_Elbow FK_R_Elbow IK_R_Elbow ;
+shadingNode -asUtility blendColors; 
+select -r blendColors5 ;
+nodeOutliner -e -replace blendColors5 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Elbow.rotateX blendColors5.color1R; 
+connectAttr -f FK_R_Elbow.rotateY blendColors5.color1G;
+connectAttr -f FK_R_Elbow.rotateZ blendColors5.color1B; 
+nodeOutliner -e -replace blendColors5 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f IK_R_Elbow.rotateX blendColors5.color2R; 
+connectAttr -f IK_R_Elbow.rotateY blendColors5.color2G;
+connectAttr -f IK_R_Elbow.rotateZ blendColors5.color2B;
+nodeOutliner -e -replace blendColors5 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors5.outputR BIND_R_Elbow.rotateX;
+connectAttr -f blendColors5.outputG BIND_R_Elbow.rotateY;
+connectAttr -f blendColors5.outputB BIND_R_Elbow.rotateZ;
+
+//R Wrist Blend// 
+select -r FK_R_Wrist ;
+select -add IK_R_Wrist ;
+select -add BIND_R_Wrist ;
+select -r BIND_R_Wrist IK_R_Wrist FK_R_Wrist ;
+shadingNode -asUtility blendColors;
+select -r blendColors6 ;
+nodeOutliner -e -replace blendColors6 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Wrist.rotateX blendColors6.color1R;
+connectAttr -f FK_R_Wrist.rotateY blendColors6.color1G; 
+connectAttr -f FK_R_Wrist.rotateZ blendColors6.color1B; 
+nodeOutliner -e -replace blendColors6 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f IK_R_Wrist.rotateX blendColors6.color2R; 
+connectAttr -f IK_R_Wrist.rotateY blendColors6.color2G;
+connectAttr -f IK_R_Wrist.rotateZ blendColors6.color2B; 
+nodeOutliner -e -replace blendColors6 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors6.outputR BIND_R_Wrist.rotateX; 
+connectAttr -f blendColors6.outputG BIND_R_Wrist.rotateY; 
+connectAttr -f blendColors6.outputB BIND_R_Wrist.rotateZ;
+
+//Connect to Shoulder Placeholder//
+select -r FK_L_Shoulder_Ctrl_Grp ;
+select -add IK_L_Shoulder ;
+select -add BIND_L_Shoulder ;
+group; xform -os -piv 0 0 0;
+select -r L_ShoulderPlaceHolder ;
+select -add group1 ;
+rename "group1" "L_ShoulderPlaceHolder_Grp";
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+
+select -r FK_R_Shoulder_Ctrl_Grp ;
+select -add IK_R_Shoulder ;
+select -add BIND_R_Shoulder ;
+group; xform -os -piv 0 0 0;
+select -r R_ShoulderPlaceHolder ;
+select -add group1 ;
+rename "group1" "R_ShoulderPlaceHolder_Grp";
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+
+setAttr "FK_R_Shoulder.visibility" 0;
+setAttr "FK_L_Shoulder.visibility" 0;
+setAttr "IK_R_Shoulder.visibility" 0;
+setAttr "IK_L_Shoulder.visibility" 0;
+setAttr "ikHandle1.visibility" 0;
+setAttr "ikHandle2.visibility" 0; 
+
+
+//IK FK Switch Display//
+//IK//
+curve -d 1 -p 0 0.966848 -0.00648891 -p 0 -0.00648891 -0.00648891 -p 0 -1.031737 -0.00648891 -p 0 -2.018053 -0.0194667 -p 0 -2.03103 0.499646 -p 0 -2.044008 0.992804 -p 0 -1.005782 1.005782 -p 0 0.0194667 0.979826 -p 0 0.966848 0.992804 -p 0 0.966848 -0.0324446 -p 0 0.966848 -1.031737 -p 0 -2.03103 -1.031737 -p 0 -2.03103 -1.771474 -p 0 -1.005782 -1.706585 -p 0 -2.03103 -2.407387 -p 0 -2.044008 -3.004368 -p 0 -0.473691 -2.005075 -p 0 0.966848 -2.99139 -p 0 0.966848 -2.485254 -p 0 0.136267 -1.680629 -p 0 0.992804 -1.641695 -p 0 0.940893 -1.044715 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 19 -k 20 -k 21 ;
+select -r curve1 ;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+//FK//
+move -r 0 0 4.624392 ;
+select -r curve2.cv[8] ;
+select -r curve2.cv[8] ;
+select -r curve2.cv[5:8] ;
+setKeyframe -breakdown 0 -hierarchy none -controlPoints 0 -shape 0 {"curve2.cv[5:8]"};
+move -r 0 0 0.355096 ;
+select -cl  ;
+select -r curve2.cv[9] ;
+move -r 0 -0.355096 0.0110967 ;
+move -r 0 0.832256 0.133161 ;
+move -r 0 -0.47716 -0.0221935 ;
+select -cl  ;
+select -r curve2.cv[1] ;
+select -cl  ;
+select -r curve2.cv[2] ;
+move -r 0 1.020901 0.92103 ;
+select -r curve2.cv[3] ;
+move -r 0 1.387093 0.943223 ;
+select -cl  ;
+select -r curve2.cv[4] ;
+move -r 0 1.375996 -0.51045 ;
+select -r curve2.cv[5] ;
+move -r 0 1.020901 -1.353803 ;
+select -r curve2.cv[6] ;
+move -r 0 0 -0.44387 ;
+select -r curve2.cv[7] ;
+move -r 0 -2.041801 -0.44387 ;
+select -r curve2.cv[8] ;
+move -r 0 -2.973928 0.0665805 ;
+select -r curve2.cv[9] ;
+move -r 0 0.0665805 1.276126 ;
+move -r 0 -0.0554837 0.0221935 ;
+select -r curve2.cv[1:7] ;
+select -tgl curve2.cv[0] ;
+move -r 0 0 -0.599224 ;
+select -cl  ;
+select -r curve2.cv[8:9] ;
+move -r 0 0 -0.610321 ;
+select -cl  ;
+select -r curve2.cv[1:2] ;
+move -r 0 0.233032 0 ;
+select -r curve2.cv[3:6] ;
+move -r 0 0.321806 0 ;
+select -cl  ;
+move -r 0 0 4.624392 ;
+select -r curve4.cv[8] ;
+select -r curve4.cv[8] ;
+select -r curve4.cv[5:8] ;
+setKeyframe -breakdown 0 -hierarchy none -controlPoints 0 -shape 0 {"curve4.cv[5:8]"};
+move -r 0 0 0.355096 ;
+select -cl  ;
+select -r curve4.cv[9] ;
+move -r 0 -0.355096 0.0110967 ;
+move -r 0 0.832256 0.133161 ;
+move -r 0 -0.47716 -0.0221935 ;
+select -cl  ;
+select -r curve4.cv[1] ;
+select -cl  ;
+select -r curve4.cv[2] ;
+move -r 0 1.020901 0.92103 ;
+select -r curve4.cv[3] ;
+move -r 0 1.387093 0.943223 ;
+select -cl  ;
+select -r curve4.cv[4] ;
+move -r 0 1.375996 -0.51045 ;
+select -r curve4.cv[5] ;
+move -r 0 1.020901 -1.353803 ;
+select -r curve4.cv[6] ;
+move -r 0 0 -0.44387 ;
+select -r curve4.cv[7] ;
+move -r 0 -2.041801 -0.44387 ;
+select -r curve4.cv[8] ;
+move -r 0 -2.973928 0.0665805 ;
+select -r curve4.cv[9] ;
+move -r 0 0.0665805 1.276126 ;
+move -r 0 -0.0554837 0.0221935 ;
+select -r curve4.cv[1:7] ;
+select -tgl curve4.cv[0] ;
+move -r 0 0 -0.599224 ;
+select -cl  ;
+select -r curve4.cv[8:9] ;
+move -r 0 0 -0.610321 ;
+select -cl  ;
+select -r curve4.cv[1:2] ;
+move -r 0 0.233032 0 ;
+select -r curve4.cv[3:6] ;
+move -r 0 0.321806 0 ;
+select -cl  ;
+
+//IK FK Setup//
+setAttr "blendColors1.blender" 0;
+setAttr "blendColors2.blender" 0;
+setAttr "blendColors5.blender" 0;
+setAttr "blendColors3.blender" 0;
+setAttr "blendColors6.blender" 0;
+setAttr "blendColors4.blender" 0;
+//Move IKFK Ctrl to Wrist//
+select -cl  ;
+select -r curve2 ;
+select -tgl curve1 ;
+blendShape;
+select -r curve2 ;
+doDelete;
+select -cl  ;
+select -r curve4 ;
+select -tgl curve3 ;
+blendShape;
+select -r curve4 ;
+doDelete;
+rename "curve1" "L_IKFK_Ctrl";
+select -r L_IKFK_Ctrl ;
+group; xform -os -piv 0 0 0;
+rename "group1" "L_IKFK_Ctrl_Grp" ;
+rename "curve3" "R_IKFK_Ctrl";
+select -r R_IKFK_Ctrl ;
+group; xform -os -piv 0 0 0;
+rename "group1" "R_IKFK_Ctrl_Grp" ;
+select -r BIND_L_Wrist ;
+select -add L_IKFK_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r L_IKFK_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r BIND_R_Wrist ;
+select -add R_IKFK_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r R_IKFK_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+setAttr "R_IKFK_Ctrl_Grp.rotateX" 0;
+setAttr "R_IKFK_Ctrl_Grp.rotateZ" 0;
+setAttr "R_IKFK_Ctrl_Grp.rotateY" 180;
+select L_IKFK_Ctrl_Grp ;
+select -add R_IKFK_Ctrl_Grp ;
+move -r 0 2 0 ;
+select -r BIND_L_Wrist ;
+select -tgl L_IKFK_Ctrl_Grp ;
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+select -r BIND_R_Wrist ;
+select -tgl R_IKFK_Ctrl_Grp ;
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+
+//Add Attrib IKFK//
+select -r L_IKFK_Ctrl ;
+addAttr -ln "IKFK"  -at double  -min 0 -max 10 -dv 0 |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl;
+setAttr -e-keyable true |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.IKFK;
+select -r R_IKFK_Ctrl ;
+addAttr -ln "IKFK"  -at double  -min 0 -max 10 -dv 0 |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl;
+setAttr -e-keyable true |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.IKFK;
+
+//Blend IKFK. FK = 10, IK = 0
+select -r L_IKFK_Ctrl;
+setAttr "L_IKFK_Ctrl.IKFK" 0;
+select -addFirst blendShape1 ;
+setAttr "blendShape1.curve2" 0;
+setAttr "blendColors3.blender" 0;
+setAttr "blendColors1.blender" 0;
+setAttr "blendColors2.blender" 0;
+setAttr "IK_L_Wrist_Ctrl.visibility" 1;
+setAttr "L_Arm_Polevector_Ctrl.visibility" 1;
+setAttr "FK_L_Shoulder_Ctrl.visibility" 0;
+setAttr "FK_L_Elbow_Ctrl.visibility" 0;
+setAttr "FK_L_Wrist_Ctrl.visibility" 0;
+select -add L_IKFK_Ctrl ;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendColors1.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendColors2.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendColors3.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendShape1.curve2;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK L_Arm_Polevector_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK IK_L_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK FK_L_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK FK_L_Elbow_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK FK_L_Shoulder_Ctrl.visibility;
+
+select -r L_IKFK_Ctrl ;
+setAttr "L_IKFK_Ctrl.IKFK" 10;
+select -addFirst blendShape1 ;
+setAttr "blendShape1.curve2" 1;
+setAttr "blendColors3.blender" 1;
+setAttr "blendColors1.blender" 1;
+setAttr "blendColors2.blender" 1;
+setAttr "IK_L_Wrist_Ctrl.visibility" 0;
+setAttr "L_Arm_Polevector_Ctrl.visibility" 0;
+setAttr "FK_L_Shoulder_Ctrl.visibility" 1;
+setAttr "FK_L_Elbow_Ctrl.visibility" 1;
+setAttr "FK_L_Wrist_Ctrl.visibility" 1;
+select -add L_IKFK_Ctrl ;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendColors1.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendColors2.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendColors3.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK blendShape1.curve2;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK L_Arm_Polevector_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK IK_L_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK FK_L_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK FK_L_Elbow_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.IKFK FK_L_Shoulder_Ctrl.visibility;
+
+select -r R_IKFK_Ctrl;
+setAttr "R_IKFK_Ctrl.IKFK" 0;
+select -addFirst blendShape2 ;
+setAttr "blendShape2.curve4" 0;
+setAttr "blendColors4.blender" 0;
+setAttr "blendColors5.blender" 0;
+setAttr "blendColors6.blender" 0;
+setAttr "IK_R_Wrist_Ctrl.visibility" 1;
+setAttr "R_Arm_Polevector_Ctrl.visibility" 1;
+setAttr "FK_R_Shoulder_Ctrl.visibility" 0;
+setAttr "FK_R_Elbow_Ctrl.visibility" 0;
+setAttr "FK_R_Wrist_Ctrl.visibility" 0;
+select -add R_IKFK_Ctrl ;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendColors4.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendColors5.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendColors6.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendShape2.curve4;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK R_Arm_Polevector_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK IK_R_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK FK_R_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK FK_R_Elbow_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK FK_R_Shoulder_Ctrl.visibility;
+
+select -r R_IKFK_Ctrl ;
+setAttr "R_IKFK_Ctrl.IKFK" 10;
+select -addFirst blendShape2 ;
+setAttr "blendShape2.curve4" 1;
+setAttr "blendColors4.blender" 1;
+setAttr "blendColors5.blender" 1;
+setAttr "blendColors6.blender" 1;
+setAttr "IK_R_Wrist_Ctrl.visibility" 0;
+setAttr "R_Arm_Polevector_Ctrl.visibility" 0;
+setAttr "FK_R_Shoulder_Ctrl.visibility" 1;
+setAttr "FK_R_Elbow_Ctrl.visibility" 1;
+setAttr "FK_R_Wrist_Ctrl.visibility" 1;
+select -add R_IKFK_Ctrl ;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendColors4.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendColors5.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendColors6.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK blendShape2.curve4;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK R_Arm_Polevector_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK IK_R_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK FK_R_Wrist_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK FK_R_Elbow_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.IKFK FK_R_Shoulder_Ctrl.visibility;
+
+setAttr "FK_R_Shoulder_Ctrl.rotateZ" 0;
+setAttr "FK_L_Shoulder_Ctrl.rotateZ" 0;
+setAttr "IK_L_Wrist_Ctrl.translateZ" 0;
+setAttr "IK_L_Wrist_Ctrl.translateX" 0;
+setAttr "IK_R_Wrist_Ctrl.translateX" 0;
+setAttr "IK_L_Wrist_Ctrl.translateY" 0;
+setAttr "IK_R_Wrist_Ctrl.translateY" 0;
+setAttr "IK_R_Wrist_Ctrl.translateZ" 0;
+setAttr "R_IKFK_Ctrl.IKFK" 0;
+setAttr "L_IKFK_Ctrl.IKFK" 0;
+
+
+//IK and FK Leg
+//Mirror Right Leg
+select -r L_Hip ;
+mirrorJoint -mirrorYZ -mirrorBehavior -searchReplace "L_" "R_";
+
+//R Hip Placeholder
+select -r R_Hip ;
+duplicate -rr;
+parent -w;
+rename "R_Hip" "R_HipPlaceHolder";
+select -r R_HipPlaceHolder|R_Knee ;
+parent -w;
+doDelete;
+
+//R BINDchain Leg Rig Set Up
+rename "R_Hip1" "BIND_R_Hip";
+rename "R_Knee" "BIND_R_Knee";
+rename "R_Ankle" "BIND_R_Ankle";
+rename "R_Ball" "BIND_R_Ball";
+rename "R_Toe" "BIND_R_Toe";
+select -r BIND_R_Ankle ;
+makeIdentity -apply true -t 0 -r 0 -s 0 -n 0 -jointOrient;
+
+//IK Leg Rig Set Up//
+select -r BIND_R_Hip ;
+duplicate -rr;
+rename "BIND_R_Hip1" "IK_R_Hip";
+rename "IK_R_Hip|BIND_R_Knee" "IK_R_Knee";
+rename "IK_R_Knee|BIND_R_Ankle" "IK_R_Ankle";
+rename "IK_R_Ankle|BIND_R_Ball" "IK_R_Ball";
+rename "IK_R_Ball|BIND_R_Toe" "IK_R_Toe";
+
+//FK Leg Rig Set Up//
+select -r IK_R_Hip ;
+duplicate -rr;
+rename "IK_R_Hip1" "FK_R_Hip";
+rename "FK_R_Hip|IK_R_Knee" "FK_R_Knee"; 
+rename "FK_R_Knee|IK_R_Ankle" "FK_R_Ankle";
+rename "FK_R_Ankle|IK_R_Ball" "FK_R_Ball";
+rename "FK_R_Ball|IK_R_Toe" "FK_R_Toe";
+
+//L Hip Placeholder
+select -r L_Hip ;
+duplicate -rr;
+parent -w;
+rename "L_Hip" "L_HipPlaceHolder";
+select -r L_HipPlaceHolder|L_Knee ;
+parent -w;
+doDelete;
+
+//L BINDchain Leg Lig Set Up
+rename "L_Hip1" "BIND_L_Hip";
+rename "L_Knee" "BIND_L_Knee";
+rename "L_Ankle" "BIND_L_Ankle";
+rename "L_Ball" "BIND_L_Ball";
+rename "L_Toe" "BIND_L_Toe";
+select -r BIND_L_Ankle ;
+makeIdentity -apply true -t 0 -r 0 -s 0 -n 0 -jointOrient;
+
+//IK Leg Lig Set Up//
+select -r BIND_L_Hip ;
+duplicate -rr;
+rename "BIND_L_Hip1" "IK_L_Hip";
+rename "IK_L_Hip|BIND_L_Knee" "IK_L_Knee";
+rename "IK_L_Knee|BIND_L_Ankle" "IK_L_Ankle";
+rename "IK_L_Ankle|BIND_L_Ball" "IK_L_Ball";
+rename "IK_L_Ball|BIND_L_Toe" "IK_L_Toe";
+
+//FK Leg Lig Set Up//
+select -r IK_L_Hip ;
+duplicate -rr;
+rename "IK_L_Hip1" "FK_L_Hip";
+rename "FK_L_Hip|IK_L_Knee" "FK_L_Knee"; 
+rename "FK_L_Knee|IK_L_Ankle" "FK_L_Ankle";
+rename "FK_L_Ankle|IK_L_Ball" "FK_L_Ball";
+rename "FK_L_Ball|IK_L_Toe" "FK_L_Toe";
+
+
+//Leg Controllers
+//FK Leg, no Foot Controller
+curve -d 1 -p 0.0114575 0 -0.0343724 -p 1.019713 0 -7.344227 -p -0.996798 0 -7.344227 -p 0.0343724 0 -0.0343724 -k 0 -k 1 -k 2 -k 3 ;
+select -r curve1 ;
+group; xform -os -piv 0 0 0;
+rename "group1" "R_Hip_Ctrl_Grp";
+rename "curve1" "R_Hip_Ctrl";
+select -r R_Hip_Ctrl_Grp ;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+duplicate -rr;
+rename "R_Hip_Ctrl_Grp1" "R_Knee_Ctrl_Grp";
+rename "R_Hip_Ctrl_Grp2" "R_Ankle_Ctrl_Grp";
+rename "R_Hip_Ctrl_Grp3" "L_Hip_Ctrl_Grp";
+rename "R_Hip_Ctrl_Grp4" "L_Knee_Ctrl_Grp";
+rename "R_Hip_Ctrl_Grp5" "L_Ankle_Ctrl_Grp";
+rename "R_Hip_Ctrl_Grp6" "FK_L_Foot_Ctrl_Grp";
+rename "R_Hip_Ctrl_Grp7" "FK_R_Foot_Ctrl_Grp";
+rename "R_Hip_Ctrl_Grp|R_Hip_Ctrl" "R_Hip_Ctrl";
+rename "R_Knee_Ctrl_Grp|R_Hip_Ctrl" "R_Knee_Ctrl";
+rename "R_Ankle_Ctrl_Grp|R_Hip_Ctrl" "R_Ankle_Ctrl";
+rename "L_Hip_Ctrl_Grp|R_Hip_Ctrl" "L_Hip_Ctrl";
+rename "L_Knee_Ctrl_Grp|R_Hip_Ctrl" "L_Knee_Ctrl";
+rename "L_Ankle_Ctrl_Grp|R_Hip_Ctrl" "L_Ankle_Ctrl";
+rename "FK_L_Foot_Ctrl_Grp|R_Hip_Ctrl" "FK_L_Foot_Ctrl";
+rename "FK_R_Foot_Ctrl_Grp|R_Hip_Ctrl" "FK_R_Foot_Ctrl";
+select -cl  ;
+select -r FK_R_Ankle ;
+select -add R_Ankle_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r FK_R_Knee ;
+select -add R_Knee_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r FK_R_Hip ;
+select -add R_Hip_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r FK_R_Ball ;
+select -add FK_R_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r FK_L_Ankle ;
+select -add L_Ankle_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r FK_L_Knee ;
+select -add L_Knee_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r FK_L_Hip ;
+select -add L_Hip_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r FK_L_Ball ;
+select -add FK_L_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r R_Hip_Ctrl_Grp_parentConstraint1 ;
+select -add R_Knee_Ctrl_Grp_parentConstraint1 ;
+select -add R_Ankle_Ctrl_Grp_parentConstraint1 ;
+select -add L_Hip_Ctrl_Grp_parentConstraint1 ;
+select -add L_Knee_Ctrl_Grp_parentConstraint1 ;
+select -add L_Ankle_Ctrl_Grp_parentConstraint1 ;
+select -add FK_L_Foot_Ctrl_Grp_parentConstraint1 ;
+select -add FK_R_Foot_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+
+select -r R_Hip_Ctrl ;
+select -tgl FK_R_Hip ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r R_Knee_Ctrl ;
+select -tgl FK_R_Knee ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1; 
+select -r R_Ankle_Ctrl ;
+select -tgl FK_R_Ankle ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+setAttr "FK_R_Foot_Ctrl_Grp.rotateY" 90;
+select -r FK_R_Foot_Ctrl ;
+select -tgl FK_R_Ball ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r R_Hip_Ctrl ;
+select -add R_Knee_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r R_Knee_Ctrl ;
+select -add R_Ankle_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r R_Ankle_Ctrl ;
+select -add FK_R_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+select -r L_Hip_Ctrl ;
+select -tgl FK_L_Hip ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r L_Knee_Ctrl ;
+select -tgl FK_L_Knee ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1; 
+select -r L_Ankle_Ctrl ;
+select -tgl FK_L_Ankle ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+setAttr "FK_L_Foot_Ctrl_Grp.rotateY" -90;
+select -r FK_L_Foot_Ctrl ;
+select -tgl FK_L_Ball ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r L_Hip_Ctrl ;
+select -add L_Knee_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r L_Knee_Ctrl ;
+select -add L_Ankle_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r L_Ankle_Ctrl ;
+select -add FK_L_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -cl  ;
+
+//IK Leg
+select -r IK_L_Hip.rotatePivot ;
+select -add IK_L_Ankle.rotatePivot ;
+ikHandle -sol ikRPsolver -s sticky;
+select -d ikHandle3 ;
+select -r IK_R_Hip.rotatePivot ;
+select -add IK_R_Ankle.rotatePivot ;
+ikHandle -sol ikRPsolver -s sticky;
+select -d ikHandle4 ;
+spaceLocator -p 0 0 0;
+duplicate -rr;
+rename "locator1" "L_Knee_Locator";
+rename "locator2" "R_Knee_Locator";
+select -r IK_L_Knee ;
+select -add L_Knee_Locator ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r L_Knee_Locator_parentConstraint1 ;
+doDelete;
+select -r IK_R_Knee ;
+select -add R_Knee_Locator ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r R_Knee_Locator_parentConstraint1 ;
+doDelete;
+select -r L_Knee_Locator ;
+select -add R_Knee_Locator ;
+move -r 0 0 17.172572 ;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+select -r L_Knee_Locator ;
+select -add ikHandle3 ;
+poleVectorConstraint -weight 1;
+select -r R_Knee_Locator ;
+select -add ikHandle4 ;
+poleVectorConstraint -weight 1;
+
+//Foot Controllers no Driven Keys
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1; objectMoveCommand;
+select -addFirst makeNurbCircle3 ;
+setAttr "makeNurbCircle3.sections" 16;
+select -r nurbsCircle1 ;
+scale -r 1 1 4.98839 ;
+scale -r 2.633116 1 1 ;
+move -r 0 0 1.218547 ;
+select -r nurbsCircle1.cv[13] ;
+select -tgl nurbsCircle1.cv[5] ;
+select -tgl nurbsCircle1.cv[6] ;
+select -tgl nurbsCircle1.cv[4] ;
+select -tgl nurbsCircle1.cv[14] ;
+select -tgl nurbsCircle1.cv[12] ;
+scale -r -p 0cm 0cm 1.218547cm 0.758941 1 1 ;
+select -r nurbsCircle1.cv[5] ;
+select -tgl nurbsCircle1.cv[13] ;
+scale -r -p 0cm 0cm 1.218547cm 0.531525 1 1 ;
+select -r nurbsCircle1 ;
+duplicate -rr;
+select -r nurbsCircle1 ;
+group; xform -os -piv 0 0 0;
+select -r nurbsCircle2 ;
+group; xform -os -piv 0 0 0;
+rename "group1" "L_Foot_Ctrl_Grp";
+rename "nurbsCircle1" "L_Foot_Ctrl";
+rename "group2" "R_Foot_Ctrl_Grp";
+rename "nurbsCircle2" "R_Foot_Ctrl";
+select -r IK_L_Ball ;
+select -add L_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r L_Foot_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r IK_R_Ball ;
+select -add R_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r R_Foot_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r L_Foot_Ctrl ;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+select -r R_Foot_Ctrl ;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+select -cl  ;
+
+//Inverse Foot
+select -r IK_R_Ankle ;
+duplicate -rr;
+select -r IK_R_Ankle1 ;
+parent -w;
+select -r IK_R_Ankle1 ;
+duplicate -rr;
+select -r IK_R_Ankle2|IK_R_Ball ;
+doDelete;
+select -r IK_R_Ankle1|IK_R_Ball|IK_R_Toe ;
+parent -w;
+select -r IK_R_Ankle1|IK_R_Ball ;
+parent -w;
+select -add |IK_R_Toe ;
+parent;
+select -r IK_R_Ankle1 ;
+select -add |IK_R_Toe|IK_R_Ball ;
+parent;
+select -r |IK_R_Toe|IK_R_Ball ;
+select -add IK_R_Ankle2 ;
+doCreatePointConstraintArgList 1 { "0","0","0","0","1","0","1","1","","1" };
+pointConstraint -offset 0 0 0 -skip x -skip z -weight 1;
+select -r IK_R_Ankle2_pointConstraint1 ;
+doDelete;
+select -r |IK_R_Toe ;
+select -r |IK_R_Toe IK_R_Ankle2 ;
+parent;
+rename "IK_R_Ankle2" "R_Heel_Joint_Ctrl";
+rename "R_Heel_Joint_Ctrl|IK_R_Toe" "R_Toe_Joint_Ctrl";
+rename "R_Toe_Joint_Ctrl|IK_R_Ball" "R_Ball_Joint_Ctrl";
+rename "IK_R_Ankle1" "R_Ankle_Joint_Ctrl";
+select -r R_Ankle_Joint_Ctrl ;
+select -add ikHandle4 ;
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+select -r R_Ball_Joint_Ctrl ;
+select -add IK_R_Ankle ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1; 
+select -r R_Toe_Joint_Ctrl ;
+select -add IK_R_Ball ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r R_Foot_Ctrl ;
+select -tgl R_Heel_Joint_Ctrl ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+select -r IK_L_Ankle ;
+duplicate -rr;
+select -r IK_L_Ankle1 ;
+parent -w;
+select -r IK_L_Ankle1 ;
+duplicate -rr;
+select -r IK_L_Ankle2|IK_L_Ball ;
+doDelete;
+select -r IK_L_Ankle1|IK_L_Ball|IK_L_Toe ;
+parent -w;
+select -r IK_L_Ankle1|IK_L_Ball ;
+parent -w;
+select -add |IK_L_Toe ;
+parent;
+select -r IK_L_Ankle1 ;
+select -add |IK_L_Toe|IK_L_Ball ;
+parent;
+select -r |IK_L_Toe|IK_L_Ball ;
+select -add IK_L_Ankle2 ;
+doCreatePointConstraintArgList 1 { "0","0","0","0","1","0","1","1","","1" };
+pointConstraint -offset 0 0 0 -skip x -skip z -weight 1;
+select -r IK_L_Ankle2_pointConstraint1 ;
+doDelete;
+select -r |IK_L_Toe ;
+select -r |IK_L_Toe IK_L_Ankle2 ;
+parent;
+rename "IK_L_Ankle2" "L_Heel_Joint_Ctrl";
+rename "L_Heel_Joint_Ctrl|IK_L_Toe" "L_Toe_Joint_Ctrl";
+rename "L_Toe_Joint_Ctrl|IK_L_Ball" "L_Ball_Joint_Ctrl";
+rename "IK_L_Ankle1" "L_Ankle_Joint_Ctrl";
+select -r L_Ankle_Joint_Ctrl ;
+select -add ikHandle3 ;
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+select -r L_Ball_Joint_Ctrl ;
+select -add IK_L_Ankle ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1; 
+select -r L_Toe_Joint_Ctrl ;
+select -add IK_L_Ball ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r L_Foot_Ctrl ;
+select -tgl L_Heel_Joint_Ctrl ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+
+//Chains to Bind//
+select -r L_Hip_Ctrl ;
+select -tgl R_Hip_Ctrl ;
+rotate -r -os -34.067146 0 0 ;
+select -r L_Foot_Ctrl ;
+select -tgl R_Foot_Ctrl ;
+move -r 0 6.485749 -15.600726 ;
+
+//L Hip Blend//
+select -r FK_L_Hip ;
+select -add IK_L_Hip ;
+select -add BIND_L_Hip ;
+select -r BIND_L_Hip IK_L_Hip FK_L_Hip ;
+select -r BIND_L_Hip IK_L_Hip FK_L_Hip ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors7 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Hip.rotateX blendColors7.color1R; 
+connectAttr -f FK_L_Hip.rotateY blendColors7.color1G; 
+connectAttr -f FK_L_Hip.rotateZ blendColors7.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors7 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_L_Hip.rotateX blendColors7.color2R;
+connectAttr -f IK_L_Hip.rotateY blendColors7.color2G;
+connectAttr -f IK_L_Hip.rotateZ blendColors7.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors7 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors7.outputR BIND_L_Hip.rotateX; 
+connectAttr -f blendColors7.outputG BIND_L_Hip.rotateY;
+connectAttr -f blendColors7.outputB BIND_L_Hip.rotateZ;
+
+//L Knee Blend//
+select -r FK_L_Knee ;
+select -add IK_L_Knee ;
+select -add BIND_L_Knee ;
+select -r BIND_L_Knee IK_L_Knee FK_L_Knee ;
+select -r BIND_L_Knee IK_L_Knee FK_L_Knee ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors8 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Knee.rotateX blendColors8.color1R; 
+connectAttr -f FK_L_Knee.rotateY blendColors8.color1G; 
+connectAttr -f FK_L_Knee.rotateZ blendColors8.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors8 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_L_Knee.rotateX blendColors8.color2R;
+connectAttr -f IK_L_Knee.rotateY blendColors8.color2G;
+connectAttr -f IK_L_Knee.rotateZ blendColors8.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors8 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors8.outputR BIND_L_Knee.rotateX; 
+connectAttr -f blendColors8.outputG BIND_L_Knee.rotateY;
+connectAttr -f blendColors8.outputB BIND_L_Knee.rotateZ;
+
+//L Ankle Blend//
+select -r FK_L_Ankle ;
+select -add IK_L_Ankle ;
+select -add BIND_L_Ankle ;
+select -r BIND_L_Ankle IK_L_Ankle FK_L_Ankle ;
+select -r BIND_L_Ankle IK_L_Ankle FK_L_Ankle ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors9 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Ankle.rotateX blendColors9.color1R; 
+connectAttr -f FK_L_Ankle.rotateY blendColors9.color1G; 
+connectAttr -f FK_L_Ankle.rotateZ blendColors9.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors9 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_L_Ankle.rotateX blendColors9.color2R;
+connectAttr -f IK_L_Ankle.rotateY blendColors9.color2G;
+connectAttr -f IK_L_Ankle.rotateZ blendColors9.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors9 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors9.outputR BIND_L_Ankle.rotateX; 
+connectAttr -f blendColors9.outputG BIND_L_Ankle.rotateY;
+connectAttr -f blendColors9.outputB BIND_L_Ankle.rotateZ;
+
+//L Ball Blend//
+select -r FK_L_Ball ;
+select -add IK_L_Ball ;
+select -add BIND_L_Ball ;
+select -r BIND_L_Ball IK_L_Ball FK_L_Ball ;
+select -r BIND_L_Ball IK_L_Ball FK_L_Ball ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors10 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Ball.rotateX blendColors10.color1R; 
+connectAttr -f FK_L_Ball.rotateY blendColors10.color1G; 
+connectAttr -f FK_L_Ball.rotateZ blendColors10.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors10 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_L_Ball.rotateX blendColors10.color2R;
+connectAttr -f IK_L_Ball.rotateY blendColors10.color2G;
+connectAttr -f IK_L_Ball.rotateZ blendColors10.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors10 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors10.outputR BIND_L_Ball.rotateX; 
+connectAttr -f blendColors10.outputG BIND_L_Ball.rotateY;
+connectAttr -f blendColors10.outputB BIND_L_Ball.rotateZ;
+
+//L Toe Blend//
+select -r FK_L_Toe ;
+select -add IK_L_Toe ;
+select -add BIND_L_Toe ;
+select -r BIND_L_Toe IK_L_Toe FK_L_Toe ;
+select -r BIND_L_Toe IK_L_Toe FK_L_Toe ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors11 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_L_Toe.rotateX blendColors11.color1R; 
+connectAttr -f FK_L_Toe.rotateY blendColors11.color1G; 
+connectAttr -f FK_L_Toe.rotateZ blendColors11.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors11 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_L_Toe.rotateX blendColors11.color2R;
+connectAttr -f IK_L_Toe.rotateY blendColors11.color2G;
+connectAttr -f IK_L_Toe.rotateZ blendColors11.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors11 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors11.outputR BIND_L_Toe.rotateX; 
+connectAttr -f blendColors11.outputG BIND_L_Toe.rotateY;
+connectAttr -f blendColors11.outputB BIND_L_Toe.rotateZ;
+
+//R Hip Blend//
+select -r FK_R_Hip ;
+select -add IK_R_Hip ;
+select -add BIND_R_Hip ;
+select -r BIND_R_Hip IK_R_Hip FK_R_Hip ;
+select -r BIND_R_Hip IK_R_Hip FK_R_Hip ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors12 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Hip.rotateX blendColors12.color1R; 
+connectAttr -f FK_R_Hip.rotateY blendColors12.color1G; 
+connectAttr -f FK_R_Hip.rotateZ blendColors12.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors12 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_R_Hip.rotateX blendColors12.color2R;
+connectAttr -f IK_R_Hip.rotateY blendColors12.color2G;
+connectAttr -f IK_R_Hip.rotateZ blendColors12.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors12 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors12.outputR BIND_R_Hip.rotateX; 
+connectAttr -f blendColors12.outputG BIND_R_Hip.rotateY;
+connectAttr -f blendColors12.outputB BIND_R_Hip.rotateZ;
+
+//R Knee Blend//
+select -r FK_R_Knee ;
+select -add IK_R_Knee ;
+select -add BIND_R_Knee ;
+select -r BIND_R_Knee IK_R_Knee FK_R_Knee ;
+select -r BIND_R_Knee IK_R_Knee FK_R_Knee ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors13 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Knee.rotateX blendColors13.color1R; 
+connectAttr -f FK_R_Knee.rotateY blendColors13.color1G; 
+connectAttr -f FK_R_Knee.rotateZ blendColors13.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors13 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_R_Knee.rotateX blendColors13.color2R;
+connectAttr -f IK_R_Knee.rotateY blendColors13.color2G;
+connectAttr -f IK_R_Knee.rotateZ blendColors13.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors13 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors13.outputR BIND_R_Knee.rotateX; 
+connectAttr -f blendColors13.outputG BIND_R_Knee.rotateY;
+connectAttr -f blendColors13.outputB BIND_R_Knee.rotateZ;
+
+//R Ankle Blend//
+select -r FK_R_Ankle ;
+select -add IK_R_Ankle ;
+select -add BIND_R_Ankle ;
+select -r BIND_R_Ankle IK_R_Ankle FK_R_Ankle ;
+select -r BIND_R_Ankle IK_R_Ankle FK_R_Ankle ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors14 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Ankle.rotateX blendColors14.color1R; 
+connectAttr -f FK_R_Ankle.rotateY blendColors14.color1G; 
+connectAttr -f FK_R_Ankle.rotateZ blendColors14.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors14 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_R_Ankle.rotateX blendColors14.color2R;
+connectAttr -f IK_R_Ankle.rotateY blendColors14.color2G;
+connectAttr -f IK_R_Ankle.rotateZ blendColors14.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors14 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors14.outputR BIND_R_Ankle.rotateX; 
+connectAttr -f blendColors14.outputG BIND_R_Ankle.rotateY;
+connectAttr -f blendColors14.outputB BIND_R_Ankle.rotateZ;
+
+//R Ball Blend//
+select -r FK_R_Ball ;
+select -add IK_R_Ball ;
+select -add BIND_R_Ball ;
+select -r BIND_R_Ball IK_R_Ball FK_R_Ball ;
+select -r BIND_R_Ball IK_R_Ball FK_R_Ball ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors15 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Ball.rotateX blendColors15.color1R; 
+connectAttr -f FK_R_Ball.rotateY blendColors15.color1G; 
+connectAttr -f FK_R_Ball.rotateZ blendColors15.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors15 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_R_Ball.rotateX blendColors15.color2R;
+connectAttr -f IK_R_Ball.rotateY blendColors15.color2G;
+connectAttr -f IK_R_Ball.rotateZ blendColors15.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors15 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors15.outputR BIND_R_Ball.rotateX; 
+connectAttr -f blendColors15.outputG BIND_R_Ball.rotateY;
+connectAttr -f blendColors15.outputB BIND_R_Ball.rotateZ;
+
+//R Toe Blend//
+select -r FK_R_Toe ;
+select -add IK_R_Toe ;
+select -add BIND_R_Toe ;
+select -r BIND_R_Toe IK_R_Toe FK_R_Toe ;
+select -r BIND_R_Toe IK_R_Toe FK_R_Toe ;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+shadingNode -asUtility blendColors;
+nodeOutliner -e -replace blendColors16 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f FK_R_Toe.rotateX blendColors16.color1R; 
+connectAttr -f FK_R_Toe.rotateY blendColors16.color1G; 
+connectAttr -f FK_R_Toe.rotateZ blendColors16.color1B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors16 connectWindow|tl|cwForm|connectWindowPane|leftSideCW; 
+connectAttr -f IK_R_Toe.rotateX blendColors16.color2R;
+connectAttr -f IK_R_Toe.rotateY blendColors16.color2G;
+connectAttr -f IK_R_Toe.rotateZ blendColors16.color2B;
+popupMenu -e -deleteAllItems graph1HyperShadeEdPopupMenu;
+nodeOutliner -e -replace blendColors16 connectWindow|tl|cwForm|connectWindowPane|leftSideCW;
+connectAttr -f blendColors16.outputR BIND_R_Toe.rotateX; 
+connectAttr -f blendColors16.outputG BIND_R_Toe.rotateY;
+connectAttr -f blendColors16.outputB BIND_R_Toe.rotateZ;
+
+//Connect to Hip Placeholder//
+select -r L_Hip_Ctrl_Grp ;
+select -add IK_L_Hip ;
+select -add BIND_L_Hip ;
+group; xform -os -piv 0 0 0;
+select -r L_HipPlaceHolder ;
+select -add group1 ;
+rename "group1" "L_HipPlaceHolder_Grp";
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+
+select -r R_Hip_Ctrl_Grp ;
+select -add IK_R_Hip ;
+select -add BIND_R_Hip ;
+group; xform -os -piv 0 0 0;
+select -r R_HipPlaceHolder ;
+select -add group1 ;
+rename "group1" "R_HipPlaceHolder_Grp";
+doCreatePointConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+pointConstraint -mo -weight 1;
+
+setAttr "FK_R_Hip.visibility" 0;
+setAttr "FK_L_Hip.visibility" 0;
+setAttr "IK_R_Hip.visibility" 0;
+setAttr "IK_L_Hip.visibility" 0;
+setAttr "ikHandle3.visibility" 0;
+setAttr "ikHandle4.visibility" 0; 
+
+//IKFK Switch Leg
+curve -d 1 -p 0.0114575 0 -0.0343724 -p 1.019713 0 -7.344227 -p -0.996798 0 -7.344227 -p 0.0343724 0 -0.0343724 -k 0 -k 1 -k 2 -k 3 ;
+duplicate -rr;
+select -r curve1 ;
+group; xform -os -piv 0 0 0;
+select -r curve2 ;
+group; xform -os -piv 0 0 0;
+rename "group1" "L_IKFK_Leg_Ctrl_Grp";
+rename "curve1" "L_IKFK_Leg_Ctrl";
+rename "group2" "R_IKFK_Leg_Ctrl_Grp";
+rename "curve2" "R_IKFK_Leg_Ctrl";
+select -r BIND_L_Ball ;
+select -add L_IKFK_Leg_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r BIND_R_Ball ;
+select -add R_IKFK_Leg_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+
+//IK FK Setup//
+setAttr "blendColors7.blender" 0;
+setAttr "blendColors8.blender" 0;
+setAttr "blendColors9.blender" 0;
+setAttr "blendColors10.blender" 0;
+setAttr "blendColors11.blender" 0;
+setAttr "blendColors12.blender" 0;
+setAttr "blendColors13.blender" 0;
+setAttr "blendColors14.blender" 0;
+setAttr "blendColors15.blender" 0;
+setAttr "blendColors16.blender" 0;
+
+//Add Attrib IKFK//
+select -r L_IKFK_Leg_Ctrl ;
+addAttr -ln "IKFK"  -at double  -min 0 -max 10 -dv 0 |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl;
+setAttr -e-keyable true |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.IKFK;
+select -r R_IKFK_Leg_Ctrl ;
+addAttr -ln "IKFK"  -at double  -min 0 -max 10 -dv 0 |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl;
+setAttr -e-keyable true |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.IKFK;
+
+//Blend IKFK. FK = 10, IK = 0
+select -r L_IKFK_Leg_Ctrl;
+setAttr "L_IKFK_Leg_Ctrl.IKFK" 0;
+setAttr "L_Hip_Ctrl .visibility" 0;                     
+setAttr "L_Knee_Ctrl .visibility" 0;               
+setAttr "L_Ankle_Ctrl .visibility" 0;               
+setAttr "FK_L_Foot_Ctrl .visibility" 0;
+select -add L_IKFK_Leg_Ctrl ;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors7.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors8.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors9.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors10.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors11.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Knee_Locator.visibility;               
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Foot_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Hip_Ctrl.visibility;           
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Knee_Ctrl.visibility;               
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Ankle_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK FK_L_Foot_Ctrl.visibility;            
+
+select -r L_IKFK_Leg_Ctrl ;
+setAttr "L_IKFK_Leg_Ctrl.IKFK" 10;
+select -addFirst blendShape1 ;
+setAttr "blendColors7.blender" 1;
+setAttr "blendColors8.blender" 1;
+setAttr "blendColors9.blender" 1;
+setAttr "blendColors10.blender" 1;
+setAttr "blendColors11.blender" 1;
+setAttr "L_Foot_Ctrl .visibility" 0;
+setAttr "L_Knee_Ctrl .visibility" 0;                    
+setAttr "L_Hip_Ctrl .visibility" 1;                     
+setAttr "L_Knee_Ctrl .visibility" 1;               
+setAttr "L_Ankle_Ctrl .visibility" 1;               
+setAttr "FK_L_Foot_Ctrl .visibility" 1;
+select -add L_IKFK_Leg_Ctrl ;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors7.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors8.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors9.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors10.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK blendColors11.blender;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Knee_Locator.visibility;               
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Foot_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Hip_Ctrl.visibility;           
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Knee_Ctrl.visibility;               
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK L_Ankle_Ctrl.visibility;
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.IKFK FK_L_Foot_Ctrl.visibility;    
+
+select -r R_IKFK_Leg_Ctrl;
+setAttr "R_IKFK_Leg_Ctrl.IKFK" 0;
+setAttr "R_Hip_Ctrl .visibility" 0;                     
+setAttr "R_Knee_Ctrl .visibility" 0;               
+setAttr "R_Ankle_Ctrl .visibility" 0;               
+setAttr "FK_R_Foot_Ctrl .visibility" 0;
+select -add R_IKFK_Leg_Ctrl ;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors12.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors13.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors14.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors15.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors16.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Knee_Locator.visibility;               
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Foot_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Hip_Ctrl.visibility;           
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Knee_Ctrl.visibility;               
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Ankle_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK FK_R_Foot_Ctrl.visibility;                 
+
+select -r R_IKFK_Leg_Ctrl ;
+setAttr "R_IKFK_Leg_Ctrl.IKFK" 10;
+select -addFirst blendShape1 ;
+setAttr "blendColors12.blender" 1;
+setAttr "blendColors13.blender" 1;
+setAttr "blendColors14.blender" 1;
+setAttr "blendColors15.blender" 1;
+setAttr "blendColors16.blender" 1;
+setAttr "R_Foot_Ctrl .visibility" 0;
+setAttr "R_Knee_Ctrl .visibility" 0;                    
+setAttr "R_Hip_Ctrl .visibility" 1;                     
+setAttr "R_Knee_Ctrl .visibility" 1;               
+setAttr "R_Ankle_Ctrl .visibility" 1;               
+setAttr "FK_R_Foot_Ctrl .visibility" 1;
+select -add R_IKFK_Leg_Ctrl ;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors12.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors13.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors14.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors15.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK blendColors16.blender;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Knee_Locator.visibility;               
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Foot_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Hip_Ctrl.visibility;           
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Knee_Ctrl.visibility;               
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK R_Ankle_Ctrl.visibility;
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.IKFK FK_R_Foot_Ctrl .visibility;
+
+setAttr "R_Foot_Ctrl.translateZ" 0;
+setAttr "R_Foot_Ctrl.translateX" 0;
+setAttr "L_Foot_Ctrl.translateX" 0;
+setAttr "R_Foot_Ctrl.translateY" 0;
+setAttr "L_Foot_Ctrl.translateY" 0;
+setAttr "L_Foot_Ctrl.translateZ" 0;
+setAttr "R_Hip_Ctrl.rotateX" 0;
+setAttr "L_Hip_Ctrl.rotateX" 0;
+setAttr "R_IKFK_Leg_Ctrl.IKFK" 0;
+setAttr "L_IKFK_Leg_Ctrl.IKFK" 0;
+
+
+//Pelvis Controller 
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1; objectMoveCommand;
+setAttr "makeNurbCircle4.sections" 16;
+select -r nurbsCircle1 ;
+scale -r 7.873987 7.873987 7.873987 ;
+select -r nurbsCircle1.cv[11] ;
+select -tgl nurbsCircle1.cv[13] ;
+select -tgl nurbsCircle1.cv[15] ;
+select -tgl nurbsCircle1.cv[1] ;
+select -tgl nurbsCircle1.cv[3] ;
+select -tgl nurbsCircle1.cv[5] ;
+select -tgl nurbsCircle1.cv[7] ;
+select -tgl nurbsCircle1.cv[9] ;
+scale -r -p 0cm 0cm 0cm 0.261427 0.261427 0.261427 ;
+select -r nurbsCircle1 ;
+group; xform -os -piv 0 0 0;
+rename "group1" "Pelvis_Ctrl_Grp";
+rename "nurbsCircle1" "Pelvis_Ctrl";
+select -r Pelvis_Ctrl ;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+select -r Pelvis ;
+select -add Pelvis_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r Pelvis_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r Pelvis_Ctrl ;
+select -add Pelvis ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -cl  ;
+
+//FK Back Controllers
+curve -d 1 -p 0.0114575 0 -0.0343724 -p 1.019713 0 -7.344227 -p -0.996798 0 -7.344227 -p 0.0343724 0 -0.0343724 -k 0 -k 1 -k 2 -k 3 ;
+duplicate -rr;
+duplicate -rr;
+select -r curve1 ;
+group; xform -os -piv 0 0 0;
+select -r curve2 ;
+group; xform -os -piv 0 0 0;
+select -r curve3 ;
+group; xform -os -piv 0 0 0;
+rename "group1" "Lower_Back_Ctrl_Grp";
+rename "curve1" "Lower_Back_Ctrl";
+rename "group2" "Upper_Back_Ctrl_Grp";
+rename "curve2" "Upper_Back_Ctrl";
+rename "group3" "Neck_Ctrl_Grp";
+rename "curve3" "Neck_Ctrl";
+select -r Lumbar1 ;
+select -add Lower_Back_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r Scapula ;
+select -add Upper_Back_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r Neck1 ;
+select -add Neck_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","1","1","1","1","","1" };
+select -r Lower_Back_Ctrl_Grp_parentConstraint1 ;
+select -add Upper_Back_Ctrl_Grp_parentConstraint1 ;
+select -add Neck_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+select -r Lower_Back_Ctrl ;
+select -tgl Lumbar1 ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r Upper_Back_Ctrl ;
+select -tgl Scapula ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1; 
+select -r Neck_Ctrl ;
+select -tgl Neck1 ;
+doCreateOrientConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+orientConstraint -mo -weight 1;
+select -r Pelvis_Ctrl ;
+select -add Lower_Back_Ctrl  ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r Lower_Back_Ctrl ;
+select -add Upper_Back_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r Upper_Back_Ctrl ;
+select -add Neck_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -cl  ;
+
+//Hand Controllers
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1; objectMoveCommand;
+scale -r 3.655294 1 1 ;
+scale -r 1 1 2.840803 ;
+select -r nurbsCircle1.cv[4] ;
+move -r 0 0 -0.537187 ;
+select -r nurbsCircle1.cv[6] ;
+move -r -2.725242 0 -1.493642 ;
+select -r nurbsCircle1.cv[5] ;
+move -r 1.637765 0 .117919 ;
+select -r nurbsCircle1.cv[6] ;
+move -r -1.323315 0 -0.379962 ;
+select -r nurbsCircle1.cv[7] ;
+move -r 0 0 1.965319 ;
+select -r nurbsCircle1 ;
+duplicate -rr;
+select -r nurbsCircle1 ;
+group; xform -os -piv 0 0 0;
+select -r nurbsCircle2 ;
+group; xform -os -piv 0 0 0;
+rename "group1" "L_Hand_Ctrl_Grp";
+rename "nurbsCircle1" "L_Hand_Ctrl";
+rename "group2" "R_Hand_Ctrl_Grp";
+rename "nurbsCircle2" "R_Hand_Ctrl";
+select -r L_Hand_Ctrl_Grp ;
+move -r -3.643098 0 0 L_Hand_Ctrl_Grp.scalePivot L_Hand_Ctrl_Grp.rotatePivot ;
+select -r R_Hand_Ctrl_Grp ;
+move -r -3.643098 0 0 R_Hand_Ctrl_Grp.scalePivot R_Hand_Ctrl_Grp.rotatePivot ;
+select -r BIND_L_Wrist ;
+select -add L_Hand_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r BIND_R_Wrist ;
+select -add R_Hand_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "0","0","0","0","0","0","0","1","","1" };
+parentConstraint -weight 1;
+select -r R_Hand_Ctrl_Grp_parentConstraint1 ;
+doDelete;
+setAttr "R_Hand_Ctrl_Grp.rotateX" 0;
+setAttr "R_Hand_Ctrl_Grp.rotateZ" 180;
+setAttr "R_Hand_Ctrl_Grp.rotateY" 0;
+select -r BIND_R_Wrist ;
+select -add R_Hand_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+
+
+//FOLLOW_HEAD AND FOLLOW_HIPS CONSTAINTS
+//Add Attrib Follow Head and Follow Hips for ARMS//
+addAttr -ln "Follow_Head"  -at double  -min 0 -max 1 -dv 0 |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl;
+setAttr -e-keyable true |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.Follow_Head ;
+addAttr -ln "Follow_Head"  -at double  -min 0 -max 1 -dv 0 |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl;
+setAttr -e-keyable true |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.Follow_Head ;
+addAttr -ln "Follow_Hips"  -at double  -min 0 -max 1 -dv 0 |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl;
+setAttr -e-keyable true |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.Follow_Hips ;
+addAttr -ln "Follow_Hips"  -at double  -min 0 -max 1 -dv 0 |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl;
+setAttr -e-keyable true |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.Follow_Hips ;
+
+//Set Up Constraints
+select -r IK_L_Wrist_Ctrl_Grp ;
+group; xform -os -piv 0 0 0;
+select -r IK_R_Wrist_Ctrl_Grp ;
+group; xform -os -piv 0 0 0;
+rename "group1" "IK_L_Wrist_Ctrl_Grp_Head_Constraint";
+rename "group2" "IK_R_Wrist_Ctrl_Grp_Head_Constraint";
+
+select -r Head_Center ;
+select -add IK_L_Wrist_Ctrl_Grp_Head_Constraint ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+select -r Head_Center ;
+select -add IK_R_Wrist_Ctrl_Grp_Head_Constraint ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+select -r Pelvis_Ctrl ;
+select -add IK_L_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+select -r Pelvis_Ctrl ;
+select -add IK_R_Wrist_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+//Set Follow Head and Hips Attribs 0= off, 1 = on
+
+setAttr "L_IKFK_Ctrl.Follow_Head" 0;
+setAttr "IK_L_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0" 0;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.Follow_Head IK_L_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0;
+
+setAttr "R_IKFK_Ctrl.Follow_Head" 0;
+setAttr "IK_R_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0" 0;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.Follow_Head IK_R_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0;
+
+
+setAttr "L_IKFK_Ctrl.Follow_Hips" 0;
+setAttr "IK_L_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 0;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.Follow_Hips IK_L_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "R_IKFK_Ctrl.Follow_Hips" 0;
+setAttr "IK_R_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 0;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.Follow_Hips IK_R_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "L_IKFK_Ctrl.Follow_Head" 1;
+setAttr "IK_L_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0" 1;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.Follow_Head IK_L_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0;
+
+setAttr "R_IKFK_Ctrl.Follow_Head" 1;
+setAttr "IK_R_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0" 1;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.Follow_Head IK_R_Wrist_Ctrl_Grp_Head_Constraint_parentConstraint1.Head_CenterW0;
+
+setAttr "L_IKFK_Ctrl.Follow_Hips" 1;
+setAttr "IK_L_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 1;
+setDrivenKeyframe -currentDriver L_IKFK_Ctrl.Follow_Hips IK_L_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "R_IKFK_Ctrl.Follow_Hips" 1;
+setAttr "IK_R_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 1;
+setDrivenKeyframe -currentDriver R_IKFK_Ctrl.Follow_Hips IK_R_Wrist_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "L_IKFK_Ctrl.Follow_Hips" 0;
+setAttr "L_IKFK_Ctrl.Follow_Head" 0;
+setAttr "R_IKFK_Ctrl.Follow_Hips" 0;
+setAttr "R_IKFK_Ctrl.Follow_Head" 0;
+
+//Add Attribs to Follow Hips for LEGS//
+select -r L_IKFK_Leg_Ctrl ;
+addAttr -ln "Follow_Hips"  -at double  -min 0 -max 1 -dv 0 |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl;
+setAttr -e-keyable true |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.Follow_Hips;
+
+select -r R_IKFK_Leg_Ctrl ;
+addAttr -ln "Follow_Hips"  -at double  -min 0 -max 1 -dv 0 |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl;
+setAttr -e-keyable true |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.Follow_Hips;
+
+//Constraints
+select -r Pelvis_Ctrl ;
+select -add L_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+select -r Pelvis_Ctrl ;
+select -add R_Foot_Ctrl_Grp ;
+doCreateParentConstraintArgList 1 { "1","0","0","0","0","0","0","1","","1" };
+parentConstraint -mo -weight 1;
+
+//Set Follow Head and Hips Attribs 0= off, 1 = on
+setAttr "L_IKFK_Leg_Ctrl.Follow_Hips" 0;
+setAttr "L_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 0;         
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.Follow_Hips L_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "L_IKFK_Leg_Ctrl.Follow_Hips" 1; 
+setAttr "L_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 1;           
+setDrivenKeyframe -currentDriver L_IKFK_Leg_Ctrl.Follow_Hips L_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "R_IKFK_Leg_Ctrl.Follow_Hips" 0;
+setAttr "R_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 0;         
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.Follow_Hips R_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "R_IKFK_Leg_Ctrl.Follow_Hips" 1; 
+setAttr "R_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0" 1;           
+setDrivenKeyframe -currentDriver R_IKFK_Leg_Ctrl.Follow_Hips R_Foot_Ctrl_Grp_parentConstraint1.Pelvis_CtrlW0;
+
+setAttr "L_IKFK_Leg_Ctrl.Follow_Hips" 0;
+setAttr "R_IKFK_Leg_Ctrl.Follow_Hips" 0;
+
+
+
+/*Driven Keys on Hands and Feet, Constraints on Head and Hip, and Clean Up
+/ NOTE: There are attribs for palm movement, but no driven keys set
+*/
+
+//HAND DRIVEN KEYS
+select -r L_Hand ;
+makeIdentity -apply true -t 0 -r 0 -s 0 -n 0 -jointOrient;
+select -r R_Hand ;
+makeIdentity -apply true -t 0 -r 0 -s 0 -n 0 -jointOrient;
+
+//Add Attributes to Hand Control 
+addAttr -ln "pinky_base_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pinky_base_curl;
+addAttr -ln "pinky_mid_curl"  -at double  -min 0 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pinky_mid_curl;
+addAttr -ln "pinky_top_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pinky_top_curl;
+addAttr -ln "pinky_spread"  -at double  -min -10 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pinky_spread;
+
+addAttr -ln "ring_base_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.ring_base_curl;
+addAttr -ln "ring_mid_curl"  -at double  -min 0 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.ring_mid_curl;
+addAttr -ln "ring_top_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.ring_top_curl;
+addAttr -ln "ring_spread"  -at double  -min -10 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.ring_spread;
+
+addAttr -ln "middle_base_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.middle_base_curl;
+addAttr -ln "middle_mid_curl"  -at double  -min 0 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.middle_mid_curl;
+addAttr -ln "middle_top_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.middle_top_curl;
+addAttr -ln "middle_spread"  -at double  -min -10 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.middle_spread;
+
+addAttr -ln "pointer_base_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pointer_base_curl;
+addAttr -ln "pointer_mid_curl"  -at double  -min 0 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pointer_mid_curl;
+addAttr -ln "pointer_top_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pointer_top_curl;
+addAttr -ln "pointer_spread"  -at double  -min -10 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.pointer_spread;
+
+addAttr -ln "thumb_base_curl"  -at double  -min -10 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.thumb_base_curl;
+addAttr -ln "thumb_mid_curl"  -at double  -min -5 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.thumb_mid_curl;
+addAttr -ln "thumb_spread"  -at double  -min -10 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.thumb_spread;
+
+addAttr -ln "four_finger_curl"  -at double  -min 0 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.four_finger_curl;
+
+addAttr -ln "palm"  -at double  -min -10 -max 10 -dv 0 |L_Hand_Ctrl_Grp|L_Hand_Ctrl;
+setAttr -e-keyable true |L_Hand_Ctrl_Grp|L_Hand_Ctrl.palm;
+
+addAttr -ln "pinky_base_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pinky_base_curl;
+addAttr -ln "pinky_mid_curl"  -at double  -min 0 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pinky_mid_curl;
+addAttr -ln "pinky_top_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pinky_top_curl;
+addAttr -ln "pinky_spread"  -at double  -min -10 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pinky_spread;
+
+addAttr -ln "ring_base_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.ring_base_curl;
+addAttr -ln "ring_mid_curl"  -at double  -min 0 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.ring_mid_curl;
+addAttr -ln "ring_top_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.ring_top_curl;
+addAttr -ln "ring_spread"  -at double  -min -10 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.ring_spread;
+
+addAttr -ln "middle_base_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.middle_base_curl;
+addAttr -ln "middle_mid_curl"  -at double  -min 0 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.middle_mid_curl;
+addAttr -ln "middle_top_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.middle_top_curl;
+addAttr -ln "middle_spread"  -at double  -min -10 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.middle_spread;
+
+addAttr -ln "pointer_base_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pointer_base_curl;
+addAttr -ln "pointer_mid_curl"  -at double  -min 0 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pointer_mid_curl;
+addAttr -ln "pointer_top_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pointer_top_curl;
+addAttr -ln "pointer_spread"  -at double  -min -10 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.pointer_spread;
+
+addAttr -ln "thumb_base_curl"  -at double  -min -10 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.thumb_base_curl;
+addAttr -ln "thumb_mid_curl"  -at double  -min -5 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.thumb_mid_curl;
+addAttr -ln "thumb_spread"  -at double  -min -10 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.thumb_spread;
+
+addAttr -ln "four_finger_curl"  -at double  -min 0 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.four_finger_curl;
+
+addAttr -ln "palm"  -at double  -min -10 -max 10 -dv 0 |R_Hand_Ctrl_Grp|R_Hand_Ctrl;
+setAttr -e-keyable true |R_Hand_Ctrl_Grp|R_Hand_Ctrl.palm;
+
+//LEFT HAND
+//Pinky Curl
+setAttr "L_Hand_Ctrl.pinky_base_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_base_curl L_Pinky_Base.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_base_curl" 10;
+setAttr "L_Pinky_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_base_curl L_Pinky_Base.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_base_curl" -5;
+setAttr "L_Pinky_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_base_curl L_Pinky_Base.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_base_curl" 0;
+
+setAttr "L_Hand_Ctrl.pinky_mid_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_mid_curl L_Pinky_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_mid_curl" 10;
+setAttr "L_Pinky_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_mid_curl L_Pinky_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_mid_curl" 0;
+
+setAttr "L_Hand_Ctrl.pinky_top_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_top_curl L_Pinky_Top.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_top_curl" 10;
+setAttr "L_Pinky_Top.rotateZ" -100;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_top_curl L_Pinky_Top.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_top_curl" -5;
+setAttr "L_Pinky_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_top_curl L_Pinky_Top.rotateZ;
+setAttr "L_Hand_Ctrl.pinky_top_curl" 0;
+
+//Pinky Spread
+setAttr "L_Hand_Ctrl.pinky_spread" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_spread L_Pinky_Base.rotateY;
+setAttr "L_Hand_Ctrl.pinky_spread" 10;
+setAttr "L_Pinky_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_spread L_Pinky_Base.rotateY;
+setAttr "L_Hand_Ctrl.pinky_spread" -10;
+setAttr "L_Pinky_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pinky_spread L_Pinky_Base.rotateY;
+setAttr "L_Hand_Ctrl.pinky_spread" 0;
+
+//Ring Curl
+setAttr "L_Hand_Ctrl.ring_base_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_base_curl L_Ring_Base.rotateZ;
+setAttr "L_Hand_Ctrl.ring_base_curl" 10;
+setAttr "L_Ring_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_base_curl L_Ring_Base.rotateZ;
+setAttr "L_Hand_Ctrl.ring_base_curl" -5;
+setAttr "L_Ring_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_base_curl L_Ring_Base.rotateZ;
+setAttr "L_Hand_Ctrl.ring_base_curl" 0;
+
+setAttr "L_Hand_Ctrl.ring_mid_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_mid_curl L_Ring_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.ring_mid_curl" 10;
+setAttr "L_Ring_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_mid_curl L_Ring_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.ring_mid_curl" 0;
+
+setAttr "L_Hand_Ctrl.ring_top_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_top_curl L_Ring_Top.rotateZ;
+setAttr "L_Hand_Ctrl.ring_top_curl" 10;
+setAttr "L_Ring_Top.rotateZ" -100;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_top_curl L_Ring_Top.rotateZ;
+setAttr "L_Hand_Ctrl.ring_top_curl" -5;
+setAttr "L_Ring_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_top_curl L_Ring_Top.rotateZ;
+setAttr "L_Hand_Ctrl.ring_top_curl" 0;
+
+//Ring Spread
+setAttr "L_Hand_Ctrl.ring_spread" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_spread L_Ring_Base.rotateY;
+setAttr "L_Hand_Ctrl.ring_spread" 10;
+setAttr "L_Ring_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_spread L_Ring_Base.rotateY;
+setAttr "L_Hand_Ctrl.ring_spread" -10;
+setAttr "L_Ring_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.ring_spread L_Ring_Base.rotateY;
+setAttr "L_Hand_Ctrl.ring_spread" 0;
+
+//Middle Curl
+setAttr "L_Hand_Ctrl.middle_base_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_base_curl L_Middle_Base.rotateZ;
+setAttr "L_Hand_Ctrl.middle_base_curl" 10;
+setAttr "L_Middle_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_base_curl L_Middle_Base.rotateZ;
+setAttr "L_Hand_Ctrl.middle_base_curl" -5;
+setAttr "L_Middle_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_base_curl L_Middle_Base.rotateZ;
+setAttr "L_Hand_Ctrl.middle_base_curl" 0;
+
+setAttr "L_Hand_Ctrl.middle_mid_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_mid_curl L_Middle_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.middle_mid_curl" 10;
+setAttr "L_Middle_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_mid_curl L_Middle_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.middle_mid_curl" 0;
+
+setAttr "L_Hand_Ctrl.middle_top_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_top_curl L_Middle_Top.rotateZ;
+setAttr "L_Hand_Ctrl.middle_top_curl" 10;
+setAttr "L_Middle_Top.rotateZ" -100;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_top_curl L_Middle_Top.rotateZ;
+setAttr "L_Hand_Ctrl.middle_top_curl" -5;
+setAttr "L_Middle_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_top_curl L_Middle_Top.rotateZ;
+setAttr "L_Hand_Ctrl.middle_top_curl" 0;
+
+//Middle Spread
+setAttr "L_Hand_Ctrl.middle_spread" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_spread L_Middle_Base.rotateY;
+setAttr "L_Hand_Ctrl.middle_spread" 10;
+setAttr "L_Middle_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_spread L_Middle_Base.rotateY;
+setAttr "L_Hand_Ctrl.middle_spread" -10;
+setAttr "L_Middle_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.middle_spread L_Middle_Base.rotateY;
+setAttr "L_Hand_Ctrl.middle_spread" 0;
+
+//Pointer Curl
+setAttr "L_Hand_Ctrl.pointer_base_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_base_curl L_Index_Base.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_base_curl" 10;
+setAttr "L_Index_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_base_curl L_Index_Base.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_base_curl" -5;
+setAttr "L_Index_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_base_curl L_Index_Base.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_base_curl" 0;
+
+setAttr "L_Hand_Ctrl.pointer_mid_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_mid_curl L_Index_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_mid_curl" 10;
+setAttr "L_Index_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_mid_curl L_Index_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_mid_curl" 0;
+
+setAttr "L_Hand_Ctrl.pointer_top_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_top_curl L_Index_Top.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_top_curl" 10;
+setAttr "L_Index_Top.rotateZ" -100;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_top_curl L_Index_Top.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_top_curl" -5;
+setAttr "L_Index_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_top_curl L_Index_Top.rotateZ;
+setAttr "L_Hand_Ctrl.pointer_top_curl" 0;
+
+//Pointer Spread
+setAttr "L_Hand_Ctrl.pointer_spread" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_spread L_Index_Base.rotateY;
+setAttr "L_Hand_Ctrl.pointer_spread" 10;
+setAttr "L_Index_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_spread L_Index_Base.rotateY;
+setAttr "L_Hand_Ctrl.pointer_spread" -10;
+setAttr "L_Index_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.pointer_spread L_Index_Base.rotateY;
+setAttr "L_Hand_Ctrl.pointer_spread" 0;
+
+//Four Finger Curl
+setAttr "L_Hand_Ctrl.four_finger_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Pinky_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Pinky_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Pinky_Top.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Ring_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Ring_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Ring_Top.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Middle_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Middle_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Middle_Top.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Index_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Index_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Index_Top.rotateZ;
+setAttr "L_Hand_Ctrl.four_finger_curl" 10;
+setAttr "L_Pinky_Base.rotateZ" -90;
+setAttr "L_Pinky_Middle.rotateZ" -90;
+setAttr "L_Pinky_Top.rotateZ" -90;
+setAttr "L_Ring_Base.rotateZ" -90;
+setAttr "L_Ring_Middle.rotateZ" -90;
+setAttr "L_Ring_Top.rotateZ" -90;
+setAttr "L_Middle_Base.rotateZ" -90;
+setAttr "L_Middle_Middle.rotateZ" -90;
+setAttr "L_Middle_Top.rotateZ" -90;
+setAttr "L_Index_Base.rotateZ" -90;
+setAttr "L_Index_Middle.rotateZ" -90;
+setAttr "L_Index_Top.rotateZ" -90;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Pinky_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Pinky_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Pinky_Top.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Ring_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Ring_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Ring_Top.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Middle_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Middle_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Middle_Top.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Index_Base.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Index_Middle.rotateZ;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.four_finger_curl L_Index_Top.rotateZ;
+setAttr "L_Hand_Ctrl.four_finger_curl" 0;
+
+//Thumb Curl
+setAttr "L_Hand_Ctrl.thumb_base_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateX;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateY;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.thumb_base_curl" 10;
+setAttr "L_Thumb_Middle.rotateX" 0;
+setAttr "L_Thumb_Middle.rotateY" 60;
+setAttr "L_Thumb_Middle.rotateZ" -30;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateX;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateY;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.thumb_base_curl" -10;
+setAttr "L_Thumb_Middle.rotateX" 10;
+setAttr "L_Thumb_Middle.rotateY" -5;
+setAttr "L_Thumb_Middle.rotateZ" 20;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateX;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateY;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_base_curl L_Thumb_Middle.rotateZ;
+setAttr "L_Hand_Ctrl.thumb_base_curl" 0;
+
+setAttr "L_Hand_Ctrl.thumb_mid_curl" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateX;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateY;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateZ;
+setAttr "L_Hand_Ctrl.thumb_mid_curl" 10;
+setAttr "L_Thumb_Top.rotateX" -120;
+setAttr "L_Thumb_Top.rotateY" 80;
+setAttr "L_Thumb_Top.rotateZ" -150;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateX;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateY;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateZ;
+setAttr "L_Hand_Ctrl.thumb_mid_curl" -5;
+setAttr "L_Thumb_Top.rotateX" 0;
+setAttr "L_Thumb_Top.rotateY" -40;
+setAttr "L_Thumb_Top.rotateZ" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateX;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateY;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_mid_curl L_Thumb_Top.rotateZ;
+setAttr "L_Hand_Ctrl.thumb_mid_curl" 0;
+
+//Thumb Spread
+setAttr "L_Hand_Ctrl.thumb_spread" 0;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_spread L_Thumb_Base.rotateY;
+setAttr "L_Hand_Ctrl.thumb_spread" 10;
+setAttr "L_Thumb_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_spread L_Thumb_Base.rotateY;
+setAttr "L_Hand_Ctrl.thumb_spread" -10;
+setAttr "L_Thumb_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver L_Hand_Ctrl.thumb_spread L_Thumb_Base.rotateY;
+setAttr "L_Hand_Ctrl.thumb_spread" 0;
+
+//RIGHT HAND
+//Pinky Curl
+setAttr "R_Hand_Ctrl.pinky_base_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_base_curl R_Pinky_Base.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_base_curl" 10;
+setAttr "R_Pinky_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_base_curl R_Pinky_Base.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_base_curl" -5;
+setAttr "R_Pinky_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_base_curl R_Pinky_Base.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_base_curl" 0;
+
+setAttr "R_Hand_Ctrl.pinky_mid_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_mid_curl R_Pinky_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_mid_curl" 10;
+setAttr "R_Pinky_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_mid_curl R_Pinky_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_mid_curl" 0;
+
+setAttr "R_Hand_Ctrl.pinky_top_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_top_curl R_Pinky_Top.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_top_curl" 10;
+setAttr "R_Pinky_Top.rotateZ" -100;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_top_curl R_Pinky_Top.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_top_curl" -5;
+setAttr "R_Pinky_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_top_curl R_Pinky_Top.rotateZ;
+setAttr "R_Hand_Ctrl.pinky_top_curl" 0;
+
+//Pinky Spread
+setAttr "R_Hand_Ctrl.pinky_spread" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_spread R_Pinky_Base.rotateY;
+setAttr "R_Hand_Ctrl.pinky_spread" 10;
+setAttr "R_Pinky_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_spread R_Pinky_Base.rotateY;
+setAttr "R_Hand_Ctrl.pinky_spread" -10;
+setAttr "R_Pinky_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pinky_spread R_Pinky_Base.rotateY;
+setAttr "R_Hand_Ctrl.pinky_spread" 0;
+
+//Ring Curl
+setAttr "R_Hand_Ctrl.ring_base_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_base_curl R_Ring_Base.rotateZ;
+setAttr "R_Hand_Ctrl.ring_base_curl" 10;
+setAttr "R_Ring_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_base_curl R_Ring_Base.rotateZ;
+setAttr "R_Hand_Ctrl.ring_base_curl" -5;
+setAttr "R_Ring_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_base_curl R_Ring_Base.rotateZ;
+setAttr "R_Hand_Ctrl.ring_base_curl" 0;
+
+setAttr "R_Hand_Ctrl.ring_mid_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_mid_curl R_Ring_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.ring_mid_curl" 10;
+setAttr "R_Ring_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_mid_curl R_Ring_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.ring_mid_curl" 0;
+
+setAttr "R_Hand_Ctrl.ring_top_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_top_curl R_Ring_Top.rotateZ;
+setAttr "R_Hand_Ctrl.ring_top_curl" 10;
+setAttr "R_Ring_Top.rotateZ" -100;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_top_curl R_Ring_Top.rotateZ;
+setAttr "R_Hand_Ctrl.ring_top_curl" -5;
+setAttr "R_Ring_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_top_curl R_Ring_Top.rotateZ;
+setAttr "R_Hand_Ctrl.ring_top_curl" 0;
+
+//Ring Spread
+setAttr "R_Hand_Ctrl.ring_spread" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_spread R_Ring_Base.rotateY;
+setAttr "R_Hand_Ctrl.ring_spread" 10;
+setAttr "R_Ring_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_spread R_Ring_Base.rotateY;
+setAttr "R_Hand_Ctrl.ring_spread" -10;
+setAttr "R_Ring_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.ring_spread R_Ring_Base.rotateY;
+setAttr "R_Hand_Ctrl.ring_spread" 0;
+
+//Middle Curl
+setAttr "R_Hand_Ctrl.middle_base_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_base_curl R_Middle_Base.rotateZ;
+setAttr "R_Hand_Ctrl.middle_base_curl" 10;
+setAttr "R_Middle_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_base_curl R_Middle_Base.rotateZ;
+setAttr "R_Hand_Ctrl.middle_base_curl" -5;
+setAttr "R_Middle_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_base_curl R_Middle_Base.rotateZ;
+setAttr "R_Hand_Ctrl.middle_base_curl" 0;
+
+setAttr "R_Hand_Ctrl.middle_mid_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_mid_curl R_Middle_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.middle_mid_curl" 10;
+setAttr "R_Middle_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_mid_curl R_Middle_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.middle_mid_curl" 0;
+
+setAttr "R_Hand_Ctrl.middle_top_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_top_curl R_Middle_Top.rotateZ;
+setAttr "R_Hand_Ctrl.middle_top_curl" 10;
+setAttr "R_Middle_Top.rotateZ" -100;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_top_curl R_Middle_Top.rotateZ;
+setAttr "R_Hand_Ctrl.middle_top_curl" -5;
+setAttr "R_Middle_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_top_curl R_Middle_Top.rotateZ;
+setAttr "R_Hand_Ctrl.middle_top_curl" 0;
+
+//Middle Spread
+setAttr "R_Hand_Ctrl.middle_spread" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_spread R_Middle_Base.rotateY;
+setAttr "R_Hand_Ctrl.middle_spread" 10;
+setAttr "R_Middle_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_spread R_Middle_Base.rotateY;
+setAttr "R_Hand_Ctrl.middle_spread" -10;
+setAttr "R_Middle_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.middle_spread R_Middle_Base.rotateY;
+setAttr "R_Hand_Ctrl.middle_spread" 0;
+
+//Pointer Curl
+setAttr "R_Hand_Ctrl.pointer_base_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_base_curl R_Index_Base.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_base_curl" 10;
+setAttr "R_Index_Base.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_base_curl R_Index_Base.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_base_curl" -5;
+setAttr "R_Index_Base.rotateZ" 70;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_base_curl R_Index_Base.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_base_curl" 0;
+
+setAttr "R_Hand_Ctrl.pointer_mid_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_mid_curl R_Index_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_mid_curl" 10;
+setAttr "R_Index_Middle.rotateZ" -110;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_mid_curl R_Index_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_mid_curl" 0;
+
+setAttr "R_Hand_Ctrl.pointer_top_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_top_curl R_Index_Top.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_top_curl" 10;
+setAttr "R_Index_Top .rotateZ" -100;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_top_curl R_Index_Top.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_top_curl" -5;
+setAttr "R_Index_Top.rotateZ" 20;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_top_curl R_Index_Top.rotateZ;
+setAttr "R_Hand_Ctrl.pointer_top_curl" 0;
+
+//Pointer Spread
+setAttr "R_Hand_Ctrl.pointer_spread" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_spread R_Index_Base.rotateY;
+setAttr "R_Hand_Ctrl.pointer_spread" 10;
+setAttr "R_Index_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_spread R_Index_Base.rotateY;
+setAttr "R_Hand_Ctrl.pointer_spread" -10;
+setAttr "R_Index_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.pointer_spread R_Index_Base.rotateY;
+setAttr "R_Hand_Ctrl.pointer_spread" 0;
+
+//Four Finger Curl
+setAttr "R_Hand_Ctrl.four_finger_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Pinky_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Pinky_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Pinky_Top.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Ring_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Ring_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Ring_Top.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Middle_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Middle_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Middle_Top.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Index_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Index_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Index_Top.rotateZ;
+setAttr "R_Hand_Ctrl.four_finger_curl" 10;
+setAttr "R_Pinky_Base.rotateZ" -90;
+setAttr "R_Pinky_Middle.rotateZ" -90;
+setAttr "R_Pinky_Top.rotateZ" -90;
+setAttr "R_Ring_Base.rotateZ" -90;
+setAttr "R_Ring_Middle.rotateZ" -90;
+setAttr "R_Ring_Top.rotateZ" -90;
+setAttr "R_Middle_Base.rotateZ" -90;
+setAttr "R_Middle_Middle.rotateZ" -90;
+setAttr "R_Middle_Top.rotateZ" -90;
+setAttr "R_Index_Base.rotateZ" -90;
+setAttr "R_Index_Middle.rotateZ" -90;
+setAttr "R_Index_Top.rotateZ" -90;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Pinky_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Pinky_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Pinky_Top.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Ring_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Ring_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Ring_Top.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Middle_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Middle_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Middle_Top.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Index_Base.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Index_Middle.rotateZ;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.four_finger_curl R_Index_Top.rotateZ;
+setAttr "R_Hand_Ctrl.four_finger_curl" 0;
+
+//Thumb Curl
+setAttr "R_Hand_Ctrl.thumb_base_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateX;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateY;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.thumb_base_curl" 10;
+setAttr "R_Thumb_Middle.rotateX" 0;
+setAttr "R_Thumb_Middle.rotateY" 60;
+setAttr "R_Thumb_Middle.rotateZ" -30;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateX;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateY;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.thumb_base_curl" -10;
+setAttr "R_Thumb_Middle.rotateX" 10;
+setAttr "R_Thumb_Middle.rotateY" -5;
+setAttr "R_Thumb_Middle.rotateZ" 20;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateX;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateY;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_base_curl R_Thumb_Middle.rotateZ;
+setAttr "R_Hand_Ctrl.thumb_base_curl" 0;
+
+setAttr "R_Hand_Ctrl.thumb_mid_curl" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateX;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateY;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateZ;
+setAttr "R_Hand_Ctrl.thumb_mid_curl" 10;
+setAttr "R_Thumb_Top.rotateX" -120;
+setAttr "R_Thumb_Top.rotateY" 80;
+setAttr "R_Thumb_Top.rotateZ" -150;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateX;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateY;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateZ;
+setAttr "R_Hand_Ctrl.thumb_mid_curl" -5;
+setAttr "R_Thumb_Top.rotateX" 0;
+setAttr "R_Thumb_Top.rotateY" -40;
+setAttr "R_Thumb_Top.rotateZ" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateX;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateY;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_mid_curl R_Thumb_Top.rotateZ;
+setAttr "R_Hand_Ctrl.thumb_mid_curl" 0;
+
+//Thumb Spread
+setAttr "R_Hand_Ctrl.thumb_spread" 0;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_spread R_Thumb_Base.rotateY;
+setAttr "R_Hand_Ctrl.thumb_spread" 10;
+setAttr "R_Thumb_Base.rotateY" -50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_spread R_Thumb_Base.rotateY;
+setAttr "R_Hand_Ctrl.thumb_spread" -10;
+setAttr "R_Thumb_Base.rotateY" 50;
+setDrivenKeyframe -currentDriver R_Hand_Ctrl.thumb_spread R_Thumb_Base.rotateY;
+setAttr "R_Hand_Ctrl.thumb_spread" 0;
+
+
+
+//FOOT DRIVEN KEYS
+//Add Attributes to Foot Control 
+addAttr -ln "foot_roll"  -at double  -min -10 -max 10 -dv 0 |L_Foot_Ctrl_Grp|L_Foot_Ctrl;
+setAttr -e-keyable true |L_Foot_Ctrl_Grp|L_Foot_Ctrl.foot_roll;
+addAttr -ln "ball_roll"  -at double  -min -10 -max 10 -dv 0 |L_Foot_Ctrl_Grp|L_Foot_Ctrl;
+setAttr -e-keyable true |L_Foot_Ctrl_Grp|L_Foot_Ctrl.ball_roll;
+addAttr -ln "toe_roll"  -at double  -min -10 -max 10 -dv 0 |L_Foot_Ctrl_Grp|L_Foot_Ctrl;
+setAttr -e-keyable true |L_Foot_Ctrl_Grp|L_Foot_Ctrl.toe_roll;
+addAttr -ln "toe_tap"  -at double  -min 0 -max 10 -dv 0 |L_Foot_Ctrl_Grp|L_Foot_Ctrl;
+setAttr -e-keyable true |L_Foot_Ctrl_Grp|L_Foot_Ctrl.toe_tap;
+addAttr -ln "toe_twist"  -at double  -min -10 -max 10 -dv 0 |L_Foot_Ctrl_Grp|L_Foot_Ctrl;
+setAttr -e-keyable true |L_Foot_Ctrl_Grp|L_Foot_Ctrl.toe_twist;
+addAttr -ln "heel_twist"  -at double  -min -10 -max 10 -dv 0 |L_Foot_Ctrl_Grp|L_Foot_Ctrl;
+setAttr -e-keyable true |L_Foot_Ctrl_Grp|L_Foot_Ctrl.heel_twist;
+
+addAttr -ln "foot_roll"  -at double  -min -10 -max 10 -dv 0 |R_Foot_Ctrl_Grp|R_Foot_Ctrl;
+setAttr -e-keyable true |R_Foot_Ctrl_Grp|R_Foot_Ctrl.foot_roll;
+addAttr -ln "ball_roll"  -at double  -min -10 -max 10 -dv 0 |R_Foot_Ctrl_Grp|R_Foot_Ctrl;
+setAttr -e-keyable true |R_Foot_Ctrl_Grp|R_Foot_Ctrl.ball_roll;
+addAttr -ln "toe_roll"  -at double  -min -10 -max 10 -dv 0 |R_Foot_Ctrl_Grp|R_Foot_Ctrl;
+setAttr -e-keyable true |R_Foot_Ctrl_Grp|R_Foot_Ctrl.toe_roll;
+addAttr -ln "toe_tap"  -at double  -min 0 -max 10 -dv 0 |R_Foot_Ctrl_Grp|R_Foot_Ctrl;
+setAttr -e-keyable true |R_Foot_Ctrl_Grp|R_Foot_Ctrl.toe_tap;
+addAttr -ln "toe_twist"  -at double  -min -10 -max 10 -dv 0 |R_Foot_Ctrl_Grp|R_Foot_Ctrl;
+setAttr -e-keyable true |R_Foot_Ctrl_Grp|R_Foot_Ctrl.toe_twist;
+addAttr -ln "heel_twist"  -at double  -min -10 -max 10 -dv 0 |R_Foot_Ctrl_Grp|R_Foot_Ctrl;
+setAttr -e-keyable true |R_Foot_Ctrl_Grp|R_Foot_Ctrl.heel_twist;
+
+//LEFT FOOT
+//Foot Roll
+setAttr "L_Foot_Ctrl.foot_roll" 0;
+select -r L_Heel_Joint_Ctrl ;
+rotate -r -os 0 0 0 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Ball_Joint_Ctrl.rotateZ;
+setAttr "L_Foot_Ctrl.foot_roll" -10;
+select -r L_Heel_Joint_Ctrl ;
+rotate -r -os 0 0 -50 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Ball_Joint_Ctrl.rotateZ;
+setAttr "L_Foot_Ctrl.foot_roll" 5;
+select -r L_Ball_Joint_Ctrl ;
+rotate -r -eu 0 0 40 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Ball_Joint_Ctrl.rotateZ;
+setAttr "L_Foot_Ctrl.foot_roll" 10;
+select -r L_Toe_Joint_Ctrl ;
+rotate -r -eu 0 0 40 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.foot_roll L_Ball_Joint_Ctrl.rotateZ;
+setAttr "L_Foot_Ctrl.foot_roll" 0;
+
+//Ball Roll
+setAttr "L_Foot_Ctrl.ball_roll" 0;
+select -r L_Ball_Joint_Ctrl ;
+rotate -r -os 0 0 0 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.ball_roll L_Ball_Joint_Ctrl.rotateZ;
+
+setAttr "L_Foot_Ctrl.ball_roll" -10;
+select -r L_Ball_Joint_Ctrl ;
+rotate -r -os 0 0 -60 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.ball_roll L_Ball_Joint_Ctrl.rotateZ;
+
+setAttr "L_Foot_Ctrl.ball_roll" 10;
+select -r L_Ball_Joint_Ctrl ;
+rotate -r -os 0 0 60 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.ball_roll L_Ball_Joint_Ctrl.rotateZ;
+setAttr "L_Foot_Ctrl.ball_roll" 0;
+
+//Toe Roll
+setAttr "L_Foot_Ctrl.toe_roll" 0;
+select -r L_Toe_Joint_Ctrl ;
+rotate -r -os 0 0 0 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_roll L_Toe_Joint_Ctrl.rotateZ;
+
+setAttr "L_Foot_Ctrl.toe_roll" -10;
+select -r L_Toe_Joint_Ctrl ;
+rotate -r -os 0 0 -70 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_roll L_Toe_Joint_Ctrl.rotateZ;
+
+setAttr "L_Foot_Ctrl.toe_roll" 10;
+select -r L_Toe_Joint_Ctrl ;
+rotate -r -os 0 0 70 ;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_roll L_Toe_Joint_Ctrl.rotateZ;
+setAttr "L_Foot_Ctrl.toe_roll" 0;
+
+//Toe Tap
+setAttr "L_Foot_Ctrl.toe_tap" 0;
+setAttr "L_Heel_Joint_Ctrl.rotateZ"0;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_tap L_Heel_Joint_Ctrl.rotateZ;
+
+setAttr "L_Foot_Ctrl.toe_tap" 10;
+setAttr "L_Heel_Joint_Ctrl.rotateZ" -20;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_tap L_Heel_Joint_Ctrl.rotateZ;
+
+setAttr "L_Foot_Ctrl.toe_tap" 0;
+
+//Toe Twist
+setAttr "L_Foot_Ctrl.toe_twist" 0;
+setAttr "L_Toe_Joint_Ctrl.rotateY" 0;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_twist L_Toe_Joint_Ctrl.rotateY;
+
+setAttr "L_Foot_Ctrl.toe_twist" -10;
+setAttr "L_Toe_Joint_Ctrl.rotateY" -50;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_twist L_Toe_Joint_Ctrl.rotateY;
+
+setAttr "L_Foot_Ctrl.toe_twist" 10;
+setAttr "L_Toe_Joint_Ctrl.rotateY" 50;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.toe_twist L_Toe_Joint_Ctrl.rotateY;
+
+setAttr "L_Foot_Ctrl.toe_twist" 0;
+
+//Heel Twist
+setAttr "L_Foot_Ctrl.heel_twist" 0;
+setAttr "L_Heel_Joint_Ctrl.rotateY" 0;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.heel_twist L_Heel_Joint_Ctrl.rotateY;
+
+setAttr "L_Foot_Ctrl.heel_twist" -10;
+setAttr "L_Heel_Joint_Ctrl.rotateY" -35;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.heel_twist L_Heel_Joint_Ctrl.rotateY;
+
+setAttr "L_Foot_Ctrl.heel_twist" 10;
+setAttr "L_Heel_Joint_Ctrl.rotateY" 35;
+setDrivenKeyframe -currentDriver L_Foot_Ctrl.heel_twist L_Heel_Joint_Ctrl.rotateY;
+
+setAttr "L_Foot_Ctrl.heel_twist" 0;
+
+//RIGHT FOOT
+//Foot Roll
+setAttr "R_Foot_Ctrl.foot_roll" 0;
+select -r R_Heel_Joint_Ctrl ;
+rotate -r -os 0 0 0 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Ball_Joint_Ctrl.rotateZ;
+setAttr "R_Foot_Ctrl.foot_roll" -10;
+select -r R_Heel_Joint_Ctrl ;
+rotate -r -os 0 0 -50 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Ball_Joint_Ctrl.rotateZ;
+setAttr "R_Foot_Ctrl.foot_roll" 5;
+select -r R_Ball_Joint_Ctrl ;
+rotate -r -eu 0 0 40 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Ball_Joint_Ctrl.rotateZ;
+setAttr "R_Foot_Ctrl.foot_roll" 10;
+select -r R_Toe_Joint_Ctrl ;
+rotate -r -eu 0 0 40 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Heel_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Toe_Joint_Ctrl.rotateZ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.foot_roll R_Ball_Joint_Ctrl.rotateZ;
+setAttr "R_Foot_Ctrl.foot_roll" 0;
+
+//Ball Roll
+setAttr "R_Foot_Ctrl.ball_roll" 0;
+select -r R_Ball_Joint_Ctrl ;
+rotate -r -os 0 0 0 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.ball_roll R_Ball_Joint_Ctrl.rotateZ;
+
+setAttr "R_Foot_Ctrl.ball_roll" -10;
+select -r R_Ball_Joint_Ctrl ;
+rotate -r -os 0 0 -60 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.ball_roll R_Ball_Joint_Ctrl.rotateZ;
+
+setAttr "R_Foot_Ctrl.ball_roll" 10;
+select -r R_Ball_Joint_Ctrl ;
+rotate -r -os 0 0 60 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.ball_roll R_Ball_Joint_Ctrl.rotateZ;
+setAttr "R_Foot_Ctrl.ball_roll" 0;
+
+//Toe Roll
+setAttr "R_Foot_Ctrl.toe_roll" 0;
+select -r R_Toe_Joint_Ctrl ;
+rotate -r -os 0 0 0 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_roll R_Toe_Joint_Ctrl.rotateZ;
+
+setAttr "R_Foot_Ctrl.toe_roll" -10;
+select -r R_Toe_Joint_Ctrl ;
+rotate -r -os 0 0 -70 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_roll R_Toe_Joint_Ctrl.rotateZ;
+
+setAttr "R_Foot_Ctrl.toe_roll" 10;
+select -r R_Toe_Joint_Ctrl ;
+rotate -r -os 0 0 70 ;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_roll R_Toe_Joint_Ctrl.rotateZ;
+setAttr "R_Foot_Ctrl.toe_roll" 0;
+
+//Toe Tap
+setAttr "R_Foot_Ctrl.toe_tap" 0;
+setAttr "R_Heel_Joint_Ctrl.rotateZ"0;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_tap R_Heel_Joint_Ctrl.rotateZ;
+
+setAttr "R_Foot_Ctrl.toe_tap" 10;
+setAttr "R_Heel_Joint_Ctrl.rotateZ" -20;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_tap R_Heel_Joint_Ctrl.rotateZ;
+
+setAttr "R_Foot_Ctrl.toe_tap" 0;
+
+//Toe Twist
+setAttr "R_Foot_Ctrl.toe_twist" 0;
+setAttr "R_Toe_Joint_Ctrl.rotateY" 0;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_twist R_Toe_Joint_Ctrl.rotateY;
+
+setAttr "R_Foot_Ctrl.toe_twist" -10;
+setAttr "R_Toe_Joint_Ctrl.rotateY" -50;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_twist R_Toe_Joint_Ctrl.rotateY;
+
+setAttr "R_Foot_Ctrl.toe_twist" 10;
+setAttr "R_Toe_Joint_Ctrl.rotateY" 50;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.toe_twist R_Toe_Joint_Ctrl.rotateY;
+
+setAttr "R_Foot_Ctrl.toe_twist" 0;
+
+//Heel Twist
+setAttr "R_Foot_Ctrl.heel_twist" 0;
+setAttr "R_Heel_Joint_Ctrl.rotateY" 0;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.heel_twist R_Heel_Joint_Ctrl.rotateY;
+
+setAttr "R_Foot_Ctrl.heel_twist" -10;
+setAttr "R_Heel_Joint_Ctrl.rotateY" -35;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.heel_twist R_Heel_Joint_Ctrl.rotateY;
+
+setAttr "R_Foot_Ctrl.heel_twist" 10;
+setAttr "R_Heel_Joint_Ctrl.rotateY" 35;
+setDrivenKeyframe -currentDriver R_Foot_Ctrl.heel_twist R_Heel_Joint_Ctrl.rotateY;
+
+setAttr "R_Foot_Ctrl.heel_twist" 0;
+
+
+
+//Master Controller
+curve -d 1 -p -1.013136 0 -2.997907 -p 1.013136 0 -2.983116 -p 0.998345 0 1.025056 -p 4.000777 0 1.039846 -p 0.00739515 0 5.033228 -p -4.000777 0 1.025056 -p -0.998345 0 1.025056 -p -0.998345 0 -2.983116 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 ;
+scale -r 3.201695 3.201695 3.201695 ;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+group; xform -os -piv 0 0 0;
+rename "group1" "Master_Ctrl_Grp";
+rename "curve1" "Master_Ctrl";
+select -r BIND_L_Ball;
+select -add Master_Ctrl_Grp ;
+doCreatePointConstraintArgList 1 { "0","0","0","0","1","0","1","1","","1" };
+pointConstraint -offset 0 0 0 -skip x -skip z -weight 1;
+select -r Master_Ctrl_Grp_pointConstraint1 ;
+doDelete;
+select -cl  ;
+
+rename "L_Foot_Ctrl_Grp" "L_Foot_Ctrl_Grp_Constraint";
+rename "R_Foot_Ctrl_Grp" "R_Foot_Ctrl_Grp_Constraint"; 
+select -r L_Foot_Ctrl_Grp_Constraint ;
+group; xform -os -piv 0 0 0;
+select -r R_Foot_Ctrl_Grp_Constraint ;
+group; xform -os -piv 0 0 0;
+rename "group1" "L_Foot_Ctrl_Grp";
+rename "group2" "R_Foot_Ctrl_Grp";
+select -r L_Knee_Locator ;
+group; xform -os -piv 0 0 0;
+select -r R_Knee_Locator ;
+group; xform -os -piv 0 0 0;
+rename "group1" "L_Knee_Locator_Ctrl_Grp";
+rename "group2" "R_Knee_Locator_Ctrl_Grp";
+select -r IK_L_Wrist_Ctrl_Grp_Head_Constraint ;
+group; xform -os -piv 0 0 0;
+select -r IK_R_Wrist_Ctrl_Grp_Head_Constraint ;
+group; xform -os -piv 0 0 0;
+rename "group1" "IK_L_Wrist_Ctrl_Grp";
+rename "group2" "IK_R_Wrist_Ctrl_Grp";
+
+parent Pelvis_Ctrl_Grp Master_Ctrl ;
+parent L_Foot_Ctrl_Grp Master_Ctrl ;
+parent R_Foot_Ctrl_Grp Master_Ctrl ;
+parent L_Arm_Polevector_Ctrl_Grp Master_Ctrl ;
+parent R_Arm_Polevector_Ctrl_Grp Master_Ctrl ;
+parent L_Knee_Locator_Ctrl_Grp Master_Ctrl ;
+parent R_Knee_Locator_Ctrl_Grp Master_Ctrl ;
+parent FK_L_Elbow_Ctrl_Grp Master_Ctrl ;
+parent FK_L_Wrist_Ctrl_Grp Master_Ctrl ;
+parent FK_R_Elbow_Ctrl_Grp Master_Ctrl ;
+parent FK_R_Wrist_Ctrl_Grp Master_Ctrl ;
+parent R_Knee_Ctrl_Grp Master_Ctrl ;
+parent R_Ankle_Ctrl_Grp Master_Ctrl ;
+parent L_Knee_Ctrl_Grp Master_Ctrl ;
+parent L_Ankle_Ctrl_Grp Master_Ctrl ; 
+parent FK_L_Foot_Ctrl_Grp Master_Ctrl ;
+parent FK_R_Foot_Ctrl_Grp Master_Ctrl ;
+parent Lower_Back_Ctrl_Grp Master_Ctrl ;
+parent Upper_Back_Ctrl_Grp Master_Ctrl ;
+parent Neck_Ctrl_Grp Master_Ctrl ;
+parent |IK_L_Wrist_Ctrl_Grp Master_Ctrl ; 
+parent |IK_R_Wrist_Ctrl_Grp Master_Ctrl ;    
+
+setAttr "FK_L_Ball.rotateY" 0;       
+}
+
+proc extra_func() {
+//CLEAN UP
+setAttr "L_Heel_Joint_Ctrl.visibility" 0;
+setAttr "R_Heel_Joint_Ctrl.visibility" 0;
+
+setAttr -lock true "L_IKFK_Leg_Ctrl.sx";
+setAttr -lock true "Neck_Ctrl.sx";
+setAttr -lock true "Upper_Back_Ctrl.sx";
+setAttr -lock true "Lower_Back_Ctrl.sx";
+setAttr -lock true "R_IKFK_Leg_Ctrl.sx";
+setAttr -lock true "L_IKFK_Leg_Ctrl.sy";
+setAttr -lock true "Neck_Ctrl.sy";
+setAttr -lock true "Upper_Back_Ctrl.sy";
+setAttr -lock true "Lower_Back_Ctrl.sy";
+setAttr -lock true "R_IKFK_Leg_Ctrl.sy";
+setAttr -lock true "L_IKFK_Leg_Ctrl.sz";
+setAttr -lock true "Neck_Ctrl.sz";
+setAttr -lock true "Upper_Back_Ctrl.sz";
+setAttr -lock true "Lower_Back_Ctrl.sz";
+setAttr -lock true "R_IKFK_Leg_Ctrl.sz";
+setAttr -lock true "L_IKFK_Leg_Ctrl.tx";
+setAttr -lock true "Neck_Ctrl.tx";
+setAttr -lock true "Upper_Back_Ctrl.tx";
+setAttr -lock true "Lower_Back_Ctrl.tx";
+setAttr -lock true "R_IKFK_Leg_Ctrl.tx";
+setAttr -lock true "L_IKFK_Leg_Ctrl.ty";
+setAttr -lock true "Neck_Ctrl.ty";
+setAttr -lock true "Upper_Back_Ctrl.ty";
+setAttr -lock true "Lower_Back_Ctrl.ty";
+setAttr -lock true "R_IKFK_Leg_Ctrl.ty";
+setAttr -lock true "L_IKFK_Leg_Ctrl.tz";
+setAttr -lock true "Neck_Ctrl.tz";
+setAttr -lock true "Upper_Back_Ctrl.tz";
+setAttr -lock true "Lower_Back_Ctrl.tz";
+setAttr -lock true "R_IKFK_Leg_Ctrl.tz";
+setAttr -lock true "Pelvis_Ctrl.sx";
+setAttr -lock true "Pelvis_Ctrl.sy";
+setAttr -lock true "Pelvis_Ctrl.sz";
+setAttr -lock true "L_IKFK_Leg_Ctrl.rx";
+setAttr -lock true "R_IKFK_Leg_Ctrl.rx";
+setAttr -lock true "L_IKFK_Leg_Ctrl.ry";
+setAttr -lock true "R_IKFK_Leg_Ctrl.ry";
+setAttr -lock true "L_IKFK_Leg_Ctrl.rz";
+setAttr -lock true "R_IKFK_Leg_Ctrl.rz";
+setAttr -lock true "IK_R_Wrist_Ctrl.sx";
+setAttr -lock true "IK_L_Wrist_Ctrl.sx";
+setAttr -lock true "IK_R_Wrist_Ctrl.sy";
+setAttr -lock true "IK_L_Wrist_Ctrl.sy";
+setAttr -lock true "IK_R_Wrist_Ctrl.sz";
+setAttr -lock true "IK_L_Wrist_Ctrl.sz";
+setAttr -lock true "Master_Ctrl.sx";
+setAttr -lock true "R_Foot_Ctrl.sx";
+setAttr -lock true "L_Foot_Ctrl.sx";
+setAttr -lock true "Master_Ctrl.sy";
+setAttr -lock true "R_Foot_Ctrl.sy";
+setAttr -lock true "L_Foot_Ctrl.sy";
+setAttr -lock true "Master_Ctrl.sz";
+setAttr -lock true "R_Foot_Ctrl.sz";
+setAttr -lock true "L_Foot_Ctrl.sz";
+setAttr -lock true "R_Hand_Ctrl.tx";
+setAttr -lock true "L_Hand_Ctrl.tx";
+setAttr -lock true "L_IKFK_Ctrl.tx";
+setAttr -lock true "R_IKFK_Ctrl.tx";
+setAttr -lock true "R_Hand_Ctrl.ty";
+setAttr -lock true "L_Hand_Ctrl.ty";
+setAttr -lock true "L_IKFK_Ctrl.ty";
+setAttr -lock true "R_IKFK_Ctrl.ty";
+setAttr -lock true "R_Hand_Ctrl.tz";
+setAttr -lock true "L_Hand_Ctrl.tz";
+setAttr -lock true "L_IKFK_Ctrl.tz";
+setAttr -lock true "R_IKFK_Ctrl.tz";
+setAttr -lock true "R_Hand_Ctrl.rx";
+setAttr -lock true "L_Hand_Ctrl.rx";
+setAttr -lock true "L_IKFK_Ctrl.rx";
+setAttr -lock true "R_IKFK_Ctrl.rx";
+setAttr -lock true "R_Hand_Ctrl.ry";
+setAttr -lock true "L_Hand_Ctrl.ry";
+setAttr -lock true "L_IKFK_Ctrl.ry";
+setAttr -lock true "R_IKFK_Ctrl.ry";
+setAttr -lock true "R_Hand_Ctrl.rz";
+setAttr -lock true "L_Hand_Ctrl.rz";
+setAttr -lock true "L_IKFK_Ctrl.rz";
+setAttr -lock true "R_IKFK_Ctrl.rz";
+setAttr -lock true "R_Hand_Ctrl.sx";
+setAttr -lock true "L_Hand_Ctrl.sx";
+setAttr -lock true "L_IKFK_Ctrl.sx";
+setAttr -lock true "R_IKFK_Ctrl.sx";
+setAttr -lock true "R_Hand_Ctrl.sy";
+setAttr -lock true "L_Hand_Ctrl.sy";
+setAttr -lock true "L_IKFK_Ctrl.sy";
+setAttr -lock true "R_IKFK_Ctrl.sy";
+setAttr -lock true "R_Hand_Ctrl.sz";
+setAttr -lock true "L_Hand_Ctrl.sz";
+setAttr -lock true "L_IKFK_Ctrl.sz";
+setAttr -lock true "R_IKFK_Ctrl.sz";
+setAttr -lock true "R_Hip_Ctrl.tx";
+setAttr -lock true "FK_L_Wrist_Ctrl.tx";
+setAttr -lock true "FK_L_Elbow_Ctrl.tx";
+setAttr -lock true "FK_L_Shoulder_Ctrl.tx";
+setAttr -lock true "FK_R_Shoulder_Ctrl.tx";
+setAttr -lock true "FK_R_Elbow_Ctrl.tx";
+setAttr -lock true "FK_R_Wrist_Ctrl.tx";
+setAttr -lock true "L_Hip_Ctrl.tx";
+setAttr -lock true "L_Knee_Ctrl.tx";
+setAttr -lock true "L_Ankle_Ctrl.tx";
+setAttr -lock true "L_IKFK_Leg_Ctrl.tx";
+setAttr -lock true "FK_L_Foot_Ctrl.tx";
+setAttr -lock true "FK_R_Foot_Ctrl.tx";
+setAttr -lock true "R_IKFK_Leg_Ctrl.tx";
+setAttr -lock true "R_Ankle_Ctrl.tx";
+setAttr -lock true "R_Knee_Ctrl.tx";
+setAttr -lock true "R_Hip_Ctrl.ty";
+setAttr -lock true "FK_L_Wrist_Ctrl.ty";
+setAttr -lock true "FK_L_Elbow_Ctrl.ty";
+setAttr -lock true "FK_L_Shoulder_Ctrl.ty";
+setAttr -lock true "FK_R_Shoulder_Ctrl.ty";
+setAttr -lock true "FK_R_Elbow_Ctrl.ty";
+setAttr -lock true "FK_R_Wrist_Ctrl.ty";
+setAttr -lock true "L_Hip_Ctrl.ty";
+setAttr -lock true "L_Knee_Ctrl.ty";
+setAttr -lock true "L_Ankle_Ctrl.ty";
+setAttr -lock true "L_IKFK_Leg_Ctrl.ty";
+setAttr -lock true "FK_L_Foot_Ctrl.ty";
+setAttr -lock true "FK_R_Foot_Ctrl.ty";
+setAttr -lock true "R_IKFK_Leg_Ctrl.ty";
+setAttr -lock true "R_Ankle_Ctrl.ty";
+setAttr -lock true "R_Knee_Ctrl.ty";
+setAttr -lock true "R_Hip_Ctrl.tz";
+setAttr -lock true "FK_L_Wrist_Ctrl.tz";
+setAttr -lock true "FK_L_Elbow_Ctrl.tz";
+setAttr -lock true "FK_L_Shoulder_Ctrl.tz";
+setAttr -lock true "FK_R_Shoulder_Ctrl.tz";
+setAttr -lock true "FK_R_Elbow_Ctrl.tz";
+setAttr -lock true "FK_R_Wrist_Ctrl.tz";
+setAttr -lock true "L_Hip_Ctrl.tz";
+setAttr -lock true "L_Knee_Ctrl.tz";
+setAttr -lock true "L_Ankle_Ctrl.tz";
+setAttr -lock true "L_IKFK_Leg_Ctrl.tz";
+setAttr -lock true "FK_L_Foot_Ctrl.tz";
+setAttr -lock true "FK_R_Foot_Ctrl.tz";
+setAttr -lock true "R_IKFK_Leg_Ctrl.tz";
+setAttr -lock true "R_Ankle_Ctrl.tz";
+setAttr -lock true "R_Knee_Ctrl.tz";
+setAttr -lock true "R_Hip_Ctrl.sx";
+setAttr -lock true "FK_L_Wrist_Ctrl.sx";
+setAttr -lock true "FK_L_Elbow_Ctrl.sx";
+setAttr -lock true "FK_L_Shoulder_Ctrl.sx";
+setAttr -lock true "FK_R_Shoulder_Ctrl.sx";
+setAttr -lock true "FK_R_Elbow_Ctrl.sx";
+setAttr -lock true "FK_R_Wrist_Ctrl.sx";
+setAttr -lock true "L_Hip_Ctrl.sx";
+setAttr -lock true "L_Knee_Ctrl.sx";
+setAttr -lock true "L_Ankle_Ctrl.sx";
+setAttr -lock true "L_IKFK_Leg_Ctrl.sx";
+setAttr -lock true "FK_L_Foot_Ctrl.sx";
+setAttr -lock true "FK_R_Foot_Ctrl.sx";
+setAttr -lock true "R_IKFK_Leg_Ctrl.sx";
+setAttr -lock true "R_Ankle_Ctrl.sx";
+setAttr -lock true "R_Knee_Ctrl.sx";
+setAttr -lock true "R_Hip_Ctrl.sy";
+setAttr -lock true "FK_L_Wrist_Ctrl.sy";
+setAttr -lock true "FK_L_Elbow_Ctrl.sy";
+setAttr -lock true "FK_L_Shoulder_Ctrl.sy";
+setAttr -lock true "FK_R_Shoulder_Ctrl.sy";
+setAttr -lock true "FK_R_Elbow_Ctrl.sy";
+setAttr -lock true "FK_R_Wrist_Ctrl.sy";
+setAttr -lock true "L_Hip_Ctrl.sy";
+setAttr -lock true "L_Knee_Ctrl.sy";
+setAttr -lock true "L_Ankle_Ctrl.sy";
+setAttr -lock true "L_IKFK_Leg_Ctrl.sy";
+setAttr -lock true "FK_L_Foot_Ctrl.sy";
+setAttr -lock true "FK_R_Foot_Ctrl.sy";
+setAttr -lock true "R_IKFK_Leg_Ctrl.sy";
+setAttr -lock true "R_Ankle_Ctrl.sy";
+setAttr -lock true "R_Knee_Ctrl.sy";
+setAttr -lock true "R_Hip_Ctrl.sz";
+setAttr -lock true "FK_L_Wrist_Ctrl.sz";
+setAttr -lock true "FK_L_Elbow_Ctrl.sz";
+setAttr -lock true "FK_L_Shoulder_Ctrl.sz";
+setAttr -lock true "FK_R_Shoulder_Ctrl.sz";
+setAttr -lock true "FK_R_Elbow_Ctrl.sz";
+setAttr -lock true "FK_R_Wrist_Ctrl.sz";
+setAttr -lock true "L_Hip_Ctrl.sz";
+setAttr -lock true "L_Knee_Ctrl.sz";
+setAttr -lock true "L_Ankle_Ctrl.sz";
+setAttr -lock true "L_IKFK_Leg_Ctrl.sz";
+setAttr -lock true "FK_L_Foot_Ctrl.sz";
+setAttr -lock true "FK_R_Foot_Ctrl.sz";
+setAttr -lock true "R_IKFK_Leg_Ctrl.sz";
+setAttr -lock true "R_Ankle_Ctrl.sz";
+setAttr -lock true "R_Knee_Ctrl.sz";
+
+
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Elbow_Ctrl_Grp|FK_L_Elbow_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Elbow_Ctrl_Grp|FK_L_Elbow_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Elbow_Ctrl_Grp|FK_L_Elbow_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Elbow_Ctrl_Grp|FK_L_Elbow_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Elbow_Ctrl_Grp|FK_L_Elbow_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Elbow_Ctrl_Grp|FK_L_Elbow_Ctrl.translateZ;
+setAttr -k off |L_ShoulderPlaceHolder_Grp|FK_L_Shoulder_Ctrl_Grp|FK_L_Shoulder_Ctrl.scaleX;
+setAttr -k off |L_ShoulderPlaceHolder_Grp|FK_L_Shoulder_Ctrl_Grp|FK_L_Shoulder_Ctrl.scaleY;
+setAttr -k off |L_ShoulderPlaceHolder_Grp|FK_L_Shoulder_Ctrl_Grp|FK_L_Shoulder_Ctrl.scaleZ;
+setAttr -k off |L_ShoulderPlaceHolder_Grp|FK_L_Shoulder_Ctrl_Grp|FK_L_Shoulder_Ctrl.translateX;
+setAttr -k off |L_ShoulderPlaceHolder_Grp|FK_L_Shoulder_Ctrl_Grp|FK_L_Shoulder_Ctrl.translateY;
+setAttr -k off |L_ShoulderPlaceHolder_Grp|FK_L_Shoulder_Ctrl_Grp|FK_L_Shoulder_Ctrl.translateZ;
+setAttr -k off |R_ShoulderPlaceHolder_Grp|FK_R_Shoulder_Ctrl_Grp|FK_R_Shoulder_Ctrl.scaleX;
+setAttr -k off |R_ShoulderPlaceHolder_Grp|FK_R_Shoulder_Ctrl_Grp|FK_R_Shoulder_Ctrl.scaleY;
+setAttr -k off |R_ShoulderPlaceHolder_Grp|FK_R_Shoulder_Ctrl_Grp|FK_R_Shoulder_Ctrl.scaleZ;
+setAttr -k off |R_ShoulderPlaceHolder_Grp|FK_R_Shoulder_Ctrl_Grp|FK_R_Shoulder_Ctrl.translateX;
+setAttr -k off |R_ShoulderPlaceHolder_Grp|FK_R_Shoulder_Ctrl_Grp|FK_R_Shoulder_Ctrl.translateY;
+setAttr -k off |R_ShoulderPlaceHolder_Grp|FK_R_Shoulder_Ctrl_Grp|FK_R_Shoulder_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Elbow_Ctrl_Grp|FK_R_Elbow_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Elbow_Ctrl_Grp|FK_R_Elbow_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Elbow_Ctrl_Grp|FK_R_Elbow_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Elbow_Ctrl_Grp|FK_R_Elbow_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Elbow_Ctrl_Grp|FK_R_Elbow_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Elbow_Ctrl_Grp|FK_R_Elbow_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Wrist_Ctrl_Grp|FK_R_Wrist_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Wrist_Ctrl_Grp|FK_R_Wrist_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Wrist_Ctrl_Grp|FK_R_Wrist_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Wrist_Ctrl_Grp|FK_R_Wrist_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Wrist_Ctrl_Grp|FK_R_Wrist_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Wrist_Ctrl_Grp|FK_R_Wrist_Ctrl.translateZ;
+setAttr -k off |L_HipPlaceHolder_Grp|L_Hip_Ctrl_Grp|L_Hip_Ctrl.scaleX;
+setAttr -k off |L_HipPlaceHolder_Grp|L_Hip_Ctrl_Grp|L_Hip_Ctrl.scaleY;
+setAttr -k off |L_HipPlaceHolder_Grp|L_Hip_Ctrl_Grp|L_Hip_Ctrl.scaleZ;
+setAttr -k off |L_HipPlaceHolder_Grp|L_Hip_Ctrl_Grp|L_Hip_Ctrl.translateX;
+setAttr -k off |L_HipPlaceHolder_Grp|L_Hip_Ctrl_Grp|L_Hip_Ctrl.translateY;
+setAttr -k off |L_HipPlaceHolder_Grp|L_Hip_Ctrl_Grp|L_Hip_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Knee_Ctrl_Grp|L_Knee_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Knee_Ctrl_Grp|L_Knee_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Knee_Ctrl_Grp|L_Knee_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Knee_Ctrl_Grp|L_Knee_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Knee_Ctrl_Grp|L_Knee_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Knee_Ctrl_Grp|L_Knee_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Ankle_Ctrl_Grp|L_Ankle_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Ankle_Ctrl_Grp|L_Ankle_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Ankle_Ctrl_Grp|L_Ankle_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Ankle_Ctrl_Grp|L_Ankle_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Ankle_Ctrl_Grp|L_Ankle_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Ankle_Ctrl_Grp|L_Ankle_Ctrl.translateZ;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.scaleX;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.scaleY;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.scaleZ;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.translateX;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.translateY;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Foot_Ctrl_Grp|FK_L_Foot_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Foot_Ctrl_Grp|FK_L_Foot_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Foot_Ctrl_Grp|FK_L_Foot_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Foot_Ctrl_Grp|FK_L_Foot_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Foot_Ctrl_Grp|FK_L_Foot_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Foot_Ctrl_Grp|FK_L_Foot_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Foot_Ctrl_Grp|FK_R_Foot_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Foot_Ctrl_Grp|FK_R_Foot_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Foot_Ctrl_Grp|FK_R_Foot_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Foot_Ctrl_Grp|FK_R_Foot_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Foot_Ctrl_Grp|FK_R_Foot_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_R_Foot_Ctrl_Grp|FK_R_Foot_Ctrl.translateZ;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.scaleX;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.scaleY;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.scaleZ;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.translateX;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.translateY;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Ankle_Ctrl_Grp|R_Ankle_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Ankle_Ctrl_Grp|R_Ankle_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Ankle_Ctrl_Grp|R_Ankle_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Ankle_Ctrl_Grp|R_Ankle_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Ankle_Ctrl_Grp|R_Ankle_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Ankle_Ctrl_Grp|R_Ankle_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Knee_Ctrl_Grp|R_Knee_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Knee_Ctrl_Grp|R_Knee_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Knee_Ctrl_Grp|R_Knee_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Knee_Ctrl_Grp|R_Knee_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Knee_Ctrl_Grp|R_Knee_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Knee_Ctrl_Grp|R_Knee_Ctrl.translateZ;
+setAttr -k off |R_HipPlaceHolder_Grp|R_Hip_Ctrl_Grp|R_Hip_Ctrl.scaleX;
+setAttr -k off |R_HipPlaceHolder_Grp|R_Hip_Ctrl_Grp|R_Hip_Ctrl.scaleY;
+setAttr -k off |R_HipPlaceHolder_Grp|R_Hip_Ctrl_Grp|R_Hip_Ctrl.scaleZ;
+setAttr -k off |R_HipPlaceHolder_Grp|R_Hip_Ctrl_Grp|R_Hip_Ctrl.translateX;
+setAttr -k off |R_HipPlaceHolder_Grp|R_Hip_Ctrl_Grp|R_Hip_Ctrl.translateY;
+setAttr -k off |R_HipPlaceHolder_Grp|R_Hip_Ctrl_Grp|R_Hip_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Wrist_Ctrl_Grp|FK_L_Wrist_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Wrist_Ctrl_Grp|FK_L_Wrist_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Wrist_Ctrl_Grp|FK_L_Wrist_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Wrist_Ctrl_Grp|FK_L_Wrist_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Wrist_Ctrl_Grp|FK_L_Wrist_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|FK_L_Wrist_Ctrl_Grp|FK_L_Wrist_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Pelvis_Ctrl_Grp|Pelvis_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Pelvis_Ctrl_Grp|Pelvis_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Pelvis_Ctrl_Grp|Pelvis_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl.scaleZ;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.rotateX;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.rotateY;
+setAttr -k off |L_IKFK_Leg_Ctrl_Grp|L_IKFK_Leg_Ctrl.rotateZ;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.rotateX;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.rotateY;
+setAttr -k off |R_IKFK_Leg_Ctrl_Grp|R_IKFK_Leg_Ctrl.rotateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Lower_Back_Ctrl_Grp|Lower_Back_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Lower_Back_Ctrl_Grp|Lower_Back_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Lower_Back_Ctrl_Grp|Lower_Back_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Lower_Back_Ctrl_Grp|Lower_Back_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Lower_Back_Ctrl_Grp|Lower_Back_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Lower_Back_Ctrl_Grp|Lower_Back_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Upper_Back_Ctrl_Grp|Upper_Back_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Upper_Back_Ctrl_Grp|Upper_Back_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Upper_Back_Ctrl_Grp|Upper_Back_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Upper_Back_Ctrl_Grp|Upper_Back_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Upper_Back_Ctrl_Grp|Upper_Back_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Upper_Back_Ctrl_Grp|Upper_Back_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Neck_Ctrl_Grp|Neck_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Neck_Ctrl_Grp|Neck_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Neck_Ctrl_Grp|Neck_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Neck_Ctrl_Grp|Neck_Ctrl.translateX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Neck_Ctrl_Grp|Neck_Ctrl.translateY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|Neck_Ctrl_Grp|Neck_Ctrl.translateZ;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.rotateX;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.rotateY;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.rotateZ;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.scaleX;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.scaleY;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.scaleZ;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.translateX;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.translateY;
+setAttr -k off |L_Hand_Ctrl_Grp|L_Hand_Ctrl.translateZ;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.rotateX;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.rotateY;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.rotateZ;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.scaleX;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.scaleY;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.scaleZ;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.translateX;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.translateY;
+setAttr -k off |L_IKFK_Ctrl_Grp|L_IKFK_Ctrl.translateZ;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.rotateX;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.rotateY;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.rotateZ;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.scaleX;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.scaleY;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.scaleZ;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.translateX;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.translateY;
+setAttr -k off |R_IKFK_Ctrl_Grp|R_IKFK_Ctrl.translateZ;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.rotateX;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.rotateY;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.rotateZ;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.scaleX;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.scaleY;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.scaleZ;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.translateX;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.translateY;
+setAttr -k off |R_Hand_Ctrl_Grp|R_Hand_Ctrl.translateZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|IK_L_Wrist_Ctrl_Grp|IK_L_Wrist_Ctrl_Grp_Head_Constraint|IK_L_Wrist_Ctrl_Grp|IK_L_Wrist_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|IK_L_Wrist_Ctrl_Grp|IK_L_Wrist_Ctrl_Grp_Head_Constraint|IK_L_Wrist_Ctrl_Grp|IK_L_Wrist_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|IK_L_Wrist_Ctrl_Grp|IK_L_Wrist_Ctrl_Grp_Head_Constraint|IK_L_Wrist_Ctrl_Grp|IK_L_Wrist_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|IK_R_Wrist_Ctrl_Grp|IK_R_Wrist_Ctrl_Grp_Head_Constraint|IK_R_Wrist_Ctrl_Grp|IK_R_Wrist_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|IK_R_Wrist_Ctrl_Grp|IK_R_Wrist_Ctrl_Grp_Head_Constraint|IK_R_Wrist_Ctrl_Grp|IK_R_Wrist_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|IK_R_Wrist_Ctrl_Grp|IK_R_Wrist_Ctrl_Grp_Head_Constraint|IK_R_Wrist_Ctrl_Grp|IK_R_Wrist_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Foot_Ctrl_Grp|R_Foot_Ctrl_Grp_Constraint|R_Foot_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Foot_Ctrl_Grp|R_Foot_Ctrl_Grp_Constraint|R_Foot_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|R_Foot_Ctrl_Grp|R_Foot_Ctrl_Grp_Constraint|R_Foot_Ctrl.scaleZ;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Foot_Ctrl_Grp|L_Foot_Ctrl_Grp_Constraint|L_Foot_Ctrl.scaleX;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Foot_Ctrl_Grp|L_Foot_Ctrl_Grp_Constraint|L_Foot_Ctrl.scaleY;
+setAttr -k off |Master_Ctrl_Grp|Master_Ctrl|L_Foot_Ctrl_Grp|L_Foot_Ctrl_Grp_Constraint|L_Foot_Ctrl.scaleZ;
+}
+
