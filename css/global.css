@@ -10,7 +10,8 @@ emp-text {font-family:'Josefin Slab', serif; font-size:18px; font-style:italic;}
 mobile-header, mobile-header.flexDisplay {display:none;}
 ul li {line-height:30px;}
 /* Buttons */
-button {background-color:#848388; border:none; color:#fff; cursor:pointer; -moz-box-flex:1; -ms-flex:1; -webkit-box-flex:1; -webkit-flex:1; flex:1; font-size:16px; margin:5px; min-height:50px; padding:0px 30px;}
+button {background-image:linear-gradient(to top, #848388 0%, #403d4b 100%); border:none; color:#fff; cursor:pointer; -moz-box-flex:1; -ms-flex:1; -webkit-box-flex:1; -webkit-flex:1; flex:1; font-size:16px; margin:5px; min-height:50px; padding:0px 30px;}
+button:hover{background-image:linear-gradient(to top, #403d4b 0%, #403d4b 100%);}
 button:first-of-type {margin:5px 5px 5px 0px;}
 button:last-of-type {margin:5px 0px 5px 5px;}
 /* Content Dividers */
@@ -70,9 +71,9 @@ multi-header line{background-color:#77939f;}
 multi-header h2:last-of-type{color:#77939f;}
 /* Links */
 a {background-color:transparent; border-bottom:1px solid #77939f; color:#77939f; padding:5px 30px; text-decoration:none;}
-a:hover {background-color:#77939f; color:#fff; transition:all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+a:hover {background-image:linear-gradient(to right, #abc7d2 0%, #8bb1c1 50%, #77939f 100%); color:#fff; transition:all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);}
 h1 a {border:none; color:#58575f; padding:0px;}
-h1 a:hover {background-color:transparent; color:#58575f; transition:none;}
+h1 a:hover {background-image:linear-gradient(to right, #abc7d2 0%, #8bb1c1 50%, #77939f 100%);  -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
 .mobileLink a{cursor:default;border:none;color:inherit;padding:0px;}
 .mobileLink a:hover{background-color:transparent;color:inherit;transition:none;}
 
@@ -131,7 +132,7 @@ resume-title emp-text {display: block;font-size:12px;line-height: 16px;text-alig
 resume-experience{margin-bottom:15px;}
 resume-experience .flex2 {padding:30px 2% 30px 0px;}
 resume-experience h3 {margin-top:0px;}
-resume-experience .flex1 {align-self:stretch; background-color:#889879; font-size:18px; line-height:30px; text-align:center;color: #e8e8e8;padding: 30px;}
+resume-experience .flex1 {align-self:stretch; background-image:linear-gradient(to bottom, #889879 0%, #96ad80 100%); font-size:18px; line-height:30px; text-align:center;color: #e8e8e8;padding: 30px;}
 resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0;width: 100%;height: 100%;min-height: 160px;}
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
 
