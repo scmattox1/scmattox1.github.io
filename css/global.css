@@ -4,7 +4,7 @@
 @-ms-viewport {width:device-width;}
 html {box-sizing:border-box; height:100%;}
 *, *:before, *:after {box-sizing:border-box;}
-body {color:#58575f; cursor:default; font-family:'Open Sans', sans-serif; font-size:14px; font-weight:300; margin:0; min-height:100%; position:relative; width:100%;}
+body {color:#58575f; cursor:default; font-family:'Open Sans', sans-serif; font-size:14px; font-weight:300; margin:0; min-height:100%; overflow-x:hidden; position:relative; width:100%;}
 border {border:3px solid #889879; display:inline-block; height:50px; margin:0px 30px; padding:2px;}
 emp-text {font-family:'Josefin Slab', serif; font-size:18px; font-style:italic;}
 mobile-header, mobile-header.flexDisplay {display:none;}
@@ -42,23 +42,23 @@ line {background-color:#e8e8e8; height:1px; width:40%;}
 .flex2 {-moz-box-flex:2; -ms-flex:2; -webkit-box-flex:2; -webkit-flex:2; flex:2;}
 .flex3 {-moz-box-flex:3; -ms-flex:3; -webkit-box-flex:3; -webkit-flex:3; flex:3;}
 /* Icons */
-icon {height: 50px;display: block;width: 100px;}
-icon.home {background:url("/assets/images/icons-01.jpg") no-repeat; background-size:auto 50px;}
-icon.email {background:url("/assets/images/icons-02.jpg") no-repeat; background-size:auto 50px;}
-icon.site {background:url("/assets/images/icons-05.jpg") no-repeat; background-size:auto 30px;}
-icon.phone {background:url("/assets/images/icons-03.jpg") no-repeat; background-size:auto 50px;}
-icon.linkedin {background:url("/assets/images/icons-04.jpg") no-repeat; background-size:auto 50px;}
-icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-size:auto 50px;}
+icon {background-size:auto 50px;height: 50px;display: block;width: 100px;}
+icon.home {background:url("/assets/images/icons-01.jpg") no-repeat;}
+icon.email {background:url("/assets/images/icons-02.jpg") no-repeat;}
+icon.site {background:url("/assets/images/icons-05.jpg") no-repeat;}
+icon.phone {background:url("/assets/images/icons-03.jpg") no-repeat;}
+icon.linkedin {background:url("/assets/images/icons-04.jpg") no-repeat;}
+icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat;}
 /* Images */
 .img-right {float: right; margin: 0 0 15px 15px;}
 .img-left {float: left; margin: 0 15px 15px 0px;}
 .img-full {-ms-flex-align:end; align-items:flex-end; height:250px; margin-top:50px; overflow:hidden; width:100%;}
 .img-full img {height:auto; width:100%;}
-.img-self{border-radius:100%; height:400px; margin-top:80px; width:400px;}
-.img-self.bio{background:url("/assets/images/moab.jpg") no-repeat center center;background-size: 100% auto;}
-.img-self.gallery{background:url("/assets/images/dozer.jpg") no-repeat center center;background-size: 100% auto;}
-.img-self.map{background:url("/assets/images/map.gif") no-repeat center center; background-size:auto 100%; border:3px solid #77939f;}
-.img-self.self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;background-size: 100% auto;}
+.img-self{background-size:cover; border-radius:100%; height:400px; margin-top:80px; width:400px;}
+.img-self.bio{background:url("/assets/images/moab.jpg") no-repeat center center;}
+.img-self.gallery{background:url("/assets/images/dozer.jpg") no-repeat center center;}
+.img-self.map{background:url("/assets/images/map.gif") no-repeat center center; border:3px solid #77939f;}
+.img-self.self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center;}
 /* Headers */
 h1 {font-family:'Josefin Slab', serif; font-size:48px;}
 h2 {font-size:24px; font-weight:300; margin:10px;}
@@ -137,9 +137,6 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
 
 /***** MEDIA QUERIES *****/
-@media only screen and (max-width:1400px) and (min-width:1025px){
-    .homepage-image .img-self{background-size:auto 100%;background-position:left center;}
-}
 @media only screen and (max-height:851px) and (min-width:1025px){
     .fixed-left section.fixed{height: unset;min-height: 100vh;}
 }
@@ -233,7 +230,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     /* Fixed Pages */
     .fixed-left mobile-header, .resume mobile-header {height:120px; padding:0%;}
     /* Images */
-    .img-self {background-position-y:center;}
+    .img-self, .homepage-image .img-self {background-position-y:center;}
     /* Mobile Header */
     mobile-header h1, mobile-header h2:first-of-type {padding-right:5%}
     mobile-header h2:last-of-type {border-bottom:1px solid #e8e8e8; height:35px; margin-bottom:0px; padding-bottom:10px; width:100%;}
@@ -250,7 +247,6 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     
     /*** INDEX ***/
     .homepage-image {height:auto; top:120px;}
-    .homepage-image .img-self{background-position-y:center;}
     .homepage mobile-header {height:120px; min-height:120px; flex:unset; padding:0px;}
     
     /*** NAVIGATION ***/
@@ -272,21 +268,9 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     /*** RESUME ***/
     .icons-container ul li {margin-bottom:30px; width:100%;}
 }
-@media only screen and (max-width:550px) and (min-height:880px){
-     /*** INDEX ***/
-    .homepage-image .img-self{background-size:auto 100%;}
-}
 @media only screen and (max-width:500px){
     /*** RESUME ***/
     .icons-container icon{background-size: auto 40px;height: 40px;width: 60px;}
     .resume-skills, .resume-skills > .flex1 ul, .resume-skills > .flex2 > div.flexDisplay {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
     .resume-skills.flexJustifySpaceAround ul {text-align:left;}
-}
-@media only screen and (max-height:600px) and (min-width:680px){
-     /*** INDEX ***/
-    .homepage-image{height: 0;}
-}
-@media only screen and (max-height:600px) and (max-width:680px){
-     /*** INDEX ***/
-    .homepage-image .img-self{background-position-y: -250px;}
 }
