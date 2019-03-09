@@ -7,10 +7,9 @@ html {box-sizing:border-box; height:100%;}
 body {color:#58575f; cursor:default; font-family:'Open Sans', sans-serif; font-size:14px; font-weight:300; margin:0; min-height:100%; position:relative; width:100%;}
 border {border:3px solid #889879; display:inline-block; height:50px; margin:0px 30px; padding:2px;}
 emp-text {font-family:'Josefin Slab', serif; font-size:18px; font-style:italic;}
-mobile-header, mobile-header.flexDisplay {display:none;}
 ul li {line-height:30px;}
 /* Buttons */
-button {background-image:linear-gradient(to top, #848388 0%, #403d4b 100%); border:none; color:#fff; cursor:pointer; -moz-box-flex:1; -ms-flex:1; -webkit-box-flex:1; -webkit-flex:1; flex:1; font-size:16px; margin:5px; min-height:50px; padding:0px 30px;}
+button {background-image:linear-gradient(-47deg, #848388 0%, #403d4b 100%); border:none; color:#fff; cursor:pointer; -moz-box-flex:1; -ms-flex:1; -webkit-box-flex:1; -webkit-flex:1; flex:1; font-size:16px; margin:5px; min-height:50px; padding:0px 30px;}
 button:hover{background-image:linear-gradient(to top, #403d4b 0%, #403d4b 100%);}
 button:first-of-type {margin:5px 5px 5px 0px;}
 button:last-of-type {margin:5px 0px 5px 5px;}
@@ -25,7 +24,7 @@ line {background-color:#e8e8e8; height:1px; width:40%;}
 .fancybox-button--zoom, .fancybox-button--close{margin:0 !important;}
 /* Fixed Page */
 .fixed-left section.fixed {height:100vh; padding:5%; position:-webkit-sticky; position:sticky; top:0; width:50%;}
-.fixed-left > section:last-of-type {padding:5%; width:50%;}
+.fixed-left > section:last-of-type {padding:30px 5%; width:50%;}
 .fixed-left section:last-of-type nav {margin-bottom:80px;}
 /* FlexBox*/
 .flexDisplay {display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex;}
@@ -68,7 +67,7 @@ multi-header {text-align:center; width:100%;}
 multi-header h1 {margin-bottom:0px;}
 multi-header h2, multi-header h3 {letter-spacing:5px;}
 multi-header line{background-color:#77939f;}
-multi-header h2:last-of-type{color:#77939f;}
+multi-header > h2{color:#77939f;}
 .headerWrap{width:100%;}
 /* Links */
 a {background-color:transparent; border-bottom:1px solid #77939f; color:#77939f; padding:5px 30px; text-decoration:none;}
@@ -93,20 +92,22 @@ h1 a:hover {background-image:linear-gradient(to right, #abc7d2 0%, #8bb1c1 50%, 
 /***** GALLERY *****/
 img-col {display:block; min-height:1px; position:relative;}
 img-col.col4 {width:25%; max-width:23%;}
-img-col.col3 {width:33%; max-width:31%;}
+img-col.col3 {width:33%; max-width:33%;}
 img-col.col2 {width:50%; max-width:48%;}
 img-col a {border:none; color:inherit; display:block; margin-bottom:30px; padding:0px;}
 img-col a:hover {background-color:none; color:none; transition:none;}
 img-col img {border-style:none; height:auto; max-width:100%; vertical-align:middle;}
-.works section:last-of-type h2{margin:0;}
+.works section:last-of-type h2{margin:0 0 10px;}
 .works section:last-of-type line{display:block;width:100%;margin:50px 0;}
 
 /***** INDEX *****/
+.homepage nav{display: block;margin-bottom:20%;}
+.homepage section:first-of-type{width:50%; padding:5%;}
 .homepage-image {background-color:#fff; -moz-box-flex:1 50%; -ms-flex:1 50%; -webkit-box-flex:1 50%; -webkit-flex:1 50%; flex:1 50%; height:100vh; min-width:50%; max-width:50%; order:-1;}
 .homepage-image .img-self{border-radius: 0;height: 100%;width: 100%;margin-top: 0px;}
-.homepage mobile-header {display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex; min-height:600px; padding:5%;}
 
 /***** NAVIGATION *****/
+multi-header nav{display: none;}
 nav {width:100%;}
 nav ul {list-style:none; margin:0px; padding:0px;}
 nav input {display:none;}
@@ -170,22 +171,27 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     /* Fixed Pages */
     .fixed-left, .resume {flex-direction:column;}
     .fixed-left section.fixed, .resume section.fixed {padding:0px; position:unset; top:unset; width:100%;}
-    .fixed-left mobile-header, .resume mobile-header {display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex; height:50vh; min-height:350px; padding:5%; width:90%;}
-    .fixed-left section > multi-header, .resume section > multi-header {display:none;}
-    .fixed-left section > nav, .resume section > nav {display:none;}
     .fixed-left > section:last-of-type {width:100%;}
     /* Images */
-    .img-self {border-radius:0px; margin-top:0px; width:100%;background-position-y:-400px}
-    .img-self.map{border:unset;}
+    .img-self {border-radius:0px; margin-top:0px; width:100%;}
+    .img-self.map{border:unset;background-size: auto 100%;}
+    .img-self.bio{background-position-y:-90px;}
     
     /*** BIO ***/
     .bio article section {margin-top:50px;}
     
     /*** INDEX ***/
+    .homepage section:first-of-type{width:100%;}
+    .homepage section:first-of-type nav{margin-bottom:30px;}
     .homepage {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
-    .homepage mobile-header {min-height:50vh;}
     .homepage-image {bottom:0px; display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex; height:50vh; max-width: 100%; order:0; position:absolute; width:100%;}
     .homepage-image .img-self{background-position-y: -280px;}
+    
+    /*** NAV ***/
+    multi-header{height:50vh;}
+    multi-header nav{display:block;padding:15px 5% 50px;}
+    .fixed-left section > nav, .resume section > nav {display:none;}
+    
     
     /*** RESUME ***/
     .resume > .icons-container {height:unset; padding:50px 5% 0px; width:90%;}
@@ -223,24 +229,24 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     /*** PRIMARY SETUP ***/
     body {font-size:16px;}
     line {margin:8px 0; width:100%;}
+    emp-text {font-size:20px;}
     /* Headers */
     h1 {font-size:30px; margin-top:15px}
     h2 {font-size:16px; margin:0px;} 
     h3 {font-size:30px;}
-    multi-header.flexAlign {-ms-flex-align:end; align-items:flex-end;}
-    /* Fixed Pages */
-    .fixed-left mobile-header, .resume mobile-header {height:120px; padding:0%;}
     /* Images */
     .img-self, .homepage-image .img-self {background-position-y:center;}
     /* Mobile Header */
-    .headerWrap{flex-direction: row;width: 100%;}
+    multi-header{height:120px;}
+    .headerWrap{flex-direction:row; width:100%;}
     .headerWrap > div {text-align:right; width:70%;}
-    mobile-header div h1, mobile-header div h2:first-of-type {padding-right:5%; z-index:10;border-bottom: none;}
-    mobile-header multi-header > h2:last-of-type {border-bottom:1px solid #e8e8e8; height:35px; margin-bottom:0px; padding-bottom:10px; width:100%;}
-    .fixed-left mobile-header, .resume mobile-header {min-height:auto;}
+    .headerWrap h1, .headerWrap h2:first-of-type {padding-right:5%; z-index:10;border-bottom: none;}
+    multi-header > h2:last-of-type {border-bottom:1px solid #e8e8e8; height:35px; margin-bottom:0px; padding-bottom:10px; width:100%;}
     
     /*** BIO ***/
     .bio article > img {display:none;}
+    .bio article section{flex-direction: column;}
+    .bio article section button{width: 100%;padding: 0px;margin: 20px 0;min-height: 60px;}
     
     /*** CONTACT ***/
     .contact-img {width:100%;}
@@ -249,11 +255,12 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     .works section:last-of-type h2{font-size:24px;}
     
     /*** INDEX ***/
+    .homepage section:first-of-type{padding:0px;}
     .homepage-image {height:auto; top:120px;}
-    .homepage mobile-header {height:120px; min-height:120px; flex:unset; padding:0px;}
+    .homepage multi-header {height:120px; min-height:120px; flex:unset; padding:0px;}
     
     /*** NAVIGATION ***/
-    nav { width: 30%;z-index: 20;}
+    multi-header nav { width: 30%;z-index: 20;padding: 0px;}
     nav a {border:none; padding:0px;color: #fff;}
     nav a:hover {background:transparent; color:#848388;}
     nav div {left:10%; position:relative; top:25px; user-select:none; z-index:1;}
@@ -264,7 +271,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     nav input:checked ~ span {background-color:#fff; opacity:1; transform:rotate(45deg) translate(-2px, -1px);}
     nav input:checked ~ span:nth-last-child(3) {opacity: 0; transform:rotate(0deg) scale(0.2, 0.2);}
     nav input:checked ~ span:nth-last-child(2) {transform:rotate(-45deg) translate(0, -1px);}
-    nav ul {background-color:#889879; -ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column; height:100vh; -ms-flex-pack:start !important; -webkit-box-pack:start !important; -webkit-justify-content:flex-start !important; justify-content:flex-start !important; left:-10%; list-style-type:none; padding:70px 5%; position:absolute; -webkit-font-smoothing:antialiased; top: -25px; transform-origin:0% 0%; transform:translate(-100%, 0); transition:transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); width:260px;}
+    nav ul {background-image:linear-gradient(to bottom, #889879 0%, #96ad80 100%); -ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column; height:100vh; -ms-flex-pack:start !important; -webkit-box-pack:start !important; -webkit-justify-content:flex-start !important; justify-content:flex-start !important; left:-10%; list-style-type:none; padding:70px 5%; position:absolute; -webkit-font-smoothing:antialiased; top: -25px; transform-origin:0% 0%; transform:translate(-100%, 0); transition:transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); width:260px;}
     nav li {font-size:18px; padding:20px 0;}
     nav input:checked ~ ul {transform:none;}
     
@@ -272,8 +279,12 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     .icons-container ul li {margin-bottom:30px; width:100%;}
 }
 @media only screen and (max-width:500px){
+    /*** GALLERY ***/
+    .col2, .col3, .col4{}
     /*** RESUME ***/
     .icons-container icon{background-size: auto 40px;height: 40px;width: 60px;}
     .resume-skills, .resume-skills > .flex1 ul, .resume-skills > .flex2 > div.flexDisplay {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
     .resume-skills.flexJustifySpaceAround ul {text-align:left;}
 }
+@media only screen and (max-width:460px){
+    .img-self.bio{background-position-y: center;}
