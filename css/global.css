@@ -53,6 +53,7 @@ icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-si
 .img-right {float: right; margin: 0 0 15px 15px;}
 .img-left {float: left; margin: 0 15px 15px 0px;}
 
+
 .img-full {-ms-flex-align:end; align-items:flex-end; height:250px; margin-top:50px; overflow:hidden; width:100%;}
 .img-full img {height:auto; width:100%;}
 .img-self{border-radius:100%; height:400px; margin-top:80px; width:400px;}
@@ -142,8 +143,11 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
 
 /***** MEDIA QUERIES *****/
+@media only screen and (min-width:680px) and (max-height:600px){
+    section multi-header{height: unset;}
+}
 @media only screen and (max-height:851px) and (min-width:1025px){
-    .fixed-left section.fixed{height: unset;min-height: 100vh;}
+    .fixed-left section.fixed, .resume section.fixed{height: unset ;min-height: 100vh;}
 }
 @media only screen and (max-width:1600px) and (min-width:1501px){
     /* Resume Alignment */
