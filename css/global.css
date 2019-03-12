@@ -8,6 +8,7 @@ body {color:#58575f; cursor:default; font-family:'Open Sans', sans-serif; font-s
 border {border:3px solid #889879; display:inline-block; height:50px; margin:0px 30px; padding:2px;}
 emp-text {font-family:'Josefin Slab', serif; font-size:18px; font-style:italic;}
 ul li {line-height:30px;}
+.hideDesktop{display:none;}
 /* Buttons */
 button {background-image:linear-gradient(-47deg, #848388 0%, #403d4b 100%); border:none; color:#fff; cursor:pointer; -moz-box-flex:1; -ms-flex:1; -webkit-box-flex:1; -webkit-flex:1; flex:1; font-size:16px; margin:5px; min-height:50px; padding:0px 30px;}
 button:hover{background-image:linear-gradient(to top, #403d4b 0%, #403d4b 100%);}
@@ -51,6 +52,7 @@ icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-si
 /* Images */
 .img-right {float: right; margin: 0 0 15px 15px;}
 .img-left {float: left; margin: 0 15px 15px 0px;}
+
 .img-full {-ms-flex-align:end; align-items:flex-end; height:250px; margin-top:50px; overflow:hidden; width:100%;}
 .img-full img {height:auto; width:100%;}
 .img-self{border-radius:100%; height:400px; margin-top:80px; width:400px;}
@@ -134,6 +136,7 @@ resume-title emp-text {display: block;font-size:12px;line-height: 16px;text-alig
 resume-experience{margin-bottom:15px;}
 resume-experience .flex2 {padding:30px 2% 30px 0px;}
 resume-experience h3 {margin-top:0px;}
+resume-experience .hideDesktop{font-size:14px;color:#889879;}
 resume-experience .flex1 {align-self:stretch; background-image:linear-gradient(to bottom, #889879 0%, #96ad80 100%); font-size:18px; line-height:30px; text-align:center;color: #e8e8e8;padding: 30px;}
 resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0;width: 100%;height: 100%;min-height: 160px;}
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
@@ -168,6 +171,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 }
 @media only screen and (max-width:1024px){
     /*** PRIMARY SETUP ***/
+    .hideDesktop{display:block;}
     /* Fixed Pages */
     .fixed-left, .resume {flex-direction:column;}
     .fixed-left section.fixed, .resume section.fixed {padding:0px; position:unset; top:unset; width:100%;height: auto;}
@@ -198,7 +202,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     .resume > .icons-container {height:unset; padding:50px 5% 0px; width:90%;}
     .icons-container ul {flex-direction:row; -ms-flex-wrap:wrap; flex-wrap:wrap; -ms-flex-pack:justify; -webkit-box-pack:justify; -webkit-justify-content:space-between; justify-content:space-between; padding:0px;}
     .icons-container ul li {justify-content:center; margin-bottom:50px; width:50%;}
-    resume-experience .flex1 {font-size:14px;padding: 15px;}
+    resume-experience .flex1 {display:none;}
 }
 @media only screen and (max-width:1024px) and (min-width:801px){
     /*** RESUME ***/
