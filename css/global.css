@@ -9,8 +9,8 @@ emp-text {font-family:'Josefin Slab', serif; font-size:18px; font-style:italic;}
 ul li {line-height:30px;}
 .hideDesktop{display:none;}
 /* Buttons */
-button {background-image:linear-gradient(-47deg, #848388 0%, #403d4b 100%); border:none; color:#fff; cursor:pointer; -moz-box-flex:1; -ms-flex:1; -webkit-box-flex:1; -webkit-flex:1; flex:1; font-size:16px; margin:5px; min-height:50px; padding:0px 30px;}
-button:hover{background-image:linear-gradient(to top, #403d4b 0%, #403d4b 100%);}
+button {background-image:linear-gradient(-47deg, #582c8d 0%, #5e3860 100%); border: 2px solid transparent; color:#fff; cursor:pointer; -moz-box-flex:1; -ms-flex:1; -webkit-box-flex:1; -webkit-flex:1; flex:1; font-size:16px; margin:5px; min-height:50px; padding:0px 30px;}
+button:hover {background-image:none;background:transparent;color:#58575f;border: 2px solid #58575f;}
 button:first-of-type {margin:5px 5px 5px 0px;}
 button:last-of-type {margin:5px 0px 5px 5px;}
 /* Content Dividers */
@@ -18,8 +18,8 @@ line {background-color:#e8e8e8; height:1px; width:40%;}
 .divider {font-size:14px; margin:20px 0px; text-transform:uppercase; width:50%;}
 .divider .text {margin:0px 15px;}
 /* Double Lined Boxes */
-border {border:3px solid #889879; display:inline-block; padding:2px;}
-border span{border:1px solid #889879; color:#889879; display:inline-block; font-family:'Josefin Slab', serif;}
+border {border:3px solid #678f40; display:inline-block; padding:2px;}
+border span{border:1px solid #678f40; color:#678f40; display:inline-block; font-family:'Josefin Slab', serif;}
 resume-title border{height:50px; margin:0px 30px;}
 resume-title border span {font-size:24px; line-height:40px; height:40px; padding:0px 50px; white-space:nowrap;}
 .works border{margin:0 0 15px;}
@@ -63,7 +63,7 @@ icon.pdf {background:url("/assets/images/icons-06.jpg") no-repeat; background-si
 .img-self{border-radius:100%; height:400px; margin-top:80px; width:400px;}
 .img-self.bio{background:url("/assets/images/moab.jpg") no-repeat center center; background-size:cover;}
 .img-self.gallery{background:url("/assets/images/dozer.jpg") no-repeat center center; background-size:cover;}
-.img-self.map{background:url("/assets/images/map.gif") no-repeat center center; border:3px solid #77939f; background-size:cover;}
+.img-self.map{background:url("/assets/images/map.gif") no-repeat center center; border:3px solid #5fa9bd; background-size:cover;}
 .img-self.self{background:url("/assets/images/sarahmattox.jpg") no-repeat center center; background-size:cover;}
 /* Headers */
 h1 {font-family:'Josefin Slab', serif; font-size:48px;}
@@ -73,16 +73,16 @@ h4 {font-size:20px; font-weight:300; margin:0px; padding:0px;}
 multi-header {text-align:center; width:100%;}
 multi-header h1 {margin-bottom:0px;}
 multi-header h2, multi-header h3 {letter-spacing:5px;}
-multi-header line{background-color:#77939f;}
-multi-header > h2{color:#77939f;}
+multi-header line{background-color:#5fa9bd;}
+multi-header > h2{color:#5fa9bd;}
 .headerWrap{width:100%;}
 /* Links */
-a {background-color:transparent; border-bottom:1px solid #77939f; color:#77939f; padding:5px 30px; text-decoration:none;}
-a:hover {background-image:linear-gradient(to right, #abc7d2 0%, #8bb1c1 50%, #77939f 100%); color:#fff; transition:all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);}
+a {background-color:transparent; border-bottom:1px solid #5fa9bd; color:#5fa9bd; padding:5px 30px; text-decoration:none;}
+a:hover {background-image:linear-gradient(to right, #518aa1 0%, #5fa9bd 100%); color:#fff; transition:all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);}
 h1 a {border:none; color:#58575f; padding:0px;}
-h1 a:hover {background-image:linear-gradient(to right, #abc7d2 0%, #8bb1c1 50%, #77939f 100%);  -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+h1 a:hover {background-image:linear-gradient(to right, #518aa1 0%, #5fa9bd 100%);  -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
 .mobileLink a{cursor:default;border:none;color:inherit;padding:0px;}
-.mobileLink a:hover{background-color:transparent;color:inherit;transition:none;}
+.mobileLink a:hover{background:transparent;color:inherit;transition:none;}
 
 /***** BIO *****/
 .bio article section {margin-top:50px;}
@@ -140,8 +140,8 @@ resume-title emp-text {display: block;font-size:12px;line-height: 16px;text-alig
 resume-experience{margin-bottom:15px;}
 resume-experience .flex2 {padding:30px 2% 30px 0px;}
 resume-experience h3 {margin-top:0px;}
-resume-experience .hideDesktop{font-size:14px;color:#889879;}
-resume-experience .flex1 {align-self:stretch; background-image:linear-gradient(to bottom, #889879 0%, #96ad80 100%); font-size:18px; line-height:30px; text-align:center;color: #e8e8e8;padding: 30px;}
+resume-experience .hideDesktop{font-size:14px;color:#678f40;}
+resume-experience .flex1 {align-self:stretch; background-image:linear-gradient(to bottom, #638146 0%, #96b677 100%); font-size:18px; line-height:30px; text-align:center;color: #e8e8e8;padding: 30px;}
 resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0;width: 100%;height: 100%;min-height: 160px;}
 .resume-end {border-top:1px solid #848388; margin-top:50px; padding-top:5px; text-align:right;}
 
@@ -290,7 +290,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     nav input:checked ~ span {background-color:#fff; opacity:1; transform:rotate(45deg) translate(-2px, -1px);}
     nav input:checked ~ span:nth-last-child(3) {opacity: 0; transform:rotate(0deg) scale(0.2, 0.2);}
     nav input:checked ~ span:nth-last-child(2) {transform:rotate(-45deg) translate(0, -1px);}
-    nav ul {background-image:linear-gradient(to bottom, #889879 0%, #96ad80 100%); -ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column; height:100vh; -ms-flex-pack:start !important; -webkit-box-pack:start !important; -webkit-justify-content:flex-start !important; justify-content:flex-start !important; left:-10%; list-style-type:none; padding:70px 5%; position:absolute; -webkit-font-smoothing:antialiased; top: -25px; transform-origin:0% 0%; transform:translate(-100%, 0); transition:transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); width:260px;}
+    nav ul {background-image:linear-gradient(to bottom, #638146 0%, #96b677 100%); -ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column; height:100vh; -ms-flex-pack:start !important; -webkit-box-pack:start !important; -webkit-justify-content:flex-start !important; justify-content:flex-start !important; left:-10%; list-style-type:none; padding:70px 5%; position:absolute; -webkit-font-smoothing:antialiased; top: -25px; transform-origin:0% 0%; transform:translate(-100%, 0); transition:transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); width:260px;}
     nav li {font-size:18px; padding:20px 0;}
     nav input:checked ~ ul {transform:none;}
     
