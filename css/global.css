@@ -125,7 +125,7 @@ nav input {display:none;}
 .icons-container > ul {height:100%; list-style:none ;margin:0px; padding:80px 0 0 0;font-size: 20px;}
 .icons-container > ul a, .icons-container > ul span {padding:5px;}
 .resume-content {width:100%;}
-.resume-content p {margin-bottom:80px; text-align:center;}
+.resume-content > p {margin-bottom:80px; text-align:center;}
 resume-title {margin:50px 0px;}
 resume-title > * {height:50px;}
 resume-title line {width:90%;align-self:center;}
@@ -205,7 +205,9 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     
     
     /*** RESUME ***/
-    .resume > .icons-container {height:unset; padding:50px 5% 0px; width:90%;}
+    .resume-skills .flex1 border, resume-title border{margin:0;}
+    .resume > .icons-container {height:unset; padding:50px 5% 0px; width:100%;}
+    .resume-skills{width: 100%;padding: 0 0 0 5%;}
     .icons-container ul {flex-direction:row; -ms-flex-wrap:wrap; flex-wrap:wrap; -ms-flex-pack:justify; -webkit-box-pack:justify; -webkit-justify-content:space-between; justify-content:space-between; padding:0px;}
     .icons-container ul li {justify-content:center; margin-bottom:50px; width:50%;}
     resume-experience .flex1 {display:none;}
@@ -214,9 +216,9 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 @media only screen and (max-width:1024px) and (min-width:801px){
     /*** RESUME ***/
     .resume-content {padding:0 0 5%;}
-    .resume-content p {padding:0 2%;} 
+    .resume-content > p {padding:0 2%;} 
     .resume-end {padding:5px 2% 0;} 
-    resume-experience {padding:0 0 0 2%;} 
+    resume-experience {padding:0 0 0 5%;} 
     resume-experience .flex2 {-moz-box-flex:3; -ms-flex:3; -webkit-box-flex:3; -webkit-flex:3; flex:3;}
 }
 @media only screen and (max-width:800px){
@@ -225,6 +227,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     border span {text-align:center; width:100%;}
     
     /*** RESUME ***/
+    .resume-skills{padding:0 5%;}
     .icons-container ul li {-ms-flex-pack:start; -webkit-box-pack:start; -webkit-justify-content:flex-start; justify-content:flex-start;}
     .resume-content {padding:5%;}
     .resume-content p {margin:0px;}
@@ -233,7 +236,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     .resume-skills > .flex1 ul {display:-moz-box; display:-ms-flexbox;display:-webkit-box; display:-webkit-flex; display:flex; -ms-flex-wrap:wrap; flex-wrap:wrap; -ms-flex-pack:justify; -webkit-box-pack:justify; -webkit-justify-content:space-between; justify-content:space-between;}
     .resume-skills > .flex1 li {width:50%;}
     .resume-skills > .flex2 {-moz-box-flex:2 100%; -ms-flex:2 100%; -webkit-box-flex:2 100%; -webkit-flex:2 100%; flex:2 100%; max-width:100%;}
-    resume-experience {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
+    resume-experience {padding:0 5%;}
     resume-experience .flex2 {padding:80px 0 0 0; width:100%;}
     resume-experience:first-of-type .flex2 {padding:0px;}
 }
@@ -299,6 +302,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
 }
 @media only screen and (max-width:500px){
     /*** RESUME ***/
+    .resume-skills > .flex1 li{width:100%;}
     .icons-container icon{background-size: auto 40px;height: 40px;width: 60px;}
     .resume-skills, .resume-skills > .flex1 ul, .resume-skills > .flex2 > div.flexDisplay {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
     .resume-skills.flexJustifySpaceAround ul {text-align:left;}
