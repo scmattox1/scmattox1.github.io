@@ -137,7 +137,7 @@ resume-title emp-text {display: block;font-size:12px;line-height: 16px;text-alig
 .resume-skills .flex1 border {margin:0 30px 0 0;}
 .resume-skills > .flex2 {-moz-box-flex:2 58%; -ms-flex:2 58%; -webkit-box-flex:2 58%; -webkit-flex:2 58%; flex:2 58%; max-width:58%;}
 .resume-skills.flexJustifySpaceAround ul {margin-left:0px; text-align:center;}
-resume-experience{margin-bottom:15px;}
+resume-experience{margin:0 auto; max-width:1020px; padding-bottom:30px;}
 resume-experience .flex2 {padding:30px 2% 30px 0px;}
 resume-experience h3 {margin-top:0px;}
 resume-experience .hideDesktop{font-size:14px;color:#678f40;}
