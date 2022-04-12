@@ -260,7 +260,7 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     /* Links */
 	.mobileLink a{background-color:transparent; border-bottom:1px solid #5fa9bd; color:#5fa9bd; cursor:pointer; padding:5px 30px; text-decoration:none;}
 	.mobileLink a:hover {background-image:linear-gradient(to right, #518aa1 0%, #5fa9bd 100%); color:#fff; transition:all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);}
-
+	.mobileLink em {margin-top:10px;}
     /*** BIO ***/
     .bio article > img {display:none;}
     .bio article section{flex-direction: column;}
