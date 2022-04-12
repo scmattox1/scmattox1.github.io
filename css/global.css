@@ -136,7 +136,7 @@ resume-title emp-text {display: block;font-size:12px;line-height: 16px;text-alig
 .resume-skills emp-text {display:block; font-size:16px; line-height:16px; padding-top:2px;}
 .resume-skills .flex1 border {margin:0 30px 0 0;}
 .resume-skills > .flex2 {-moz-box-flex:2 58%; -ms-flex:2 58%; -webkit-box-flex:2 58%; -webkit-flex:2 58%; flex:2 58%; max-width:58%;}
-.resume-skills.flexJustifySpaceAround ul {margin-left:0px; text-align:center;}
+.resume-skills.lists-centered ul {margin:0 auto; width:30%; text-align:center;}
 resume-experience{margin:0 auto; max-width:1020px; padding-bottom:30px;}
 resume-experience .flex2 {padding:30px 2% 30px 0px;}
 resume-experience h3 {margin-top:0px;}
@@ -303,13 +303,14 @@ resume-experience .flex1 div{border: 1px solid #fff;border-radius: 30px 0 30px 0
     
     /*** RESUME ***/
     .icons-container ul li {margin-bottom:30px; width:100%;}
+	.resume-skills.lists-centered {flex-direction:column;}
+	.resume-skills.lists-centered ul {width:100%;}
 }
 @media only screen and (max-width:500px){
     /*** RESUME ***/
     .resume-skills > .flex1 li{width:100%;}
     .icons-container icon{background-size: auto 40px;height: 40px;width: 60px;}
     .resume-skills, .resume-skills > .flex1 ul, .resume-skills > .flex2 > div.flexDisplay {-ms-flex-direction:column; -webkit-box-direction:normal; -webkit-box-orient: vertical; flex-direction: column;}
-    .resume-skills.flexJustifySpaceAround ul {text-align:left;}
 }
 @media only screen and (max-width:460px){
     .img-self.bio{background-position-y: center;}
